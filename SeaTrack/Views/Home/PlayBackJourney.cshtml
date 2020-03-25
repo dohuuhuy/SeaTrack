@@ -1,0 +1,824 @@
+﻿<!-- Test video: 08-11-2019, 30b5e51 -->
+
+@{
+ViewBag.Title = "PlayBackJourney";
+Layout = "~/Views/Share/_Layout_PlayBackJourney.cshtml";
+IList<khanhhoi.vn.Models.Device> listdevicebyUser = (IList<khanhhoi.vn.Models.Device>)ViewBag.listdevicebyUser;
+String im = ViewBag.imei;
+String d = ViewBag.folderName_date;
+String cur = ViewBag.Cur;
+String date_ = ViewBag.date_;
+String date_str = ViewBag.date_str;
+String browName = Request.Browser.Browser;
+}
+
+<link href="~/Content/css/video-js.css" rel="stylesheet" />
+<!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+<script src="~/Scripts/videojs-ie8.min.js"></script>
+<link href="~/Content/css/Treeview.css" rel="stylesheet" />
+<script type="text/javascript">
+  var valuetemp = '';
+  var IDtemp = '';
+
+  var map_camera;
+
+  var flag_load=0;
+  $(document).ready(function () {
+        //var obj = document.querySelector('.preloader'), inner = document.querySelector('.preloader_inner'), page = document.querySelector('.main');
+        setupMap_camera(10.85586, 106.67961, 8);
+
+        var audioElement = document.getElementById('audio1');
+          $('#stop').hide();
+            $('#play').click(function () {
+              $('#play').hide();
+              $('#stop').show();
+              audioElement.play();
+            });
+            $('#stop').click(function () {
+              $('#play').show();
+              $('#stop').hide();
+              audioElement.pause();
+            });
+
+            @{
+              if (!String.IsNullOrEmpty(date_))
+              {
+                if (date_.Trim().Length > 0)
+              {
+                @:document.getElementById("date_form_d").value = '@date_';
+          @:getAjax(0);
+        }
+      }
+      else {
+        DateTime dateNow = DateTime.Now;
+        String dateCurr = dateNow.ToString("dd-MM-yyyy");
+        @:document.getElementById("date_form_d").value = '@dateCurr';
+      }
+    }
+    @{
+      if (!String.IsNullOrEmpty(cur)) {
+        if (cur.Trim().Length > 0) {
+         @:valuetemp = '@cur';
+       }
+     }
+
+   }
+   @{
+    if (!String.IsNullOrEmpty(im)) {
+      if (im.Trim().Length > 0) {
+        @:IDtemp = '@im';
+      }
+    }
+  }
+  var video = document.getElementById('my-video');
+  document.getElementById("file_name_video").style.display = "";
+  document.getElementById("file_name_video").innerHTML = '@date_str';
+  setInterval(function () {
+    getAjax(1);
+  }, 25000);
+
+});
+
+        function TestPlayAjax() {
+          $.ajax({
+            type: 'POST',
+            dataType: "json",
+            //async: false,
+            url: '@(Url.Action("TestgetAjaxVideo", "Home"))',
+            data: { },
+            success: function (data, txtStatus, XMLHttpRequest) {
+              if (data != null) {
+                    // alert(data);
+                    //my-video
+                    var video = videojs('my-video');
+                    //var source = document.createElement('source');
+
+                    //source.setAttribute('src', data);
+                    video.src({ type: "video/mp4", src: "/ContentVideos/0x900eb30b5e51/Video/20191108/191755_1.mp4" });
+
+                    //video.appendChild(source);
+                    video.play();
+}
+else { location.href = "Logout"; }
+},
+error: function () {
+  obj.classList.remove('show');
+  page.classList.add('show');
+  console.log("Kết nối dữ liệu thất bại.");
+
+}
+});
+}
+var marker;
+function ShowDeviceOnMap(objectStatus) {
+        //map_camera
+        if (objectStatus != null) {
+          if (objectStatus.Latitude > 0) {
+            var point = new window.google.maps.LatLng(objectStatus.Latitude, objectStatus.Longitude);
+            var vehiclenumber = objectStatus.VehicleNumber;
+            if (marker == null) {
+              map_camera.setZoom(18);
+              map_camera.setCenter(point);
+            }
+            if (marker != null) {
+              marker.setMap(null);
+              map_camera.setZoom(map_camera.getZoom());
+            }
+
+            marker = new google.maps.Marker({
+              map: map_camera,
+              draggable: true,
+              animation: google.maps.Animation.DROP,
+              position: point,
+              label: vehiclenumber
+            });
+            marker.addListener('click', toggleBounce);
+          }
+
+        }
+        else {
+          if (marker != null) {
+            marker.setMap(null);
+
+          }
+        }
+
+      }
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+      function setupMap_camera(lat, lng, mapZoom) {
+        var mapLatlng = new google.maps.LatLng(lat, lng);
+        var myOptions = {
+          zoom: mapZoom,
+          center: mapLatlng,
+          mapTypeControl: false,
+          streetViewControl: true,
+          streetViewControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_BOTTOM
+          },
+          fullscreenControl: true,
+          fullscreenControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+          },
+          zoomControl: true,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE,
+            position: google.maps.ControlPosition.RIGHT_CENTER
+          },
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map_camera = new google.maps.Map(document.getElementById("map_camera_hanhtrinh"), myOptions);
+        var styleControl = document.getElementById('style-selector-control-camera');
+        map_camera.controls[google.maps.ControlPosition.LEFT_TOP].push(styleControl);
+
+        var styles = {
+          default: null,
+            //satellite: map.setMapTypeId('satellite'),
+            night: [
+            { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+            { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+            { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#d59563' }]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#d59563' }]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{ color: '#263c3f' }]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#6b9a76' }]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{ color: '#38414e' }]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{ color: '#212a37' }]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#9ca5b3' }]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{ color: '#746855' }]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{ color: '#1f2835' }]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#f3d19c' }]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{ color: '#2f3948' }]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#d59563' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{ color: '#17263c' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#515c6d' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{ color: '#17263c' }]
+            }
+            ],
+          };
+
+          var styleSelector = document.getElementById('style-selector-camera');
+          map_camera.setOptions({
+            styles: styles[styleSelector.value]
+          });
+
+          styleSelector.addEventListener('change', function () {
+            if (styleSelector.value === "satellite") { map_camera.setMapTypeId('hybrid'); } // hybrid, satellite
+              else {
+                map_camera.setMapTypeId('roadmap');
+                  map_camera.setOptions({ styles: styles[styleSelector.value] });
+                }
+
+              });
+                };
+
+                var id_href = "";
+                var next_href = "";
+                var _flag = 0;
+
+                function getAjax(flag) {
+                  var obj = document.querySelector('.preloader'), inner = document.querySelector('.preloader_inner'), page = document.querySelector('.main');
+                  var imei_ = document.getElementById("dn_list_camerahanhtrinh").value;
+                  var dateform = document.getElementById("date_form_d").value;
+                  if (imei_ != IDtemp) { valuetemp = ""; }
+
+                  if (flag == 0) {
+                    obj.classList.add('show');
+                    page.classList.remove('show');
+                  }
+
+
+                  $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+            //async: false,
+            url: '@(Url.Action("LoadVideoJourney", "Home"))',
+            data: { imei: imei_, date: dateform },
+            success: function (data, txtStatus, XMLHttpRequest) {
+              if (data != null) {
+                obj.classList.remove('show');
+                  page.classList.add('show');
+                    if (data == "0000") { //send successful
+              id_href = "PlayBackJourney?Cur=&im=&d=";
+              if (flag == 0) {
+                alert("Chưa có dữ liệu.");
+                if (marker != null) {
+            marker.setMap(null);
+
+}
+}
+
+}
+else {
+  $('#li_camera0').hide();
+  $('#li_camera1').hide();
+  $('#li_camera2').hide();
+  $('#li_camera3').hide();
+  $('#li_camera4').hide();
+
+                        var _cam0_list = document.getElementById("li_camera_group0"); // no group
+                        _cam0_list.innerHTML = "";
+                        var _cam1_list = document.getElementById("li_camera_group1");
+                        _cam1_list.innerHTML = "";
+                        var _cam2_list = document.getElementById("li_camera_group2");
+                        _cam2_list.innerHTML = "";
+                        var _cam3_list = document.getElementById("li_camera_group3");
+                        _cam3_list.innerHTML = "";
+                        var _cam4_list = document.getElementById("li_camera_group4");
+                        _cam4_list.innerHTML = "";
+                        ShowDeviceOnMap(data.statusDevice);
+                        data = data.listFile;
+
+                        if (data.length > 0) {
+                          for (var j = data.length - 1; j >= 0; j--) {
+                            var _li_a = document.createElement("a");
+                                //_li_a.setAttribute("href", "PlayBackJourney?Cur=" + data[j].fileName + "&im=" + imei_ + "&d=" + dateform);
+                                _li_a.setAttribute("href", "#");
+                                _li_a.setAttribute("onclick", "Loader('" + data[j].fileName + "','" + imei_ + "','" + data[j].Folderdate + "','" + data[j].Group + "')");
+                                _li_a.setAttribute("class", "playlist-track");
+                                _li_a.setAttribute("data-play-track", "(j + 1)");
+
+                                var _a_span1 = document.createElement("span");
+                                //_a_span1.setAttribute("class", "sign");
+                                var _span1_i = document.createElement("i");
+                                _span1_i.setAttribute("class", "fa fa-video-camera");
+                                _span1_i.setAttribute("aria-hidden", "true");
+                                _a_span1.appendChild(_span1_i);
+                                _li_a.appendChild(_a_span1);
+
+                                var _a_span2 = document.createElement("span");
+                                _a_span2.setAttribute("class", "lbl play-list-row");
+                                _a_span2.setAttribute("data-track-row", (j + 1));
+                                _a_span2.innerHTML = data[j].date_;
+                                _li_a.appendChild(_a_span2);
+
+                                switch (data[j].Group) {
+                                    case 1: //danhdau01
+                                    $('#li_camera1').show();
+                                      _cam1_list.appendChild(_li_a);
+                                      break;
+                                      case 2:
+                                      $('#li_camera2').show();
+                                        _cam2_list.appendChild(_li_a);
+                                        break;
+                                        case 3:
+                                        $('#li_camera3').show();
+                                          _cam3_list.appendChild(_li_a);
+                                          break;
+                                          case 4:
+                                          $('#li_camera4').show();
+                                            _cam4_list.appendChild(_li_a);
+                                            break;
+                                            case 0:
+                                            $('#li_camera0').show();
+                                              _cam0_list.appendChild(_li_a);
+                                              break;
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                    else { location.href = "Logout"; }
+                                  },
+                                  error: function () {
+                                    obj.classList.remove('show');
+                                    page.classList.add('show');
+                                    alert("Kết nối dữ liệu thất bại.");
+                                  }
+                                });
+                                          };
+
+
+
+                                          function Loader(filename, imei_, dateform, group) {
+
+
+        //alert(filename);
+        //alert(imei_);
+        //alert(dateform);
+        //alert(group);
+        var obj = document.querySelector('.preloader'), inner = document.querySelector('.preloader_inner'), page = document.querySelector('.main');
+
+        obj.classList.add('show');
+        page.classList.remove('show');
+
+        if (filename.includes(".avi")) {
+
+          var result = 0;
+            //alert("avi");
+            $.ajax({
+              type: 'POST',
+              dataType: "json",
+                //async: false,
+                url: '@(Url.Action("Convert_avi_to_mp4", "Home"))',
+                data: { imei__: imei_, dateform_: dateform, filename_: filename },
+                success: function (data, txtStatus, XMLHttpRequest) {
+                  if (data != null) {
+                    if (data == "Err") {
+                      console.log("Convert file Error");
+
+                      result= - 1;
+                    }
+                    else {
+
+                      result= 1;
+                    }
+                  }
+                  else {
+
+                    result= - 1;
+                  }
+                },
+                error: function () {
+                  obj.classList.remove('show');
+                  page.classList.add('show');
+                    //alert("Kết nối dữ liệu thất bại.");
+                    console("Connect data err");
+
+                    result= - 1;
+                  },
+                  async: false
+                });
+
+                if (result != 0) {
+
+                  filename = filename.replace(".avi", ".mp4");
+               // alert(filename);
+             }
+
+           }
+           switch (group) {
+            case '1': //danhdau01
+            var video = videojs('my-video');
+            var src = "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "";
+               // alert(src);
+               video.src({ type: "video/mp4", src: "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "" });
+               video.play();
+               break;
+               case '2':
+               var video2 = videojs('my-video2');
+
+               video2.src({ type: "video/mp4", src: "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "" });
+               video2.play();
+               break;
+               case '3':
+               var video3 = videojs('my-video3');
+
+               video3.src({ type: "video/mp4", src: "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "" });
+               video3.play();
+               break;
+               case '4':
+               var video4 = videojs('my-video4');
+
+               video4.src({ type: "video/mp4", src: "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "" });
+               video4.play();
+               break;
+               case '0':
+               var video = videojs('my-video');
+
+               video.src({ type: "video/mp4", src: "/ContentVideos/" + imei_ + "/Video/" + dateform + "/" + filename + "" });
+               video.play();
+               break;
+             }
+             obj.classList.remove('show');
+             page.classList.add('show');
+
+           }
+           function myStopFunction() {
+            clearTimeout(while_);
+          }
+          function loadVideobyIMEI() {
+            id_href = "";
+            getAjax(0);
+            var interval_obj = setInterval(function () {
+              if (id_href.length > 0) {
+                obj.classList.add('show');
+                page.classList.remove('show');
+                location.href = id_href;
+
+                clearInterval(interval_obj);
+              }
+            }, 200);
+          };
+
+        </script>
+
+        @* Start Report camera hành trình *@
+        <div id="content-dn-camerahanhtrinh" class="content main">
+          <div id="signupbox" class="mainbox">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div class="panel-title text-center">@khanhhoi.vn.Resources.Language.lbcamera</div>
+              </div>
+              @*<input type="button" onclick="TestPlayAjax();" value="TestPlayAjax" id="playAjax" />*@
+              <div class="table">
+                <div class="x-s-main clearfix">
+                  <div class="col-md-7 col-xs-12 clearfix">
+                    <div class="row clearfix s-x-sub">
+                      <div class="s-x-boxed col-md-6 col-xs-6 clearfix" style="padding-right: 0!important;">
+                        @{
+                        <video id='my-video' autoplay class='video-js video-form-view' controls preload='auto' data-setup='{}'>
+                          @*<source id="source_video" src="~/ContentVideos/@im/Video/@d/@cur#t=0.2" type='video/mp4'>*@
+                          </video>
+                          <label id="file_name_video" class="m-t-5 text-danger" style="display:none"></label>
+                        }
+                      </div>
+                      <div class="s-x-boxed col-md-6 col-xs-6 clearfix" style="">
+                        @{
+                        <video id='my-video2' autoplay class='video-js video-form-view' controls preload='auto' data-setup='{}'>
+                          @*<source id="source_video2" src="~/ContentVideos/@im/Video/@d/@cur#t=0.2" type='video/mp4'>*@
+                          </video>
+
+                          <label id="file_name_video" class="m-t-5 text-danger" style="display:none"></label>
+                        }
+                      </div>
+                    </div>
+                    <div class="row clearfix s-x-sub">
+                      <div class="s-x-boxed col-md-6 col-xs-6 clearfix" style="padding-right: 0!important;">
+                        @{
+                          <video id='my-video3' autoplay class='video-js video-form-view' controls preload='auto' data-setup='{}'>
+                          @*<source id="source_video3" src="~/ContentVideos/@im/Video/@d/@cur#t=0.2" type='video/mp4'>*@
+                          </video>
+
+                          <label id="file_name_video" class="m-t-5 text-danger" style="display:none"></label>
+                        }
+                      </div>
+                      <div class="s-x-boxed col-md-6 col-xs-6 clearfix" style="">
+                        @{
+                        <video id='my-video4' autoplay class='video-js video-form-view' controls preload='auto' data-setup='{}'>
+                          @*<source id="source_video4" src="~/ContentVideos/@im/Video/@d/@cur#t=0.2" type='video/mp4'>*@
+                          </video>
+                          <label id="file_name_video" class="m-t-5 text-danger" style="display:none"></label>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-xs-12 clearfix s-x-maps">
+                    <div class="row" style="height: 50%;">
+                      <div class="s-x-boxed col-md-12 col-xs-12 clearfix">
+                        <div id="style-selector-control-camera" class="map-control">
+                          <select id="style-selector-camera" class="selector-control" style="width:100px;height:40px">
+                            <option value="default" selected="selected">@khanhhoi.vn.Resources.Language.lbmacdinh</option>
+                            <option value="satellite">@khanhhoi.vn.Resources.Language.lbvetinh</option>
+                            <option value="night">@khanhhoi.vn.Resources.Language.lbdem</option>
+                          </select>
+                        </div>
+                        <div class="google-maps" style="height: 330px;">
+                          <div id="map_camera_hanhtrinh" class="map-camera-hanhtrinh"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="s-x-boxed col-md-12 col-xs-12 clearfix" style="padding-top: 10px;">
+                        <form class="well">
+                          <fieldset>
+                            <div class="col-lg-5" style="padding:0;">
+                              <div class="form-group">
+                                <label class="control-label requiredField">@khanhhoi.vn.Resources.Language.lbchonngay</label>
+                                <div class="input-group date form_date" data-date-format="dd-mm-yyyy" data-link-format="dd-mm-yyyy">
+                                  <input class="form-control" type="text" id="date_form_d" style="height:26px">
+                                  <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                              </div>
+                              <div class="form-group" style="margin-top:20px">
+                                <label class="control-labeltext-left">
+                                  @khanhhoi.vn.Resources.Language.lbbienso
+                                  <span class="text-danger">*</span>
+                                </label>
+                                <select id="dn_list_camerahanhtrinh" class="form-control select2 fl" style="width:100%">
+                                  @{
+                                    if (listdevicebyUser != null){
+                                      if (listdevicebyUser.Count > 0){
+                                        for (int i = 0; i < listdevicebyUser.Count; i++){
+                                          if (!String.IsNullOrEmpty(im)){
+                                            if (listdevicebyUser[i].Imei.Equals(im)){
+                                              <option selected value="@listdevicebyUser[i].Imei">
+                                                @listdevicebyUser[i].VehicleNumber
+                                              </option>
+                                            }else{
+                                              <option value="@listdevicebyUser[i].Imei">
+                                                @listdevicebyUser[i].VehicleNumber
+                                              </option>
+                                            }
+                                          }else{
+                                            <option value="@listdevicebyUser[i].Imei">
+                                              @listdevicebyUser[i].VehicleNumber
+                                            </option>
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                </select>
+                              </div>
+                              @*<div class="form-group">
+                                <label class="control-label">Chọn camera</label>
+                                <select class="form-control" style="width:100%;">
+                                  <option value="0">Tất cả</option>
+                                  <option value="1">Camera 1</option>
+                                  <option value="2">Camera 2</option>
+                                  <option value="3">Camera 3</option>
+                                  <option value="4">Camera 4</option>
+                                </select>
+                              </div>*@
+
+                              <button type="button" style="width:100%;margin-top:33px" name="Signup" class="btn btn-primary btn-sm" onclick="loadVideobyIMEI();">
+                              @khanhhoi.vn.Resources.Language.lbxem</button>
+                            </div>
+                            <div class="col-lg-7" style="padding-right:0">
+                              <div class="panel panel-default">
+                                <div id="left" class="span3">
+                                  <div id="menu-group-1" class="nav menu">
+                                    <ul class="children nav-child unstyled small">
+                                      <li id="li_camera1" class="deeper parent" hidden>
+                                        <a href="#">
+                                          <span class="lbl" data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-1">
+                                            <i class="fa fa-folder sign"></i>
+                                            @*<i class="fa fa-plus sign" aria-hidden="true"></i>*@
+                                            Camera 1
+                                          </span>
+                                        </a>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-1">
+                                          <li id="li_camera_group1"></li>
+                                        </ul>
+                                      </li>
+                                      <li id="li_camera2" class="deeper parent" hidden>
+                                        <a href="#">
+                                          <span class="lbl" data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-2">
+                                            <i class="fa fa-folder sign"></i>
+                                            Camera 2
+                                          </span>
+                                        </a>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-2">
+                                          <li id="li_camera_group2" class="item-6"></li>
+                                        </ul>
+                                      </li>
+                                      <li id="li_camera3" class="deeper parent" hidden>
+                                        <a href="#">
+                                          <span class="lbl" data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-3">
+                                            <i class="fa fa-folder sign"></i>
+                                            Camera 3
+                                          </span>
+                                        </a>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-3">
+                                          <li id="li_camera_group3" class="item-6"></li>
+                                        </ul>
+                                      </li>
+                                      <li id="li_camera4" class="deeper parent" hidden>
+                                        <a href="#">
+                                          <span class="lbl" data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-4">
+                                            <i class="fa fa-folder sign"></i>
+                                            Camera 4
+                                          </span>
+                                        </a>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-4">
+                                          <li id="li_camera_group4" class="item-6"></li>
+                                        </ul>
+                                      </li>
+                                      <li id="li_camera0" class="deeper parent" hidden>
+                                        <a href="#">
+                                          <span class="lbl" data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-0">
+                                            <i class="fa fa-folder sign"></i>
+                                            Camera no group
+                                          </span>
+                                        </a>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-0">
+                                          <li id="li_camera_group0" class="item-6"></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                
+                
+
+                </div>
+              </div>
+
+                <script src="~/Scripts/video.js"></script>
+                </div>
+                </div>
+                </div>
+
+                <div class="preloader">
+                  <div class="preloader_inner">@khanhhoi.vn.Resources.Language.lbdangcapnhatdulieu</div>
+                </div>
+
+                <style>
+                  .form-horizontal .control-label {
+                    text-align: left;
+                  }
+
+                  .vertical-menu a {
+                    background-color: #eee; /* Grey background color */
+                    color: black; /* Black text color */
+                    display: block; /* Make the links appear below each other */
+                    padding: 12px; /* Add some padding */
+                    text-decoration: none; /* Remove underline from links */
+                  }
+
+                  .vertical-menu a:hover {
+                    background-color: #ccc; /* Dark grey background on mouse-over */
+                  }
+
+                  .vertical-menu a.active {
+                    background-color: #4CAF50; /* Add a green color to the "active/current" link */
+                    color: white;
+                  }
+
+                  .vertical-menu {
+                    height: 360px;
+                    overflow-y: auto;
+                  }
+
+                  .simpleAudioPlayer {
+                    margin: 0 auto 2em auto;
+                  }
+
+                  .simpleAudioPlayer {
+                    font-family: Karla,Arial,sans-serif;
+                    width: 500px;
+                    max-width: 100%;
+                    background: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    -webkit-box-shadow: 0 0 6px 1px rgba(0,0,0,.1);
+                    box-shadow: 0 0 6px 1px rgba(0,0,0,.1);
+                    position: relative;
+                    overflow: hidden;
+                  }
+                </style>
+
+                <link href="~/Content/css/Video.css" rel="stylesheet" />
+
+                <script type="text/javascript">
+                  $('.form_datetime').datetimepicker({
+                        //language:  'fr',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        forceParse: 0,
+                        showMeridian: 1
+                      });
+                  $('.form_date').datetimepicker({
+                    language: 'vi',
+                    weekStart: 1,
+                    todayBtn: 1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    minView: 2,
+                    forceParse: 0,
+                    format: 'dd-mm-yyyy'
+                  });
+                  $('.form_time').datetimepicker({
+                    language: 'vi',
+                    weekStart: 1,
+                    todayBtn: 1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 1,
+                    minView: 0,
+                    maxView: 1,
+                    forceParse: 0
+                  });
+                  $('.select2').select2();
+                  !function ($) {
+
+                        // Le left-menu sign
+                        //for older jquery version
+                        //$('#left ul.nav li.parent > a > span.sign').click(function () {
+                        //    $(this).find('i:first').toggleClass("fa fa-minus");
+                        //});
+
+                        $(document).on("click", "#left div.nav li.parent > a > span.sign", function () {
+                          $(this).find('i:first').toggleClass("fa-minus");
+                        });
+                        $(document).on("click", "#left div.nav li.parent > a > span.lbl", function () { //danhdau02
+                          $(this).find('i:first').toggleClass("fa-minus");
+                        });
+                        $('.collapse').collapse('hide')
+                        // Open Le current menu
+                        //$("#left div.nav li.parent.active > a > span.sign").find('i:first').addClass("fa-minus");
+                        //$("#left div.nav li.current").parents('ul.children').addClass("in");
+
+                      }(window.jQuery);
+                    </script>
+
+
+
+

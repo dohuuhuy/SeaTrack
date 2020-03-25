@@ -1,0 +1,48 @@
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojResolveAssemblyReference.cache
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.pdb
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\bin\Debug\DotNetNuke.dll
+C:\Users\Thuong Nguyen\documents\visual studio 2015\Projects\SeaTrack\SeaTrack.Lib\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+D:\Glorius\SeaTrack\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll
+D:\Glorius\SeaTrack\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.pdb
+D:\Glorius\SeaTrack\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
+D:\Glorius\SeaTrack\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
+D:\Glorius\SeaTrack\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll.config
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.pdb
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\RestSharp.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.pdb
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.xml
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.pdb
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.xml
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.pdb
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.xml
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\bin\Debug\RestSharp.xml
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
+D:\Glorius\[VINASIA] Web\SeaTrack - Copy\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll.config
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.pdb
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\RestSharp.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.pdb
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.xml
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.pdb
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Common.Logging.Core.xml
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.pdb
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\Quartz.xml
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\bin\Debug\RestSharp.xml
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojAssemblyReference.cache
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CoreCompileInputs.cache
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
+C:\Users\dohuu\Music\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb

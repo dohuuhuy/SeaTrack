@@ -1,0 +1,110 @@
+.s-navbar-logo{
+  position: relative;
+  width: 280px;
+}
+.navbar-inner > .s-navbar-logo > .navbar-brand {
+  margin: auto;
+}
+.file-input-wrapper {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+}
+.file-input-wrapper input[type=file],
+.file-input-wrapper input[type=file]:focus,
+.file-input-wrapper input[type=file]:hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  z-index: 99;
+  outline: 0;
+}
+.file-input-name { margin-left: 8px; }
+.jqstooltip { position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  visibility: hidden;
+  background: rgb(43, 48, 58) transparent;
+  background-color: rgba(43, 48, 58,0.8);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+  color: white;
+  font: 10px arial, san serif;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 10000;
+  padding: 5px 5px 5px 5px;
+  min-height: 22px;
+  min-width: 30px;
+  border-radius: 3px;
+}
+.jqsfield {
+  color: white;
+  font: 10px arial, san serif;
+  text-align: left;
+}
+.page-container .navbar .logo-env{
+  width: auto;
+  padding: 0 35px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.page-container .navbar .logo-env > div.sidebar-collapse,
+.page-container .navbar .logo-env > div.sidebar-mobile-menu {
+  position: relative;
+  float: right;
+}
+.page-container .navbar .logo-env > div {
+  display: block;
+  vertical-align: middle;
+  white-space: nowrap;
+  float: left;
+}
+.page-container .navbar .logo-env > div.sidebar-collapse a,
+.page-container .navbar .logo-env > div.sidebar-mobile-menu a {
+  display: inline-block;
+  border: 1px solid #454a54;
+  text-align: center;
+  padding: 0;
+  line-height: 1;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 5px 2px;
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
+  border-radius: 3px;
+  background-clip: padding-box;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+.page-container .navbar .logo-env > div > a {
+  display: inline-block;
+  color: #aaabae;
+}
+.page-container .navbar .logo-env > div.sidebar-collapse a,
+.page-container .navbar .logo-env > div.sidebar-mobile-menu a {
+  text-align: center;
+  line-height: 1;
+  font-size: 20px;
+  font-weight: 300;
+}
+.page-container .navbar .logo-env > div > a {
+  color: #aaabae;
+}
+.page-container .sidebar-menu .sidebar-user-info .user-link span,
+.page-container .sidebar-menu .sidebar-user-info .user-link strong {
+  -webkit-transition: unset;
+  -moz-transition: unset;
+  -o-transition: unset;
+  transition: unset;
+}

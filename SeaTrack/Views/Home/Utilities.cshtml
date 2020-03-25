@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Utilities";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div id="list-tienich" class="main" style="display:none;">
+        <div class="wrapper">
+            <div id="sidebar7" class=" si-sidebar s-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+                <a href="#sub-menu-7" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">
+                    Quản trị đăng kiểm
+                    <span class="caret pull-right m-t-5"></span>
+                </a>
+                <div class="collapse list-group-level1 show in" id="sub-menu-7">
+                    <a id="menu-tienich-thongtinthietbi" href="javascript:getAllDevice();" class="list-group-item" data-parent="#sub-menu">
+                        <img src="/Content/images/icon/Info-icon.png" />
+                        Thông tin thiết bị
+                    </a>
+                </div>
+            </div>
+            <div id="content-tienich-thongtinthietbi" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>THÔNG TIN THIẾT BỊ</h2>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_tienich_thongtinthietbi" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Thông tin</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_tienich_thongtinthietbi"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/public/img/logo.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="vi" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Test</title>
+
+
+
+    <link href="~/Content/public/css/stylemain.css" rel="stylesheet" />
+    <link href="~/Content/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/public/css/daterangepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="~/Content/public/js/Datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/public/js/Datetimepicker/bootstrap-datetimepicker.fr.js"></script>
+    <link href="~/Content/public/css/style-s.css" rel="stylesheet" />
+    <link href="~/Content/public/css/rate.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous" async></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous" async></script>
+
+
+
+    <!-- <script src="/Content/public/js/Gmap/v3_epoly.js"></script> -->
+    <!-- <script src="/Content/public/js/markerwithlabel.js"></script> -->
+    <!-- <script src="/Content/public/js/Gmap/markerclusterer.js"></script> -->
+    <!-- <script src="/Content/public/js/Gmap/markerclusterer_compiled.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
+
+</head>
+<body id="body" class="class_body_t">
+    <div class="body-content">
+        <div class="wrapper ">
+            <nav id="menubar" class="active navbar navbar-expand-lg navbar-light bg-light s-menu-run">
+                <div class="container-fluid s-display-block">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Menu</span>
+                    </button>
+                    <button type="button" id="giamsat_toggle" class="btn btn-danger d-none">
+                        <i class="fas fa-indent"></i>
+                        <span>Giám sát</span>
+                    </button>
+                    <img id="s-logo-menu" src="~/Content/public/img/logo-vinasia.png" class="s-logo-menu d-none">
+                    <div class="float-right">
+                        <div class="dropdown s-div-btn">
+                            <a href="~/Home/Route" onclick="//win_reload();" type="button" class="btn btn-outline-primary">
+                                <i class="fas fa-location-arrow"></i>
+                                Giám sát
+                            </a>
+                        </div>
+                        <div class="dropdown s-div-btn ">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-chart-bar"></i>
+                                Báo cáo
+                            </button>
+                            <div class="dropdown-menu">
+                                <a id="show_ministry" class="dropdown-item" href="~/Report/Ministry">Báo cáo Bộ giao thông</a>
+                                <a id="show_business" class="dropdown-item" href="~/Report/Business">Báo cáo Doanh nghiệp</a>
+                            </div>
+                        </div>
+                        <div class="dropdown s-div-btn">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-users-cog"></i>
+                                Quản trị
+                            </button>
+                            <div class="dropdown-menu">
+                                <a id="show_manage" class="dropdown-item" href="~/Manage/Customer">Tài khoản</a>
+                                <a id="show_device" class="dropdown-item" href="~/Manage/Device">Thiết bị và Lái tàu</a>
+                            </div>
+                        </div>
+                        <div class="dropdown s-div-btn">
+                            <a href="" id="show_util" type="button" class="btn btn-outline-info">
+                                <i class="fas fa-tasks"></i>
+                                Tiện ích
+                            </a>
+                        </div>
+                        <div class="dropdown s-div-btn">
+                            <button id="show_comment" type="button" class="btn btn-outline-info">
+                                <i class="fas fa-comments"></i>
+                                Phản hồi
+                            </button>
+                        </div>
+                        <div class="dropdown s-div-btn">
+                            <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-question"></i>
+                                Hướng dẫn
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mi-modal">Hướng dẫn sử dụng</a>
+                            </div>
+                        </div>
+                        <div class="btn-group s-div-btn">
+                            <button type="button" class="btn btn-outline-success">
+                                <i class="fas fa-user"></i>
+                                Tài khoản
+                            </button>
+                            <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                            <div class="dropdown-menu">
+                                <a id="show_admin" class="dropdown-item" href="#">Thông tin Quản lý</a>
+                                <a id="show_info_device_exp" class="dropdown-item" href="#">Dịch vụ hết hạn</a>
+                            </div>
+                        </div>
+                        <button onclick="ActionMenu(1);" type="button" class="btn btn-outline-dark" title="Đăng xuất">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div id="content" class="s-relative main show">
+
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/Content/public/js/moment.min.js"></script>
+    <script src="/Content/public/js/daterangepicker.min.js"></script>
+
+    <!-- <script src="/Content/public/js/jquery.dataTables.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="/Content/public/js/dataTables.bootstrap.min.js"></script> -->
+    <!-- <script src="/Content/public/js/lightgallery.min.js"></script> -->
+    <!-- <script src="/Content/public/js/jquery.mousewheel.min.js"></script> -->
+    <!-- <script src="/Content/public/js/lg-thumbnail.min.js"></script> -->
+    <!-- <script src="/Content/public/js/lg-fullscreen.min.js"></script> -->
+    <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&libraries=places,geometry,drawing&callback=initMap" type="text/javascript" async defer></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&libraries=places,geometry,drawing" type="text/javascript"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&callback=initMap" type="text/javascript" async defer></script> -->
+    <script src="/Content/public/js/Gmap/v3_epoly.js"></script>
+    <script src="/Content/public/js/markerwithlabel.js"></script>
+    <script src="/Content/public/js/Gmap/markerclusterer.js"></script>
+    <script src="/Content/public/js/Gmap/markerclusterer_compiled.js"></script>
+
+    <script type="text/javascript" src="/Content/public/js/main/default.js"></script>
+    <script type="text/javascript" src="/Content/public/js/main/controller.js"></script>
+    <script type="text/javascript" src="/Content/public/js/main/global.js" defer></script>
+
+</body>
+</html>

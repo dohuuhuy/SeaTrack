@@ -1,0 +1,2465 @@
+﻿
+@{
+    ViewBag.Title = "HomeTracking";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper ">
+    <nav id="menubar" class="active navbar navbar-expand-lg navbar-light bg-light s-menu-run">
+        <div class="container-fluid s-display-block">
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <i class="fas fa-align-left"></i>
+                <span>Menu</span>
+            </button>
+            <button type="button" id="giamsat_toggle" class="btn btn-danger d-none">
+                <i class="fas fa-indent"></i>
+                <span>Giám sát</span>
+            </button>
+            <img id="s-logo-menu" src="/Content/public/img/logo-vinasia.png" class="s-logo-menu d-none">
+            <div class="float-right">
+                <div class="dropdown s-div-btn">
+                    <button onclick="win_reload();" type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-location-arrow"></i>
+                        Giám sát
+                    </button>
+                </div>
+                <div class="dropdown s-div-btn d-none">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-chart-bar"></i>
+                        Báo cáo
+                    </button>
+                    <div class="dropdown-menu">
+                        <a id="show_bgt" class="dropdown-item" href="#">Báo cáo Bộ giao thông</a>
+                        <a id="show_business" class="dropdown-item" href="#">Báo cáo Doanh nghiệp</a>
+                    </div>
+                </div>
+                <div class="dropdown s-div-btn">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-users-cog"></i>
+                        Quản trị
+                    </button>
+                    <div class="dropdown-menu">
+                        <a id="show_taikhoan" class="dropdown-item" href="#">Tài khoản</a>
+                        <a id="show_thietbi_taixe" class="dropdown-item" href="#">Thiết bị và Lái tàu</a>
+                    </div>
+                </div>
+                <div class="dropdown s-div-btn">
+                    <button id="show_tienich" type="button" class="btn btn-outline-info">
+                        <i class="fas fa-tasks"></i>
+                        Tiện ích
+                    </button>
+                </div>
+                <div class="dropdown s-div-btn">
+                    <button id="show_comment" type="button" class="btn btn-outline-info">
+                        <i class="fas fa-comments"></i>
+                        Phản hồi
+                    </button>
+                </div>
+                <div class="dropdown s-div-btn">
+                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-question"></i>
+                        Hướng dẫn
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mi-modal">Hướng dẫn sử dụng</a>
+                    </div>
+                </div>
+                <div class="btn-group s-div-btn">
+                    <button type="button" class="btn btn-outline-success">
+                        <i class="fas fa-user"></i>
+                        Tài khoản
+                    </button>
+                    <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                    <div class="dropdown-menu">
+                        <a id="show_admin" class="dropdown-item" href="#">Thông tin Tài khoản</a>
+                        <a id="show_info_device_exp" class="dropdown-item" href="#">Dịch vụ hết hạn</a>
+                    </div>
+                </div>
+                <button onclick="ActionMenu(1);" type="button" class="btn btn-outline-dark" title="Đăng xuất">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div id="content" class="s-relative main show">
+        <main id="rounded" class="s-auto-height">
+            <div class="s-full s-flexible-wrap">
+                <div class="s-no-padding s-full">
+                    <nav id="s-sidebar" class="s-absolute s-main-sidebar">
+                        <div class="sidebar-header s-flexible s-just-center">
+                            <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                        </div>
+                        <hr>
+                        <div class="s-left-tab">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a onclick="//GiamSat();" class="nav-link active" href="#lefttab_1" data-toggle="tab">Giám sát tàu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a onclick="setDate();" class="nav-link" href="#lefttab_2" data-toggle="tab">Xem lại lộ trình</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="lefttab_1">
+                                    <div class="m-b-5 m-t-5 input-group">
+                                        <div class="input-group-prepend">
+                                            <select class="custom-select" id="selectState" onchange="//createTable(dataListStatus);">
+                                                <option value="0">Tất cả</option>
+                                                <option value="1">Mở máy</option>
+                                                <option value="2">Tắt máy</option>
+                                                <option value="3">Di chuyển</option>
+                                                <option value="4">Dừng đỗ</option>
+                                                <option value="5">Mất tín hiệu</option>
+                                                <option value="6">Hết hạn</option>
+                                            </select>
+                                        </div>
+                                        <input id="search_dsxe" type="text" class="form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
+                                    </div>
+                                    <hr>
+                                    <div class="s-sub-left-tab s-relative">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#sublefttab_1" data-toggle="tab">Tàu cá</a>
+                                            </li>
+                                            <button id="s-info-button" class="float-right btn btn-info s-absolute-right" data-toggle="" data-placement="right" data-trigger="hover" data-html="true" title="Ý NGHĨA MÀU" data-content=''>
+                                                <i class="fas fa-info"></i>
+                                            </button>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="sublefttab_1">
+                                                <div id="s-tab-table">
+                                                    <table id="tbldata" class="table-bordered table table-sm text-center">
+                                                        <thead style="white-space:nowrap;">
+                                                            <tr>
+                                                                <th class="headerAlignCenter">
+                                                                    STT
+                                                                </th>
+                                                                <th class="headerAlignCenter">
+                                                                    Số hiệu
+                                                                </th>
+                                                                <th class="headerAlignCenter">
+                                                                    Vận tốc
+                                                                </th>
+                                                                <th class="headerAlignCenter">
+                                                                    Thời gian
+                                                                </th>
+                                                                <th class="headerAlignCenter">
+                                                                    Vị trí
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tblbodydata"></tbody>
+                                                    </table>
+                                                    <div class="p-10 text-center text-danger" id="tongsoxe"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="lefttab_2">
+                                    <div class="m-b-5 m-t-5 input-group">
+                                        <div class="m-b-5 m-t-5 input-group">
+                                            <div class="input-group-prepend">
+                                            </div>
+                                            <input id="search_dsxe" type="text" class="d-none form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="s-pickup-datetime">
+                                        <div class="form-date m-t-5">
+                                            <label>Từ</label>
+                                            <div class="input-group mb-3 date form_time m-l-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                                                <input class="form-control" size="5" id="date_form_h" type="text" style="height:26px" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dtp_input3" />
+                                            <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                <input class="form-control" type="text" id="date_form_d" style="height:26px" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dtp_input2" />
+                                        </div>
+                                        <div class="form-date m-t-5">
+                                            <label>Đến</label>
+                                            <div class="input-group mb-3 date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                                                <input class="form-control" size="5" type="text" id="date_t_h" style="height:26px" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dtp_input3" />
+                                            <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                <input class="form-control" type="text" id="date_t_d" style="height:26px" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dtp_input2" />
+                                        </div>
+                                    </div>
+                                    <div class="s-training-to">
+                                        <div class="input-group mb-3 ">
+                                            <select id="list_xelotrinh" class="custom-select select2 fl"></select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info" onclick="setdrawingLinePoint(1); interval_draw();">
+                                                    <i class="fa fa-search"></i>
+                                                    Xem
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="sublefttab_4" class="s-sub-left-tab">
+                                        <table id="tbldataline" class="table-bordered table table-sm text-center">
+                                            <thead style="white-space:nowrap;">
+                                                <tr>
+                                                    <th class="headerAlignCenter">
+                                                        Tọa độ
+                                                    </th>
+                                                    <th class="headerAlignCenter">
+                                                        Vận tốc
+                                                    </th>
+                                                    <th class="headerAlignCenter">
+                                                        Thời gian
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblbodydataline"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="popUpBox_theMeaningOfIcon" class="d-none popUpBox_theMeaningOfIcon" style="display: block;"><div class="content"><table><tbody><tr><td colspan="3"><div class="fl header-title">Ý nghĩa biểu tượng tàu</div><div class="fr"><a href="#"><img id="closeMeaningOfIcon" src="/Content/public/img/icon/delete-icon.png" alt="" title="Đóng"></a></div></td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-black.png" alt=""></td><td>Xe dừng đỗ</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-green.png" alt=""></td><td>Xe di chuyển</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-red.png" alt=""></td><td>Xe mất tín hiệu GPS, hết hạn dịch vụ, cảnh báo sự cố, quá tốc độ ...</td></tr></tbody></table></div></div>
+
+                        </div>
+                    </nav>
+                    <div id="style-selector-control" class="map-control">
+                        <select id="style-selector" class="selector-control">
+                            <option value="default" selected>Mặc định</option>
+                            <option value="satellite">Vệ tinh</option>
+                            <option value="night">Đêm</option>
+                        </select>
+                    </div>
+                    <div id="map" class="s-map s-full"></div>
+                </div>
+            </div>
+        </main>
+        <div class="main" id="list-bgt" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                    <a href="#sub-menu" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo TT09/2015/TT - BGTVT<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level1 in show" id="sub-menu">
+                        <a id="menu-bgt-chitiet-vipham4h" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/clipboard.png" /> Chi tiết vi phạm thời gian lái tàu liên tục (4 giờ)</a>
+                        <a id="menu-bgt-chitiet-vipham10h" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/clipboard.png" /> Chi tiết vi phạm thời gian lái tàu liên tục (10 giờ)</a>
+                    </div>
+                    <a href="#sub-sub-menu" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">Báo cáo TT73/2014/TT - BGTVT<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level2 in show" id="sub-sub-menu">
+                        <a id="menu-bgt-hanhtrinh" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/destination.png" /> Hành trình xe chạy</a>
+                        <a id="menu-bgt-tocdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/Dashboard-icon.png" /> Tốc độ của xe</a>
+                        <a id="menu-bgt-quatocdogioihan" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/car.png" /> Quá tốc độ giới hạn</a>
+                        <a id="menu-bgt-thoigianlaixelientuc" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/24-hours.png" /> Thời gian lái tàu liên tục</a>
+                        <a id="menu-bgt-dungdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/parking.png" /> Báo cáo dừng đỗ</a>
+                        <a id="menu-bgt-tonghopxe" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report-car.png" /> Báo cáo tổng hợp theo xe</a>
+                        <a id="menu-bgt-laixe" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report-car.png" /> Báo cáo tổng hợp theo lái tàu</a>
+                        <a id="menu-bgt-thoigianlaixetrongngay" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report.png" /> Báo cáo thời gian lái tàu trong ngày</a>
+                    </div>
+                </div>
+                <div id="content-bgt-chitiet-vipham4h" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO CHI TIẾT VI PHẠM THỜI GIAN LÁI TÀU LIÊN TỤC (4 GIỜ)</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  row required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-vipham4h-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_vipham4h" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ViPham4h();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_vipham4h" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter">GPLT</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Bắt đầu</th>
+                                            <th class="headerAlignCenter">Kết thúc</th>
+                                            <th class="headerAlignCenter">Thời gian lái</th>
+                                            <th class="headerAlignCenter">Địa chỉ bắt đầu</th>
+                                            <th class="headerAlignCenter">Địa chỉ kết thúc</th>
+                                            <th class="headerAlignCenter">Toạ độ bắt đầu</th>
+                                            <th class="headerAlignCenter">Toạ độ kết thúc</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_vipham4h"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-chitiet-vipham10h" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO CHI TIẾT VI PHẠM THỜI GIAN LÁI TÀU LIÊN TỤC (10 GIỜ)</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-vipham10h-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_vipham10h" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ViPham10h();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_vipham10h" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter">GPLT</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Bắt đầu</th>
+                                            <th class="headerAlignCenter">Kết thúc</th>
+                                            <th class="headerAlignCenter">Thời gian lái</th>
+                                            <th class="headerAlignCenter">Địa chỉ bắt đầu</th>
+                                            <th class="headerAlignCenter">Địa chỉ kết thúc</th>
+                                            <th class="headerAlignCenter">Toạ độ bắt đầu</th>
+                                            <th class="headerAlignCenter">Toạ độ kết thúc</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_vipham10h"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-hanhtrinh" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="">
+                            <div class="jumbotron">
+                                <h2>BÁO CÁO HÀNH TRÌNH XE CHẠY</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-hanhtrinh-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_hanhtrinh" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_HanhTrinhXeChay();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_hanhtrinh" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Trạng thái</th>
+                                            <th class="headerAlignCenter">Địa chỉ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_hanhtrinh"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-tocdo" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron">
+                                <h2>BÁO CÁO TỐC ĐỘ XE CHẠY</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-tocdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_tocdo" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_TocDoXeChay();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_tocdo" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Từ ngày</th>
+                                            <th class="headerAlignCenter">Đến ngày</th>
+                                            <th class="headerAlignCenter">Vận tốc trung bình</th>
+                                            <th class="headerAlignCenter">Vận tốc tối đa</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_tocdo"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-quatocdogioihan" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO QUÁ TỐC ĐỘ GIỚI HẠN</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-quatocdogioihan-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_quatocdogioihan" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_QuaTocDoGioiHan();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_quatocdogioihan" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                            <th class="headerAlignCenter">Quá tốc độ giới hạn</th>
+                                            <th class="headerAlignCenter">Địa điểm gần nhất</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_quatocdogioihan"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-thoigianlaixelientuc" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO THỜI GIAN lái tàu LIÊN TỤC</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-thoigianlaixelientuc-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_thoigianlaixelientuc" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ThoiGianLaiXeLienTuc();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_thoigianlaixelientuc" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Thời gian lái</th>
+                                            <th class="headerAlignCenter">Từ ngày</th>
+                                            <th class="headerAlignCenter">Đến ngày</th>
+                                            <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                            <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_thoigianlaixelientuc"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-thoigianlaixetrongngay" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO THỜI GIAN lái tàu TRONG NGÀY</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-thoigianlaixetrongngay-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_thoigianlaixetrongngay" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ThoiGianLaiXeTrongNgay();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_thoigianlaixetrongngay" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Thời gian lái</th>
+                                            <th class="headerAlignCenter">Từ ngày</th>
+                                            <th class="headerAlignCenter">Đến ngày</th>
+                                            <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                            <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_thoigianlaixetrongngay"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-dungdo" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO DỪNG ĐỖ</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-dungdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_dungdo" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_DungDo();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_dungdo" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Thời gian</th>
+                                            <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                            <th class="headerAlignCenter">Toạ độ</th>
+                                            <th class="headerAlignCenter">Địa chỉ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_dungdo"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-laixe" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Báo cáo tổng hợp theo lái tàu</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-laixe-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_laixe" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_LaiXe();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_laixe" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_laixe"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-bgt-tonghopxe" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Báo cáo tổng hợp theo xe</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-bgt-tonghopxe-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="bgt_listxe_tonghopxe" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_TongHopXe();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_bgt_tonghopxe" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                            <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                            <th class="headerAlignCenter">Tốc độ trung bình</th>
+                                            <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_bgt_tonghopxe"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main" id="list_business" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar2" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                    <a href="#sub-menu-1" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo tổng hợp<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level1 in show" id="sub-menu-1">
+                        <a id="menu-dn-tonghop" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/business.png" /> Báo cáo tổng hợp hoạt động</a>
+                        <a id="menu-dn-chitiet" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/bar-chart.png" /> Báo cáo chi tiết hoạt động</a>
+                        <a id="menu-dn-tonghopkm" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/route.png" /> Báo cáo tổng hợp km xe hoạt động</a>
+                    </div>
+                    <a href="#sub-menu-2" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo hoạt động<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level2 in show" id="sub-menu-2">
+                        <a id="menu-dn-dungdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/parking.png" /> Báo cáo dừng đỗ</a>
+                        <a id="menu-dn-maylanh" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/air-conditioning.png" /> Báo cáo bật điều hoà</a>
+                    </div>
+                    <a href="#sub-menu-3" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo nhiên liệu<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level2 in show" id="sub-menu-3">
+                        <a id="menu-dn-nhienlieu-tonghop" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/gas-pump.png" /> Báo cáo tổng hợp tiêu hao nhiên liệu</a>
+                    </div>
+                    <a href="#sub-menu-5" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo tháp cẩu<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level2 in show" id="sub-menu-5">
+                        <a id="menu-dn-khoadien" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/ThapCau/tatmo_khoadien_24.png" /> Báo cáo tắt/mở khoá điện</a>
+                        <a id="menu-dn-mototai" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/ThapCau/moto_tai_22.png" /> Báo cáo tắt/mở mô tơ tải</a>
+                    </div>
+                    <a href="#sub-menu-6" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">Camera<span class="caret pull-right m-t-5"></span></a>
+                    <div class="collapse list-group-level2 in show" id="sub-menu-6">
+                        <a id="menu-dn-camerahanhtrinh" href="#" class="list-group-item" data-parent="#sub-sub-menu">
+                            <img src="/Content/images/ThapCau/film.png" />
+                            Camera hành trình
+                        </a>
+                        <a id="menu-dn-ngugat" href="#" class="list-group-item" data-parent="#sub-sub-menu">
+                            <img src="/Content/images/ThapCau/warning.png" />
+                            Cảnh báo ngủ gật
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content-dn-tonghop" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO TỔNG HỢP HOẠT ĐỘNG</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-tonghop-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar"></i>&nbsp;
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_tonghop" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TongHop();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_tonghop" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                            <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                            <th class="headerAlignCenter">Tốc độ trung bình</th>
+                                            <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_tonghop"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-chitiet" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO CHI TIẾT HOẠT ĐỘNG</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-chitiet-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_chitiet" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_ChiTiet();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_chitiet" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                            <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                            <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                            <th class="headerAlignCenter">Quảng đường</th>
+                                            <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                            <th class="headerAlignCenter">Thời gian lái</th>
+                                            <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                            <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_chitiet"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-tonghopkm" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO TỔNG HỢP KM XE HOẠT ĐỘNG</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-tonghopkm-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_tonghopkm" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TongHopKm();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_tonghopkm" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:24px">STT</th>
+                                            <th class="headerAlignCenter" style="width:45px">Số hiệu</th>
+                                            <th class="headerAlignCenter" style="width:35px">Ngày</th>
+                                            <th class="headerAlignCenter" style="width:103px">Thời gian bắt đầu</th>
+                                            <th class="headerAlignCenter" style="width:103px">Thời gian kết thúc</th>
+                                            <th class="headerAlignCenter" style="width:120px">Địa chỉ bắt đầu</th>
+                                            <th class="headerAlignCenter" style="width:120px">Địa chỉ kết thúc</th>
+                                            <th class="headerAlignCenter" style="width:45px">Tổng km</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_tonghopkm"></tbody>
+                                    <tfoot id="tfoot_dn_tonghopkm" style="display:none">
+                                        <tr>
+                                            <th class="headerAlignCenter">Tổng</th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter"></th>
+                                            <th class="headerAlignCenter" id="sum_tongkm_dn_tonghopkm"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-dungdo" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO DỪNG ĐỖ</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-dungdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_dungdo" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_DungDo();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_dungdo" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Thời gian</th>
+                                            <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                            <th class="headerAlignCenter">Toạ độ</th>
+                                            <th class="headerAlignCenter">Địa chỉ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_dungdo"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-maylanh" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO MÁY LẠNH</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-maylanh-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_maylanh" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_MayLanh();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_maylanh" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter" style="width:80px">Kéo dài</th>
+                                            <th class="headerAlignCenter">Mở</th>
+                                            <th class="headerAlignCenter">Tắt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_maylanh"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-nhienlieu-tonghop" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO TỔNG HỢP TIÊU HAO NHIÊN LIỆU</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-nhienlieu-tonghop-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_listxe_nhienlieu_tonghop" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_NhienLieu_TongHop();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <div>
+                                    <canvas id="canvas_oil"></canvas>
+                                </div>
+                                <table id="table_dn_nhienlieu_tonghop" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Ngày</th>
+                                            <th class="headerAlignCenter">Số lượng dầu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_nhienlieu_tonghop"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-mototai" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Báo cáo tắt/mở mô tơ tải</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-mototai-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_list_mototai" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="btn_dn_mototai" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TatMoMoToTai();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_mototai" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter">Kéo dài</th>
+                                            <th class="headerAlignCenter">Thời gian mở</th>
+                                            <th class="headerAlignCenter">Thời gian tắt</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_mototai"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-dn-khoadien" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>BÁO CÁO TẮT/MỞ KHOÁ ĐIỆN</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <input id="content-dn-khoadien-date" class="form-control" type="text" name="datefilter" value="" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_list_khoadien" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="btn_dn_khoadien" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TatMoKhoaDien();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_khoadien" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter" style="width:80px">Kéo dài</th>
+                                            <th class="headerAlignCenter">Mở khoá điện</th>
+                                            <th class="headerAlignCenter">Tắt khoá điện</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_khoadien"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="content-dn-ngugat" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Cảnh báo ngủ gật</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div id="" class="form-group row  required">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                        </div>
+                                        <div class="controls col-md-7 clearfix">
+                                            <div class="input-group date m-b-5">
+                                                <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input_dozy" data-link-format="dd-mm-yyyy">
+                                                    <input class="form-control" type="text" id="date_form_dozy" style="height:26px" readonly>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" id="dtp_input_dozy" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-3 clearfix text-right">
+                                            <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-5 clearfix">
+                                            <select id="dn_list_ngugat" class="form-control select2 fl" style="width:100%"></select>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="btn_dn_ngugat" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_CanhBaoNguGat();" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_dn_khoadien" class="table  table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Lái tàu</th>
+                                            <th class="headerAlignCenter">Tốc độ</th>
+                                            <th class="headerAlignCenter" style="width:80px">Thời gian</th>
+                                            <th class="headerAlignCenter">Toạ độ</th>
+                                            <th class="headerAlignCenter">Hình ảnh</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_dn_canhbaongugat"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="main" id="content_comment" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar3" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                </div>
+                <div class="content">
+                    <div class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>LẮNG NGHE ĐỂ PHÁT TRIỂN</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action=".">
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-2 clearfix text-right vcenter">Chủ đề</label>
+                                        <div class="col-md-10 clearfix">
+                                            <input id="feedback_chude" class="form-control m-b-5" maxlength="30" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label for="feedback_comment" class="col-md-2 clearfix text-right vcenter">Nội dung</label>
+                                        <div class="col-md-10 clearfix m-b-5">
+                                            <textarea class="form-control" id="feedback_comment" rows="15" placeholder="Nội dung góp ý (*)"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label  vcenter col-md-2 clearfix text-right">Đánh giá chất lượng dịch vụ</label>
+                                        <div class="col-md-10 clearfix">
+                                            <div class="feedback m-b-5">
+                                                <div class="rating">
+                                                    <input type="radio" name="rating" id="rating-5" onclick="danhgia_click(5);">
+                                                    <label for="rating-5"></label>
+                                                    <input type="radio" name="rating" id="rating-4" onclick="danhgia_click(4);">
+                                                    <label for="rating-4"></label>
+                                                    <input type="radio" name="rating" id="rating-3" onclick="danhgia_click(3);">
+                                                    <label for="rating-3"></label>
+                                                    <input type="radio" name="rating" id="rating-2" onclick="danhgia_click(2);">
+                                                    <label for="rating-2"></label>
+                                                    <input type="radio" name="rating" id="rating-1" onclick="danhgia_click(1);">
+                                                    <label for="rating-1"></label>
+                                                    <div class="emoji-wrapper">
+                                                        <div class="emoji">
+                                                            <svg class="rating-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <circle cx="256" cy="256" r="256" fill="#ffd93b" />
+                                                                <path d="M512 256c0 141.44-114.64 256-256 256-80.48 0-152.32-37.12-199.28-95.28 43.92 35.52 99.84 56.72 160.72 56.72 141.36 0 256-114.56 256-256 0-60.88-21.2-116.8-56.72-160.72C474.8 103.68 512 175.52 512 256z" fill="#f4c534" />
+                                                                <ellipse transform="scale(-1) rotate(31.21 715.433 -595.455)" cx="166.318" cy="199.829" rx="56.146" ry="56.13" fill="#fff" />
+                                                                <ellipse transform="rotate(-148.804 180.87 175.82)" cx="180.871" cy="175.822" rx="28.048" ry="28.08" fill="#3e4347" />
+                                                                <ellipse transform="rotate(-113.778 194.434 165.995)" cx="194.433" cy="165.993" rx="8.016" ry="5.296" fill="#5a5f63" />
+                                                                <ellipse transform="scale(-1) rotate(31.21 715.397 -1237.664)" cx="345.695" cy="199.819" rx="56.146" ry="56.13" fill="#fff" />
+                                                                <ellipse transform="rotate(-148.804 360.25 175.837)" cx="360.252" cy="175.84" rx="28.048" ry="28.08" fill="#3e4347" />
+                                                                <ellipse transform="scale(-1) rotate(66.227 254.508 -573.138)" cx="373.794" cy="165.987" rx="8.016" ry="5.296" fill="#5a5f63" />
+                                                                <path d="M370.56 344.4c0 7.696-6.224 13.92-13.92 13.92H155.36c-7.616 0-13.92-6.224-13.92-13.92s6.304-13.92 13.92-13.92h201.296c7.696.016 13.904 6.224 13.904 13.92z" fill="#3e4347" />
+                                                            </svg>
+                                                            <svg class="rating-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <circle cx="256" cy="256" r="256" fill="#ffd93b" />
+                                                                <path d="M512 256A256 256 0 0 1 56.7 416.7a256 256 0 0 0 360-360c58.1 47 95.3 118.8 95.3 199.3z" fill="#f4c534" />
+                                                                <path d="M328.4 428a92.8 92.8 0 0 0-145-.1 6.8 6.8 0 0 1-12-5.8 86.6 86.6 0 0 1 84.5-69 86.6 86.6 0 0 1 84.7 69.8c1.3 6.9-7.7 10.6-12.2 5.1z" fill="#3e4347" />
+                                                                <path d="M269.2 222.3c5.3 62.8 52 113.9 104.8 113.9 52.3 0 90.8-51.1 85.6-113.9-2-25-10.8-47.9-23.7-66.7-4.1-6.1-12.2-8-18.5-4.2a111.8 111.8 0 0 1-60.1 16.2c-22.8 0-42.1-5.6-57.8-14.8-6.8-4-15.4-1.5-18.9 5.4-9 18.2-13.2 40.3-11.4 64.1z" fill="#f4c534" />
+                                                                <path d="M357 189.5c25.8 0 47-7.1 63.7-18.7 10 14.6 17 32.1 18.7 51.6 4 49.6-26.1 89.7-67.5 89.7-41.6 0-78.4-40.1-82.5-89.7A95 95 0 0 1 298 174c16 9.7 35.6 15.5 59 15.5z" fill="#fff" />
+                                                                <path d="M396.2 246.1a38.5 38.5 0 0 1-38.7 38.6 38.5 38.5 0 0 1-38.6-38.6 38.6 38.6 0 1 1 77.3 0z" fill="#3e4347" />
+                                                                <path d="M380.4 241.1c-3.2 3.2-9.9 1.7-14.9-3.2-4.8-4.8-6.2-11.5-3-14.7 3.3-3.4 10-2 14.9 2.9 4.9 5 6.4 11.7 3 15z" fill="#fff" />
+                                                                <path d="M242.8 222.3c-5.3 62.8-52 113.9-104.8 113.9-52.3 0-90.8-51.1-85.6-113.9 2-25 10.8-47.9 23.7-66.7 4.1-6.1 12.2-8 18.5-4.2 16.2 10.1 36.2 16.2 60.1 16.2 22.8 0 42.1-5.6 57.8-14.8 6.8-4 15.4-1.5 18.9 5.4 9 18.2 13.2 40.3 11.4 64.1z" fill="#f4c534" />
+                                                                <path d="M155 189.5c-25.8 0-47-7.1-63.7-18.7-10 14.6-17 32.1-18.7 51.6-4 49.6 26.1 89.7 67.5 89.7 41.6 0 78.4-40.1 82.5-89.7A95 95 0 0 0 214 174c-16 9.7-35.6 15.5-59 15.5z" fill="#fff" />
+                                                                <path d="M115.8 246.1a38.5 38.5 0 0 0 38.7 38.6 38.5 38.5 0 0 0 38.6-38.6 38.6 38.6 0 1 0-77.3 0z" fill="#3e4347" />
+                                                                <path d="M131.6 241.1c3.2 3.2 9.9 1.7 14.9-3.2 4.8-4.8 6.2-11.5 3-14.7-3.3-3.4-10-2-14.9 2.9-4.9 5-6.4 11.7-3 15z" fill="#fff" />
+                                                            </svg>
+                                                            <svg class="rating-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <circle cx="256" cy="256" r="256" fill="#ffd93b" />
+                                                                <path d="M512 256A256 256 0 0 1 56.7 416.7a256 256 0 0 0 360-360c58.1 47 95.3 118.8 95.3 199.3z" fill="#f4c534" />
+                                                                <path d="M336.6 403.2c-6.5 8-16 10-25.5 5.2a117.6 117.6 0 0 0-110.2 0c-9.4 4.9-19 3.3-25.6-4.6-6.5-7.7-4.7-21.1 8.4-28 45.1-24 99.5-24 144.6 0 13 7 14.8 19.7 8.3 27.4z" fill="#3e4347" />
+                                                                <path d="M276.6 244.3a79.3 79.3 0 1 1 158.8 0 79.5 79.5 0 1 1-158.8 0z" fill="#fff" />
+                                                                <circle cx="340" cy="260.4" r="36.2" fill="#3e4347" />
+                                                                <g fill="#fff">
+                                                                    <ellipse transform="rotate(-135 326.4 246.6)" cx="326.4" cy="246.6" rx="6.5" ry="10" />
+                                                                    <path d="M231.9 244.3a79.3 79.3 0 1 0-158.8 0 79.5 79.5 0 1 0 158.8 0z" />
+                                                                </g>
+                                                                <circle cx="168.5" cy="260.4" r="36.2" fill="#3e4347" />
+                                                                <ellipse transform="rotate(-135 182.1 246.7)" cx="182.1" cy="246.7" rx="10" ry="6.5" fill="#fff" />
+                                                            </svg>
+                                                            <svg class="rating-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <circle cx="256" cy="256" r="256" fill="#ffd93b" />
+                                                                <path d="M407.7 352.8a163.9 163.9 0 0 1-303.5 0c-2.3-5.5 1.5-12 7.5-13.2a780.8 780.8 0 0 1 288.4 0c6 1.2 9.9 7.7 7.6 13.2z" fill="#3e4347" />
+                                                                <path d="M512 256A256 256 0 0 1 56.7 416.7a256 256 0 0 0 360-360c58.1 47 95.3 118.8 95.3 199.3z" fill="#f4c534" />
+                                                                <g fill="#fff">
+                                                                    <path d="M115.3 339c18.2 29.6 75.1 32.8 143.1 32.8 67.1 0 124.2-3.2 143.2-31.6l-1.5-.6a780.6 780.6 0 0 0-284.8-.6z" />
+                                                                    <ellipse cx="356.4" cy="205.3" rx="81.1" ry="81" />
+                                                                </g>
+                                                                <ellipse cx="356.4" cy="205.3" rx="44.2" ry="44.2" fill="#3e4347" />
+                                                                <g fill="#fff">
+                                                                    <ellipse transform="scale(-1) rotate(45 454 -906)" cx="375.3" cy="188.1" rx="12" ry="8.1" />
+                                                                    <ellipse cx="155.6" cy="205.3" rx="81.1" ry="81" />
+                                                                </g>
+                                                                <ellipse cx="155.6" cy="205.3" rx="44.2" ry="44.2" fill="#3e4347" />
+                                                                <ellipse transform="scale(-1) rotate(45 454 -421.3)" cx="174.5" cy="188" rx="12" ry="8.1" fill="#fff" />
+                                                            </svg>
+                                                            <svg class="rating-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <circle cx="256" cy="256" r="256" fill="#ffd93b" />
+                                                                <path d="M512 256A256 256 0 0 1 56.7 416.7a256 256 0 0 0 360-360c58.1 47 95.3 118.8 95.3 199.3z" fill="#f4c534" />
+                                                                <path d="M232.3 201.3c0 49.2-74.3 94.2-74.3 94.2s-74.4-45-74.4-94.2a38 38 0 0 1 74.4-11.1 38 38 0 0 1 74.3 11.1z" fill="#e24b4b" />
+                                                                <path d="M96.1 173.3a37.7 37.7 0 0 0-12.4 28c0 49.2 74.3 94.2 74.3 94.2C80.2 229.8 95.6 175.2 96 173.3z" fill="#d03f3f" />
+                                                                <path d="M215.2 200c-3.6 3-9.8 1-13.8-4.1-4.2-5.2-4.6-11.5-1.2-14.1 3.6-2.8 9.7-.7 13.9 4.4 4 5.2 4.6 11.4 1.1 13.8z" fill="#fff" />
+                                                                <path d="M428.4 201.3c0 49.2-74.4 94.2-74.4 94.2s-74.3-45-74.3-94.2a38 38 0 0 1 74.4-11.1 38 38 0 0 1 74.3 11.1z" fill="#e24b4b" />
+                                                                <path d="M292.2 173.3a37.7 37.7 0 0 0-12.4 28c0 49.2 74.3 94.2 74.3 94.2-77.8-65.7-62.4-120.3-61.9-122.2z" fill="#d03f3f" />
+                                                                <path d="M411.3 200c-3.6 3-9.8 1-13.8-4.1-4.2-5.2-4.6-11.5-1.2-14.1 3.6-2.8 9.7-.7 13.9 4.4 4 5.2 4.6 11.4 1.1 13.8z" fill="#fff" />
+                                                                <path d="M381.7 374.1c-30.2 35.9-75.3 64.4-125.7 64.4s-95.4-28.5-125.8-64.2a17.6 17.6 0 0 1 16.5-28.7 627.7 627.7 0 0 0 218.7-.1c16.2-2.7 27 16.1 16.3 28.6z" fill="#3e4347" />
+                                                                <path d="M256 438.5c25.7 0 50-7.5 71.7-19.5-9-33.7-40.7-43.3-62.6-31.7-29.7 15.8-62.8-4.7-75.6 34.3 20.3 10.4 42.8 17 66.5 17z" fill="#e24b4b" />
+                                                            </svg>
+                                                            <svg class="rating-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <g fill="#ffd93b">
+                                                                    <circle cx="256" cy="256" r="256" />
+                                                                    <path d="M512 256A256 256 0 0 1 56.8 416.7a256 256 0 0 0 360-360c58 47 95.2 118.8 95.2 199.3z" />
+                                                                </g>
+                                                                <path d="M512 99.4v165.1c0 11-8.9 19.9-19.7 19.9h-187c-13 0-23.5-10.5-23.5-23.5v-21.3c0-12.9-8.9-24.8-21.6-26.7-16.2-2.5-30 10-30 25.5V261c0 13-10.5 23.5-23.5 23.5h-187A19.7 19.7 0 0 1 0 264.7V99.4c0-10.9 8.8-19.7 19.7-19.7h472.6c10.8 0 19.7 8.7 19.7 19.7z" fill="#e9eff4" />
+                                                                <path d="M204.6 138v88.2a23 23 0 0 1-23 23H58.2a23 23 0 0 1-23-23v-88.3a23 23 0 0 1 23-23h123.4a23 23 0 0 1 23 23z" fill="#45cbea" />
+                                                                <path d="M476.9 138v88.2a23 23 0 0 1-23 23H330.3a23 23 0 0 1-23-23v-88.3a23 23 0 0 1 23-23h123.4a23 23 0 0 1 23 23z" fill="#e84d88" />
+                                                                <g fill="#38c0dc">
+                                                                    <path d="M95.2 114.9l-60 60v15.2l75.2-75.2zM123.3 114.9L35.1 203v23.2c0 1.8.3 3.7.7 5.4l116.8-116.7h-29.3z" />
+                                                                </g>
+                                                                <g fill="#d23f77">
+                                                                    <path d="M373.3 114.9l-66 66V196l81.3-81.2zM401.5 114.9l-94.1 94v17.3c0 3.5.8 6.8 2.2 9.8l121.1-121.1h-29.2z" />
+                                                                </g>
+                                                                <path d="M329.5 395.2c0 44.7-33 81-73.4 81-40.7 0-73.5-36.3-73.5-81s32.8-81 73.5-81c40.5 0 73.4 36.3 73.4 81z" fill="#3e4347" />
+                                                                <path d="M256 476.2a70 70 0 0 0 53.3-25.5 34.6 34.6 0 0 0-58-25 34.4 34.4 0 0 0-47.8 26 69.9 69.9 0 0 0 52.6 24.5z" fill="#e24b4b" />
+                                                                <path d="M290.3 434.8c-1 3.4-5.8 5.2-11 3.9s-8.4-5.1-7.4-8.7c.8-3.3 5.7-5 10.7-3.8 5.1 1.4 8.5 5.3 7.7 8.6z" fill="#fff" opacity=".2" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-4 clearfix"></div>
+                                        <div class="col-md-8 clearfix">
+                                            <input id="feedback_send" type="submit" name="Signup" value="Gửi phản hồi" class="btn btn-primary btn pull-right">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="list-admin" class="main" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar4" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                </div>
+                <div class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>THÔNG TIN NGƯỜI DÙNG</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <div class="col-sm-3">
+                                    <div class="text-center">
+                                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                                        <h6>Chọn hình...</h6>
+                                        <input type="file" class="text-center center-block file-upload" placeholder="abc">
+                                    </div></hr><br>
+                                </div>
+                                <div class="col-sm-9">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#change_info">Thông tin tài khoản</a></li>
+                                        <li><a data-toggle="tab" href="#change_password">Thay đổi mật khẩu</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="change_info">
+                                            <form class="form" action="##" method="post" id="registrationForm">
+                                                <div class="col-xs-6">
+                                                    <label for="tb_name">Họ và tên</label>
+                                                    <div class="form-group row ">
+                                                        <input type="text" class="form-control" id="tb_name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label for="tb_address">Địa chỉ</label>
+                                                    <div class="form-group row ">
+                                                        <input type="text" class="form-control" id="tb_address">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label for="tb_email">Email</label>
+                                                    <div class="form-group row ">
+                                                        <input type="text" class="form-control" id="tb_email">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label for="tb_phone">Số điện thoại</label>
+                                                    <div class="form-group row ">
+                                                        <input type="text" class="form-control" id="tb_phone">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <div class="form-group row ">
+                                                        <button id="show_admin_reload" class="btn pull-right m-l-5" type="button">
+                                                            <i class="glyphicon glyphicon-repeat"></i>
+                                                            Tải lại trang
+                                                        </button>
+                                                        <button class="btn btn-success pull-right" type="button" onclick="Update_info();">
+                                                            <i class="glyphicon glyphicon-ok-sign"></i>
+                                                            Lưu
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <hr>
+                                        </div>
+                                        <div class="tab-pane" id="change_password">
+                                            <form class="form" action="##" method="post" id="change_password">
+                                                <div class="col-xs-12">
+                                                    <div class="form-group row ">
+                                                        <label for="pw_old">Mật khẩu cũ</label>
+                                                        <input type="password" class="form-control" id="pw_old">
+                                                        <span toggle="#pw_old" class="fa fa-fw fa-2x fa-eye field-icon toggle-password"></span>
+                                                    </div>
+                                                    <div class="form-group row  m-t-5">
+                                                        <label for="pw_new">Mật khẩu mới</label>
+                                                        <input type="password" class="form-control" id="pw_new" required>
+                                                        <span toggle="#pw_new" class="fa fa-fw fa-2x fa-eye field-icon toggle-password"></span>
+                                                    </div>
+                                                    <div class="form-group row  m-t-5">
+                                                        <label for="pw_confirm">Nhập lại mật khẩu mới</label>
+                                                        <input type="password" class="form-control" id="pw_confirm" required>
+                                                        <span toggle="#pw_confirm" class="fa fa-fw fa-2x fa-eye field-icon toggle-password"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <div class="col-xs-12">
+                                                        <br>
+                                                        <button class="btn btn-success pull-right" type="button" onclick="UpdatePassword();"><i class="glyphicon glyphicon-ok-sign"></i>Lưu</button>
+                                                        <!--<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content-taikhoan" class="main contaner-fuild" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar5" class="si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                   
+                </div>
+                <div id="content-taikhoan-body" class="content">
+                    <div class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Thông tin tài khoản</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <form method="post" action="." class="form-horizontal">
+                                    <fieldset>
+                                        <div class="form-group row ">
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_nguoitao" class="control-label ">
+                                                    Người tạo
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_nguoitao" type="text" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_taikhoan" class="control-label ">
+                                                    Tài khoản
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_taikhoan" type="text" class="form-control" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_tenkhachhang" class="control-label ">
+                                                    Tên khách hàng
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_tenkhachhang" type="text" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_sodienthoai" class="control-label ">
+                                                    Số điện thoại
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_sodienthoai" type="text" class="form-control" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_email" class="control-label ">
+                                                    Email
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_email" type="text" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-2 clearfix">
+                                                <label for="thongtin_diachi" class="control-label ">
+                                                    Địa chỉ
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 clearfix">
+                                                <input id="thongtin_diachi" type="text" class="form-control" readonly />
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Danh sách tài khoản</h2>
+                            </div>
+                            <div class="panel-body container">
+                                <div class="row">
+                                    <div class="col-md-12 clearfix m-b-5">
+                                        <button id="btn_refresh_dstaikhoan" class="btn btn-primary m-l-5" onclick="GetList_User_Refresh();" title="Tải lại danh sách" style="display:none">
+                                            <span><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taikhoan-them" class="btn btn-success" onclick="taikhoan_them_click()" data-toggle="tooltip" data-placement="top" title="Thêm">
+                                            <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taikhoan-sua" class="btn btn-warning" onclick="taikhoan_sua_click()" data-toggle="tooltip" data-placement="top" title="Sửa">
+                                            <span><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taikhoan-xoa" class="btn btn-danger" onclick="taikhoan_xoa_click()" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                            <span><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taikhoan-back" class="btn btn-warning" onclick="taikhoan_back_click()" data-toggle="tooltip" data-placement="top" title="Quay lại" style="display:none">
+                                            <span><i class="fa fa-arrow-left" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taikhoan-save" class="btn btn-primary" title="Lưu" onclick="EditInfo_Acc()" data-toggle="tooltip" data-placement="top" title="Lưu" style="display:none">
+                                            <span><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="my-custom-scrollbar table-wrapper-scroll-y table-scroll">
+                                    <table id="table_taikhoan" class="table table-bordered table-hover main-table" style="cursor:pointer">
+                                        <thead>
+                                            <tr>
+                                                <th class="headerAlignCenter" style="width:25px">STT</th>
+                                                <th class="headerAlignCenter" style="width:80px">Tài khoản</th>
+                                                <th class="headerAlignCenter" style="width:70px">Mật khẩu</th>
+                                                <th class="headerAlignCenter" style="width:100px">Họ và tên</th>
+                                                <th class="headerAlignCenter" style="width:80px">Số điện thoại</th>
+                                                <th class="headerAlignCenter" style="width:100px">Địa chỉ</th>
+                                                <th class="headerAlignCenter" style="width:80px">Email</th>
+                                                <th class="headerAlignCenter" style="width:100px">Ghi chú</th>
+                                                <th class="headerAlignCenter" hidden>userid</th>
+                                                <th class="headerAlignCenter" style="width:100px">Danh sách xe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_taikhoan"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content-thietbi-taixe" class="main" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar6" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                </div>
+                <div id="content-thietbi-body" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>Danh sách thiết bị</h2>
+                            </div>
+                            <div class="p-10">
+                                <div class="table-responsive-dsthietbi table-scroll">
+                                    <table id="table_thietbi" class="table table-bordered table-hover" style="width:100%;cursor:pointer;">
+                                        <thead>
+                                            <tr>
+                                                <th class="headerAlignCenter" style="width:50px">Sửa</th>
+                                                <th class="headerAlignCenter" style="width:40px">STT</th>
+                                                <th class="headerAlignCenter">Số hiệu</th>
+                                                <th class="headerAlignCenter">Tên thiết bị</th>
+                                                <th class="headerAlignCenter">Phiên bản</th>
+                                                <th class="headerAlignCenter">Imei</th>
+                                                <th class="headerAlignCenter">Nhóm tàu</th>
+                                                <th class="headerAlignCenter" style="width:90px">Ngày hết hạn</th>
+                                                <th class="headerAlignCenter" hidden>DeviceID</th>
+                                                <th class="headerAlignCenter" hidden>VehicleID</th>
+                                                <th class="headerAlignCenter" hidden>VehicleGroupIDChild</th>
+                                                <th class="headerAlignCenter" hidden>VehicleCategoryID</th>
+                                                <th class="headerAlignCenter" hidden>Capacity</th>
+                                                <th class="headerAlignCenter" hidden>BarrelNumber</th>
+                                                <th class="headerAlignCenter" hidden>SimNumber</th>
+                                                <th class="headerAlignCenter" hidden>SimID</th>
+                                                <th class="headerAlignCenter" hidden>ProvinceID</th>
+                                                <th class="headerAlignCenter" hidden>TypeTransportID</th>
+                                                <th class="headerAlignCenter" hidden>Business</th>
+                                                <th class="headerAlignCenter" hidden>Chassis</th>
+                                                <th class="headerAlignCenter" hidden>Grosston</th>
+                                                <th class="headerAlignCenter" hidden>ParentGroupID</th>
+                                                <th class="headerAlignCenter" hidden>CurrentChildID</th>
+                                                <th class="headerAlignCenter" hidden>Switch_</th>
+                                                <th class="headerAlignCenter" hidden>Switch_Door</th>
+                                                <th class="headerAlignCenter" hidden>FuelConsumption</th>
+                                                <th class="headerAlignCenter" hidden>FuelCapacity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_thietbi"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary ">
+                            <div class="jumbotron ">
+                                <h2>Thông tin Lái tàu</h2>
+                            </div>
+                            <div class="p-10 ">
+                                <div class="row">
+                                    <div class="col-md-12 clearfix m-b-5">
+                                        <button id="item-taixe-them" class="btn btn-success" onclick="taixe_them_click()" data-toggle="tooltip" data-placement="bottom" title="Thêm">
+                                            <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taixe-sua" class="btn btn-warning" onclick="taixe_sua_click()" data-toggle="tooltip" data-placement="bottom" title="Sửa">
+                                            <span><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                                        </button>
+                                        <button id="item-taixe-xoa" class="btn btn-danger" onclick="taixe_xoa_click()" data-toggle="tooltip" data-placement="bottom" title="Xóa">
+                                            <span><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive-thongtintaixe">
+                                    <table id="table_taixe" class="table table-bordered table-hover" style="width:100%;cursor:pointer;">
+                                        <thead>
+                                            <tr>
+                                                <th class="headerAlignCenter" style="width:40px">STT</th>
+                                                <th class="headerAlignCenter">Tên lái tàu</th>
+                                                <th class="headerAlignCenter">Số điện thoại</th>
+                                                <th class="headerAlignCenter">GPLT</th>
+                                                <th class="headerAlignCenter" style="display:none">driverid</th>
+                                                <th class="headerAlignCenter">Số CMND</th>
+                                                <th class="headerAlignCenter">Hạng</th>
+                                                <th class="headerAlignCenter">Ngày cấp</th>
+                                                <th class="headerAlignCenter">Ngày hết hạn</th>
+                                                <th class="headerAlignCenter">Nơi cấp</th>
+                                                <th class="headerAlignCenter">Ghi chú</th>
+                                                <th class="headerAlignCenter" style="display:none">deviceid</th>
+                                                <th class="headerAlignCenter" style="display:none">ddid</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_taixe"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="list-tienich" class="main" style="display:none;">
+            <div class="wrapper">
+                <div id="sidebar7" class=" si-sidebar s-sidebar">
+                    <div class="sidebar-header s-flexible s-just-center">
+                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                    </div>
+                    <hr>
+                    <a href="#sub-menu-7" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">
+                        Quản trị đăng kiểm
+                        <span class="caret pull-right m-t-5"></span>
+                    </a>
+                    <div class="collapse list-group-level1 show in" id="sub-menu-7">
+                        <a id="menu-tienich-thongtinthietbi" href="javascript:getAllDevice();" class="list-group-item" data-parent="#sub-menu">
+                            <img src="/Content/images/icon/Info-icon.png" />
+                            Thông tin thiết bị
+                        </a>
+                    </div>
+                </div>
+                <div id="content-tienich-thongtinthietbi" style="display:none;" class="content">
+                    <div id="signupbox" class="mainbox">
+                        <div class="panel panel-primary">
+                            <div class="jumbotron ">
+                                <h2>THÔNG TIN THIẾT BỊ</h2>
+                            </div>
+                            <div class="p-10">
+                                <table id="table_tienich_thongtinthietbi" class="table table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter">STT</th>
+                                            <th class="headerAlignCenter">Thông tin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_tienich_thongtinthietbi"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="_preloader">
+            <div class="_preloader_inner">Đang cập nhật dữ liệu, vui lòng chờ giây lát..</div>
+        </div>
+        <div id="snackbar">Some text some message..</div> -->
+        <button type="button" id="btn_modal_exp" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#exampleModalCenter"></button>
+        <button type="button" id="btn_modal_taikhoan_them" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#Modal_taikhoan_them" data-backdrop="static" data-keyboard="false"></button>
+        <button type="button" id="btn_modal_taikhoan_dsxe" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#Modal_taikhoan_dsxe" data-backdrop="static" data-keyboard="false"></button>
+        <button type="button" id="btn_modal_taixe_them" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#Modal_taixe_them" data-backdrop="static" data-keyboard="false"></button>
+        <button type="button" id="btn_modal_taixe_sua" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#Modal_taixe_sua" data-backdrop="static" data-keyboard="false"></button>
+        <button type="button" id="btn_modal_dsthietbi_sua" style="display:none" class="btn btn-primary" data-toggle="modal"
+                data-target="#Modal_dsthietbi_sua" data-backdrop="static" data-keyboard="false"></button>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Danh sách thiết bị đã và sắp hết hạn</h5>
+                        <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close" style="display:none">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive-taikhoan-them table-scroll">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Ngày hết hạn</th>
+                                        <th class="headerAlignCenter">Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="body_dv_exp"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal_taikhoan_them" tabindex="-1" role="dialog" aria-labelledby="Modal_taikhoan_them_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_taikhoan_them_title">Thông tin tài khoản</h5>
+                    </div>
+                    <form id="taikhoan_form_submit" autocomplete="off" class="form-horizontal">
+                        <fieldset>
+                            <div class="modal-body">
+                                <div class="panel-body container">
+                                    <div class="col-xs-5">
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Tên đăng nhập</label>
+                                            <input id="taikhoan_tendangnhap" type="text" class="form-control" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Mật khẩu</label>
+                                            <input id="taikhoan_matkhau" type="password" class="form-control" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Họ và tên</label>
+                                            <input id="taikhoan_hoten" class="form-control" type="text" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Email</label>
+                                            <input id="taikhoan_email" class="form-control" type="text" placeholder="nguyenvana@gmail.com" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Điện thoại</label>
+                                            <input id="taikhoan_dienthoai" class="form-control" type="text" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Địa chỉ</label>
+                                            <input id="taikhoan_diachi" class="form-control" type="text" />
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="control-label ">Ghi chú</label>
+                                            <textarea id="taikhoan_ghichu" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <label style="display:block;text-align:center">Danh sách xe</label>
+                                        <div class="table-responsive-taikhoan-them">
+                                            <table id="table_taikhoan_them" class="table table-bordered  table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="headerAlignCenter" style="width:20px">STT</th>
+                                                        <th class="headerAlignCenter" style="width:100px">Số hiệu</th>
+                                                        <th class="headerAlignCenter">Nhóm tàu</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody_taikhoan_them"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="modal_taikhoan_confirm" onclick="CreateInfo_Acc();">
+                                    Xác nhận
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="modal_taikhoan_close" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal_taikhoan_dsxe" tabindex="-1" role="dialog" aria-labelledby="Modal_taikhoan_dsxe_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_taikhoan_dsxe_title">Danh sách xe</h5>
+                    </div>
+                    <form id="taikhoan_form_dsxe">
+                        <div class="modal-body">
+                            <div class="panel-body container">
+                                <div class="row">
+                                    <div class="table-responsive-taikhoan-them table-scroll">
+                                        <table id="table_taikhoan_dsxe" class="table table-bordered  table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="headerAlignCenter" style="width:20px">STT</th>
+                                                    <th class="headerAlignCenter" style="width:100px">Số hiệu</th>
+                                                    <th class="headerAlignCenter" style="width:100px">Nhóm tàu</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_taikhoan_dsxe"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modal_taikhoan_dsxe_confirm" onclick="modal_taikhoan_dsxe_confirm_click()">
+                                Xác nhận
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="modal_taikhoan_dsxe_close" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal_taixe_them" tabindex="-1" role="dialog" aria-labelledby="Modal_taixe_them_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-taixe">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_taixe_them_title">Tạo mới thông tin lái tàu</h5>
+                    </div>
+                    <form id="taixe_form_them_submit" autocomplete="off" class="form-horizontal">
+                        <div class="modal-body">
+                            <div class="row">
+                                <fieldset class="groupbox-border">
+                                    <legend class="groupbox-border">Giấy phép lái tàu</legend>
+                                    <div class="row form-group row ">
+                                        <div class="col-lg-4">
+                                            <label class="control-label  text-danger">Số</label>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <input id="taixe_them_sogplx" class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group row ">
+                                        <div class="col-lg-4">
+                                            <label class="control-label ">Hạng</label>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <input id="taixe_them_hang" class="form-control " type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group row ">
+                                        <div class="col-lg-4">
+                                            <label class="control-label ">Ngày cấp</label>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                <input class="form-control " type="text" id="taixe_them_ngaycapgplx" style="height:34px;" readonly>
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group row ">
+                                        <div class="col-lg-4">
+                                            <label class="control-label ">Ngày hết hạn</label>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                <input class="form-control " type="text" id="taixe_them_hethangplx" style="height:34px;" readonly>
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group row ">
+                                        <div class="col-lg-4">
+                                            <label class="control-label ">Nơi cấp</label>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <input id="taixe_them_noicap" class="form-control " type="text" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label  text-danger">Tên Lái tàu</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="taixe_them_tentaixe" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label  text-danger">Số điện thoại</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="taixe_them_sodienthoai" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label  text-danger">Số CMND</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="taixe_them_socmnd" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Ghi chú</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <textarea id="taixe_them_ghichu" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modal_taixe_confirm" onclick="btn_taixe_them_confirm()">
+                                Xác nhận
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="modal_taixe_close" data-dismiss="modal">
+                                Hủy
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal_taixe_sua" tabindex="-1" role="dialog" aria-labelledby="Modal_taixe_sua_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-taixe">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_taixe_sua_title">Sửa thông tin lái tàu</h5>
+                    </div>
+                    <form autocomplete="off" class="form-horizontal">
+                        <fieldset>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <fieldset class="groupbox-border">
+                                        <legend class="groupbox-border">Giấy phép lái tàu</legend>
+                                        <div class="row form-group row ">
+                                            <div class="col-lg-4">
+                                                <label class="control-label ">Số</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input id="taixe_sua_sogplx" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="row form-group row ">
+                                            <div class="col-lg-4">
+                                                <label class="control-label ">Hạng</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input id="taixe_sua_hang" class="form-control " type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="row form-group row ">
+                                            <div class="col-lg-4">
+                                                <label class="control-label ">Ngày cấp</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                    <input class="form-control " type="text" id="taixe_sua_ngaycapgplx" style="height:34px;" readonly>
+                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group row ">
+                                            <div class="col-lg-4">
+                                                <label class="control-label ">Ngày hết hạn</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                                    <input class="form-control " type="text" id="taixe_sua_hethangplx" style="height:34px;" readonly>
+                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group row ">
+                                            <div class="col-lg-4">
+                                                <label class="control-label ">Nơi cấp</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input id="taixe_sua_noicap" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="row form-group row ">
+                                    <div class="col-lg-4">
+                                        <label class="text-danger control-label ">Tên Lái tàu</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input id="taixe_sua_tentaixe" class="form-control" type="text" />
+                                    </div>
+                                </div>
+                                <div class="row form-group row ">
+                                    <div class="col-lg-4">
+                                        <label class="text-danger control-label ">Số điện thoại</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input id="taixe_sua_sodienthoai" class="form-control" type="text" />
+                                    </div>
+                                </div>
+                                <div class="row form-group row ">
+                                    <div class="col-lg-4">
+                                        <label class="control-label ">Số CMND</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input id="taixe_sua_socmnd" class="form-control" type="text" />
+                                    </div>
+                                </div>
+                                <div class="row form-group row ">
+                                    <div class="col-lg-4">
+                                        <label class="control-label ">Ghi chú</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <textarea id="taixe_sua_ghichu" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="modal_taixe_sua_confirm" onclick="btn_taixe_sua_confirm()">
+                                    Xác nhận
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="modal_taixe_sua_close" data-dismiss="modal">
+                                    Hủy
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal_dsthietbi_sua" tabindex="-1" role="dialog" aria-labelledby="Modal_dsthietbi_sua_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-taixe">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_dsthietbi_sua_title">Sửa thông tin thiết bị</h5>
+                    </div>
+                    <form id="thietbi_form_sua_submit" autocomplete="off" class="form-horizontal">
+                        <div class="modal-body">
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Số hiệu</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_bienso" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Số</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_sokhung" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Loại xe</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select id="thietbi_sua_loaixe" class="form-control select2 fl" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <div class="paragraph-thongtintaikhoan"><label>Nhóm tàu</label></div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select id="thietbi_sua_nhomxe" class="form-control select2 fl" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Số th&#249;ng</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_sothung" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Dung t&#237;ch</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_dungtich" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Tải trọng</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_taitrong" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label>Mức tiêu hao nhiên liệu/100km</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_muctieuhao" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label>Dung t&#237;ch bình nhiên liệu (l&#237;t)</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_dungtich_binh" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Tỉnh</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select id="thietbi_sua_tinh" class="form-control select2 fl" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label>DN quản lý</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input id="thietbi_sua_dnquanly" class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-lg-4">
+                                    <label class="control-label ">Loại vận tải</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select id="thietbi_sua_loaivantai" class="form-control select2 fl" style="width:100%"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group row ">
+                                <div class="col-md-4 clearfix"></div>
+                                <div class="col-md-8 clearfix">
+                                    <div class="checkbox">
+                                        <label style="padding:0">
+                                            <input id="thietbi_sua_daokhoa" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>Đảo khóa
+                                        </label>
+                                        <label>
+                                            <input id="thietbi_sua_daocua" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>Đảo cửa
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modal_thietbi_confirm" onclick="btn_thietbi_sua_confirm()">
+                                Xác nhận
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="modal_thietbi_close" data-dismiss="modal">
+                                Hủy
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Vui lòng chọn hình thức xem?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-footer">
+                    <a href="/File/HDSD Website.docx" download><button type="button" class="btn btn-default">Tải xuống</button></a>
+                    <a href="/File/HDSD-Website.html" target="_blank"><button type="button" class="btn btn-primary">Xem trực tuyến</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Content/public/js/moment.min.js"></script>
+<script src="/Content/public/js/daterangepicker.min.js"></script>
+
+<!-- <script src="/Content/public/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<!-- <script src="/Content/public/js/dataTables.bootstrap.min.js"></script> -->
+<!-- <script src="/Content/public/js/lightgallery.min.js"></script> -->
+<!-- <script src="/Content/public/js/jquery.mousewheel.min.js"></script> -->
+<!-- <script src="/Content/public/js/lg-thumbnail.min.js"></script> -->
+<!-- <script src="/Content/public/js/lg-fullscreen.min.js"></script> -->
+<!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&libraries=places,geometry,drawing&callback=initMap" type="text/javascript" async defer></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&libraries=places,geometry,drawing" type="text/javascript"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1P2dXHGBESLKUTuDqyeEi6MEKkOFtlec&callback=initMap" type="text/javascript" async defer></script> -->
+<script src="/Content/public/js/Gmap/v3_epoly.js"></script>
+<script src="/Content/public/js/markerwithlabel.js"></script>
+<script src="/Content/public/js/Gmap/markerclusterer.js"></script>
+<script src="/Content/public/js/Gmap/markerclusterer_compiled.js"></script>
+
+<script type="text/javascript" src="/Content/public/js/main/default.js"></script>
+
+<script type="text/javascript" src="/Content/public/js/main/controller.js"></script>
+
+<script type="text/javascript" src="/Content/public/js/main/global.js" defer></script>
+

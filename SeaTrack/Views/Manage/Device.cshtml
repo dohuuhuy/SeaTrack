@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Device";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div id="content-thietbi-taixe" class="main">
+        <div class="wrapper">
+            <div id="sidebar6" class="si-sidebar s-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+            </div>
+            <div id="content-thietbi-body" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Danh sách thiết bị</h2>
+                        </div>
+                        <div class="p-10">
+                            <div class="table-responsive-dsthietbi table-scroll">
+                                <table id="table_thietbi" class="table table-bordered table-hover" style="width:100%;cursor:pointer;">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:50px">Sửa</th>
+                                            <th class="headerAlignCenter" style="width:40px">STT</th>
+                                            <th class="headerAlignCenter">Số hiệu</th>
+                                            <th class="headerAlignCenter">Tên thiết bị</th>
+                                            <th class="headerAlignCenter">Phiên bản</th>
+                                            <th class="headerAlignCenter">Imei</th>
+                                            <th class="headerAlignCenter">Nhóm tàu</th>
+                                            <th class="headerAlignCenter" style="width:90px">Ngày hết hạn</th>
+                                            <th class="headerAlignCenter" hidden>DeviceID</th>
+                                            <th class="headerAlignCenter" hidden>VehicleID</th>
+                                            <th class="headerAlignCenter" hidden>VehicleGroupIDChild</th>
+                                            <th class="headerAlignCenter" hidden>VehicleCategoryID</th>
+                                            <th class="headerAlignCenter" hidden>Capacity</th>
+                                            <th class="headerAlignCenter" hidden>BarrelNumber</th>
+                                            <th class="headerAlignCenter" hidden>SimNumber</th>
+                                            <th class="headerAlignCenter" hidden>SimID</th>
+                                            <th class="headerAlignCenter" hidden>ProvinceID</th>
+                                            <th class="headerAlignCenter" hidden>TypeTransportID</th>
+                                            <th class="headerAlignCenter" hidden>Business</th>
+                                            <th class="headerAlignCenter" hidden>Chassis</th>
+                                            <th class="headerAlignCenter" hidden>Grosston</th>
+                                            <th class="headerAlignCenter" hidden>ParentGroupID</th>
+                                            <th class="headerAlignCenter" hidden>CurrentChildID</th>
+                                            <th class="headerAlignCenter" hidden>Switch_</th>
+                                            <th class="headerAlignCenter" hidden>Switch_Door</th>
+                                            <th class="headerAlignCenter" hidden>FuelConsumption</th>
+                                            <th class="headerAlignCenter" hidden>FuelCapacity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_thietbi"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary ">
+                        <div class="jumbotron ">
+                            <h2>Thông tin Lái tàu</h2>
+                        </div>
+                        <div class="p-10 ">
+                            <div class="row">
+                                <div class="col-md-12 clearfix m-b-5">
+                                    <button id="item-taixe-them" class="btn btn-success" onclick="taixe_them_click()" data-toggle="tooltip" data-placement="bottom" title="Thêm">
+                                        <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taixe-sua" class="btn btn-warning" onclick="taixe_sua_click()" data-toggle="tooltip" data-placement="bottom" title="Sửa">
+                                        <span><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taixe-xoa" class="btn btn-danger" onclick="taixe_xoa_click()" data-toggle="tooltip" data-placement="bottom" title="Xóa">
+                                        <span><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive-thongtintaixe">
+                                <table id="table_taixe" class="table table-bordered table-hover" style="width:100%;cursor:pointer;">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:40px">STT</th>
+                                            <th class="headerAlignCenter">Tên lái tàu</th>
+                                            <th class="headerAlignCenter">Số điện thoại</th>
+                                            <th class="headerAlignCenter">GPLT</th>
+                                            <th class="headerAlignCenter" style="display:none">driverid</th>
+                                            <th class="headerAlignCenter">Số CMND</th>
+                                            <th class="headerAlignCenter">Hạng</th>
+                                            <th class="headerAlignCenter">Ngày cấp</th>
+                                            <th class="headerAlignCenter">Ngày hết hạn</th>
+                                            <th class="headerAlignCenter">Nơi cấp</th>
+                                            <th class="headerAlignCenter">Ghi chú</th>
+                                            <th class="headerAlignCenter" style="display:none">deviceid</th>
+                                            <th class="headerAlignCenter" style="display:none">ddid</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_taixe"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

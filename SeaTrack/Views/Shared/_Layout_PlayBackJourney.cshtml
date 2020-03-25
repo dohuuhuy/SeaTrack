@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>VINASIA JSC</title>
+    <!-- for-mobile-apps -->
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0' name='viewport' />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/Datetimepicker/jquery-1.8.3.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />*@
+    <link href="~/Content/css/daterangepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/Datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/Datetimepicker/bootstrap-datetimepicker.fr.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBeyBqnIIC1RaRL1hXZ9f05KiRdvWKrIws&libraries=places,geometry,drawing"></script>
+    <script src="~/Scripts/Gmap/v3_epoly.js"></script>
+    <script src="~/Scripts/markerwithlabel.js"></script>
+    <script src="~/Scripts/Gmap/markerclusterer.js"></script>
+    <script src="~/Scripts/Gmap/markerclusterer_compiled.js"></script>
+    <link href="~/Content/css/stylemain.css" rel="stylesheet" />
+    <link href="~/Content/css/rate.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/css/lightgallery.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    @*<link href="~/Content/css/select2.min.css" rel="stylesheet" />*@
+    <link href="~/Content/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    @*<script src="~/Scripts/select2.min.js"></script>*@
+
+    <script type="text/javascript">        
+        $(document).ready(function () {
+            $("#backtohome").click(function () { // hạn chế tạo nhiều tab con
+                try { self.close(); } catch (e) { }
+            });
+        });
+
+        function ActionMenu(index) {
+            var alert_txt = "";
+            switch (index) {
+                case 1:
+                    location.href = "Logout";
+                    break;
+                default:
+                    break;
+            }
+        };
+
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div id="logo">
+            <a href="/Home/Index">
+                <img id="imgLogo" style="height: 75px" src="~/images/logo/logo-vinasia.png" alt="Viễn Thông Khánh Hội">
+            </a>
+        </div>
+        <div id="header-right" class="collapse navbar-collapse">
+            <div style="margin-top:10px;">
+                <div class="navbar navbar-nav navbar-right">
+                    <a href="#" id="backtohome" class="btn btn-primary btn-backtohome"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> @khanhhoi.vn.Resources.Language.btnquaylai</a> @*/Home/Index*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/Main.js"></script>
+    @*<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>*@
+    <script src="~/Scripts/moment.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>*@
+    <script src="~/Scripts/daterangepicker.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/lightgallery.min.js"></script>    
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>*@
+    <script src="~/Scripts/jquery.mousewheel.min.js"></script>
+    <script src="~/Scripts/lg-thumbnail.min.js"></script>
+    <script src="~/Scripts/lg-fullscreen.min.js"></script>
+    
+    <script>
+        $('#fixed-size').lightGallery({
+            width: '700px',
+            height: '470px',
+            mode: 'lg-fade',
+            addClass: 'fixed-size',
+            counter: false,
+            download: false,
+            startClass: '',
+            enableSwipe: false,
+            enableDrag: false,
+            speed: 500
+        });
+        $('#lightgallery').lightGallery({});
+        $('#aniimated-thumbnials').lightGallery({
+            thumbnail: true
+        });
+    </script>
+</body>
+
+</html>

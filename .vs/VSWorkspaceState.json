@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SeaTrack",
+    "\\SeaTrack\\Areas",
+    "\\SeaTrack\\Areas\\Admin",
+    "\\SeaTrack\\Areas\\Admin\\Controllers",
+    "\\SeaTrack\\Areas\\Admin\\View",
+    "\\SeaTrack\\Areas\\Admin\\View\\Shared"
+  ],
+  "SelectedNode": "\\SeaTrack\\Areas\\Admin\\View\\Shared\\_LayoutAdmin.html",
+  "PreviewInSolutionExplorer": false
+}

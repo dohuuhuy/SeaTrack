@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div id="content-taikhoan" class="main contaner-fuild">
+        <div class="wrapper">
+            <div id="sidebar5" class="si-sidebar s-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+
+            </div>
+            <div id="content-taikhoan-body" class="content">
+                <div class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Thông tin tài khoản</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action="." class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group row ">
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_nguoitao" class="control-label ">
+                                                Người tạo
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_nguoitao" type="text" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_taikhoan" class="control-label ">
+                                                Tài khoản
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_taikhoan" type="text" class="form-control" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_tenkhachhang" class="control-label ">
+                                                Tên khách hàng
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_tenkhachhang" type="text" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_sodienthoai" class="control-label ">
+                                                Số điện thoại
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_sodienthoai" type="text" class="form-control" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_email" class="control-label ">
+                                                Email
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_email" type="text" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-2 clearfix">
+                                            <label for="thongtin_diachi" class="control-label ">
+                                                Địa chỉ
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 clearfix">
+                                            <input id="thongtin_diachi" type="text" class="form-control" readonly />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Danh sách tài khoản</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <div class="row">
+                                <div class="col-md-12 clearfix m-b-5">
+                                    <button id="btn_refresh_dstaikhoan" class="btn btn-primary m-l-5" onclick="GetList_User_Refresh();" title="Tải lại danh sách" style="display:none">
+                                        <span><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taikhoan-them" class="btn btn-success" onclick="taikhoan_them_click()" data-toggle="tooltip" data-placement="top" title="Thêm">
+                                        <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taikhoan-sua" class="btn btn-warning" onclick="taikhoan_sua_click()" data-toggle="tooltip" data-placement="top" title="Sửa">
+                                        <span><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taikhoan-xoa" class="btn btn-danger" onclick="taikhoan_xoa_click()" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                        <span><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taikhoan-back" class="btn btn-warning" onclick="taikhoan_back_click()" data-toggle="tooltip" data-placement="top" title="Quay lại" style="display:none">
+                                        <span><i class="fa fa-arrow-left" aria-hidden="true"></i></span>
+                                    </button>
+                                    <button id="item-taikhoan-save" class="btn btn-primary" title="Lưu" onclick="EditInfo_Acc()" data-toggle="tooltip" data-placement="top" title="Lưu" style="display:none">
+                                        <span><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="my-custom-scrollbar table-wrapper-scroll-y table-scroll">
+                                <table id="table_taikhoan" class="table table-bordered table-hover main-table" style="cursor:pointer">
+                                    <thead>
+                                        <tr>
+                                            <th class="headerAlignCenter" style="width:25px">STT</th>
+                                            <th class="headerAlignCenter" style="width:80px">Tài khoản</th>
+                                            <th class="headerAlignCenter" style="width:70px">Mật khẩu</th>
+                                            <th class="headerAlignCenter" style="width:100px">Họ và tên</th>
+                                            <th class="headerAlignCenter" style="width:80px">Số điện thoại</th>
+                                            <th class="headerAlignCenter" style="width:100px">Địa chỉ</th>
+                                            <th class="headerAlignCenter" style="width:80px">Email</th>
+                                            <th class="headerAlignCenter" style="width:100px">Ghi chú</th>
+                                            <th class="headerAlignCenter" hidden>userid</th>
+                                            <th class="headerAlignCenter" style="width:100px">Danh sách xe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_taikhoan"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

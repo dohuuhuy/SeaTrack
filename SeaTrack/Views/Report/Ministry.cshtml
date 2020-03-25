@@ -1,0 +1,596 @@
+﻿
+@{
+    ViewBag.Title = "Ministry";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div class="main" id="list-bgt">
+        <div class="wrapper">
+            <div id="sidebar" class=" si-sidebar s-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+                <a href="#sub-menu" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo TT09/2015/TT - BGTVT<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level1 in show" id="sub-menu">
+                    <a id="menu-bgt-chitiet-vipham4h" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/clipboard.png" /> Chi tiết vi phạm thời gian lái tàu liên tục (4 giờ)</a>
+                    <a id="menu-bgt-chitiet-vipham10h" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/clipboard.png" /> Chi tiết vi phạm thời gian lái tàu liên tục (10 giờ)</a>
+                </div>
+                <a href="#sub-sub-menu" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">Báo cáo TT73/2014/TT - BGTVT<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level2 in show" id="sub-sub-menu">
+                    <a id="menu-bgt-hanhtrinh" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/destination.png" /> Hành trình xe chạy</a>
+                    <a id="menu-bgt-tocdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/Dashboard-icon.png" /> Tốc độ của xe</a>
+                    <a id="menu-bgt-quatocdogioihan" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/car.png" /> Quá tốc độ giới hạn</a>
+                    <a id="menu-bgt-thoigianlaixelientuc" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/24-hours.png" /> Thời gian lái tàu liên tục</a>
+                    <a id="menu-bgt-dungdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/parking.png" /> Báo cáo dừng đỗ</a>
+                    <a id="menu-bgt-tonghopxe" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report-car.png" /> Báo cáo tổng hợp theo xe</a>
+                    <a id="menu-bgt-laixe" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report-car.png" /> Báo cáo tổng hợp theo lái tàu</a>
+                    <a id="menu-bgt-thoigianlaixetrongngay" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/report.png" /> Báo cáo thời gian lái tàu trong ngày</a>
+                </div>
+            </div>
+            <div id="content-bgt-chitiet-vipham4h" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO CHI TIẾT VI PHẠM THỜI GIAN LÁI TÀU LIÊN TỤC (4 GIỜ)</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  row required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-vipham4h-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_vipham4h" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ViPham4h();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_vipham4h" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter">GPLT</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Bắt đầu</th>
+                                        <th class="headerAlignCenter">Kết thúc</th>
+                                        <th class="headerAlignCenter">Thời gian lái</th>
+                                        <th class="headerAlignCenter">Địa chỉ bắt đầu</th>
+                                        <th class="headerAlignCenter">Địa chỉ kết thúc</th>
+                                        <th class="headerAlignCenter">Toạ độ bắt đầu</th>
+                                        <th class="headerAlignCenter">Toạ độ kết thúc</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_vipham4h"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-chitiet-vipham10h" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO CHI TIẾT VI PHẠM THỜI GIAN LÁI TÀU LIÊN TỤC (10 GIỜ)</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-vipham10h-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_vipham10h" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ViPham10h();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_vipham10h" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter">GPLT</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Bắt đầu</th>
+                                        <th class="headerAlignCenter">Kết thúc</th>
+                                        <th class="headerAlignCenter">Thời gian lái</th>
+                                        <th class="headerAlignCenter">Địa chỉ bắt đầu</th>
+                                        <th class="headerAlignCenter">Địa chỉ kết thúc</th>
+                                        <th class="headerAlignCenter">Toạ độ bắt đầu</th>
+                                        <th class="headerAlignCenter">Toạ độ kết thúc</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_vipham10h"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-hanhtrinh" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="">
+                        <div class="jumbotron">
+                            <h2>BÁO CÁO HÀNH TRÌNH XE CHẠY</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-hanhtrinh-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_hanhtrinh" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_HanhTrinhXeChay();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_hanhtrinh" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Trạng thái</th>
+                                        <th class="headerAlignCenter">Địa chỉ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_hanhtrinh"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-tocdo" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron">
+                            <h2>BÁO CÁO TỐC ĐỘ XE CHẠY</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-tocdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_tocdo" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_TocDoXeChay();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_tocdo" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Từ ngày</th>
+                                        <th class="headerAlignCenter">Đến ngày</th>
+                                        <th class="headerAlignCenter">Vận tốc trung bình</th>
+                                        <th class="headerAlignCenter">Vận tốc tối đa</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_tocdo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-quatocdogioihan" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO QUÁ TỐC ĐỘ GIỚI HẠN</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-quatocdogioihan-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_quatocdogioihan" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_QuaTocDoGioiHan();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_quatocdogioihan" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                        <th class="headerAlignCenter">Quá tốc độ giới hạn</th>
+                                        <th class="headerAlignCenter">Địa điểm gần nhất</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_quatocdogioihan"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-thoigianlaixelientuc" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO THỜI GIAN lái tàu LIÊN TỤC</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-thoigianlaixelientuc-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_thoigianlaixelientuc" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ThoiGianLaiXeLienTuc();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_thoigianlaixelientuc" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Thời gian lái</th>
+                                        <th class="headerAlignCenter">Từ ngày</th>
+                                        <th class="headerAlignCenter">Đến ngày</th>
+                                        <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                        <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_thoigianlaixelientuc"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-thoigianlaixetrongngay" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO THỜI GIAN lái tàu TRONG NGÀY</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-thoigianlaixetrongngay-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_thoigianlaixetrongngay" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_ThoiGianLaiXeTrongNgay();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_thoigianlaixetrongngay" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Thời gian lái</th>
+                                        <th class="headerAlignCenter">Từ ngày</th>
+                                        <th class="headerAlignCenter">Đến ngày</th>
+                                        <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                        <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_thoigianlaixetrongngay"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-dungdo" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO DỪNG ĐỖ</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-dungdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_dungdo" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_DungDo();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_dungdo" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Thời gian</th>
+                                        <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                        <th class="headerAlignCenter">Toạ độ</th>
+                                        <th class="headerAlignCenter">Địa chỉ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_dungdo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-laixe" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Báo cáo tổng hợp theo lái tàu</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-laixe-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_laixe" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_LaiXe();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_laixe" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_laixe"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-bgt-tonghopxe" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Báo cáo tổng hợp theo xe</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-bgt-tonghopxe-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="bgt_listxe_tonghopxe" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_BGT_TongHopXe();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_bgt_tonghopxe" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                        <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                        <th class="headerAlignCenter">Tốc độ trung bình</th>
+                                        <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_bgt_tonghopxe"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

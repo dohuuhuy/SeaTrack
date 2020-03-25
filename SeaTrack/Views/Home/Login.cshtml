@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
+@{
+Layout = null;
+String result = (String)Session["statusLogin"] != null ? (String)Session["statusLogin"] : "";
+Session["statusLogin"] = null;
+    var _User = Request.Cookies["userName_log"] != null ? Request.Cookies["userName_log"].Value : "";
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/Scripts/js-login/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/js-login/bootstrap.js"></script>
+    <title>Trang đăng nhập Vinasia</title>
+    <link href="~/Content/login-css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/login-css/vinasia.css" rel="stylesheet" />
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @{
+                if (Request.Cookies["userName_log"] != null && Request.Cookies["pass_log"] != null)
+                {
+                    @:document.getElementById('username').value = '@Request.Cookies["userName_log"].Value';
+                    @:document.getElementById('password').value = '@Request.Cookies["pass_log"].Value';
+                }
+                if (Request.Cookies["lang"] != null) {}
+            }
+            @{
+                if (result == "0")
+                {
+                    @:  Lobibox.notify('error', {
+                    @:  delay: 15000,
+                    @:  msg: 'Đăng nhập thất bại hoặc chưa được cấp quyền.'
+                    @:  });
+                }
+            }
+        });
+        var countload = 0;
+        function ajaxGetdata(idlang) {
+        //deviceID
+        // var idlang = document.getElementById('idlang').value;
+        if (countload == 0) {
+            countload += 1;
+            window.location = "Home/Change?languageFlag=" + idlang;
+        }
+        else {
+            window.location = "Change?languageFlag=" + idlang;
+        }
+
+    };
+    function SubmitForm() {
+        setInterval(function () {
+            document.getElementById("loginform").submit();
+        }, 3000);
+    }
+</script>
+</head>
+<body id="login">
+    <div class="s-conten container">
+        <div>
+            <div valign="middle">
+                <div id="loginBackground" class="s-container">
+                    <div id="loginPanel">
+                        <form id="loginform" action="~/Home/ValidateUser" method="post" autocomplete="on">
+                            <input type="hidden" name="sticky" value="false" />
+                            <div class="form-group">
+                                <label for="username" class="s-label-a" >Tên đăng nhập: </label>
+                                <input type="text" name="username" tabindex="1" id="username" value="@_User" required /><br clear="all" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="s-label-a" >Mật khẩu: </label>
+                                <input type="password" name="password" tabindex="2" id="password" required />&nbsp;&nbsp;
+                                <input name="Submit" class="btn s-bton-subm" type="submit" onclick="SubmitForm();" tabindex="4" value="Đăng nhập" />
+                            </div>
+
+                            <p class="s-mis-pass"><a href="#">Quên mật khẩu?</a></p>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="newAccountPanel" class="s-container">
+                    <div class="content s-cla-cont">
+                        <p>Nếu chưa có tài khoản bạn vui lòng tạo tài khoản Vinasia mới</p>
+                        <a href="#" class="btn btn-primary">Tạo tài khoản</a>
+                    </div>
+                </div>
+
+                <div id="loginFooterPanel">
+                    <p>&copy; 2019 Copyright registration Vinasia</p>
+                    @*<p>Nếu cần sự hỗ trợ, vui lòng liên hệ email <a href="mailto:support@rock7.com">support@vinasia.com</a></p>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

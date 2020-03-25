@@ -1,0 +1,573 @@
+﻿
+@{
+    ViewBag.Title = "Business";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div class="main" id="list_business">
+        <div class="wrapper">
+            <div id="sidebar2" class=" si-sidebar s-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+                <a href="#sub-menu-1" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo tổng hợp<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level1 in show" id="sub-menu-1">
+                    <a id="menu-dn-tonghop" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/business.png" /> Báo cáo tổng hợp hoạt động</a>
+                    <a id="menu-dn-chitiet" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/bar-chart.png" /> Báo cáo chi tiết hoạt động</a>
+                    <a id="menu-dn-tonghopkm" href="#" class="list-group-item" data-parent="#sub-menu"><img src="/Content/images/icon/route.png" /> Báo cáo tổng hợp km xe hoạt động</a>
+                </div>
+                <a href="#sub-menu-2" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo hoạt động<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level2 in show" id="sub-menu-2">
+                    <a id="menu-dn-dungdo" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/parking.png" /> Báo cáo dừng đỗ</a>
+                    <a id="menu-dn-maylanh" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/air-conditioning.png" /> Báo cáo bật điều hoà</a>
+                </div>
+                <a href="#sub-menu-3" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo nhiên liệu<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level2 in show" id="sub-menu-3">
+                    <a id="menu-dn-nhienlieu-tonghop" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/icon/gas-pump.png" /> Báo cáo tổng hợp tiêu hao nhiên liệu</a>
+                </div>
+                <a href="#sub-menu-5" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu"> Báo cáo tháp cẩu<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level2 in show" id="sub-menu-5">
+                    <a id="menu-dn-khoadien" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/ThapCau/tatmo_khoadien_24.png" /> Báo cáo tắt/mở khoá điện</a>
+                    <a id="menu-dn-mototai" href="#" class="list-group-item" data-parent="#sub-sub-menu"><img src="/Content/images/ThapCau/moto_tai_22.png" /> Báo cáo tắt/mở mô tơ tải</a>
+                </div>
+                <a href="#sub-menu-6" class="list-group-item active" data-toggle="collapse" data-parent="#sub-menu">Camera<span class="caret pull-right m-t-5"></span></a>
+                <div class="collapse list-group-level2 in show" id="sub-menu-6">
+                    <a id="menu-dn-camerahanhtrinh" href="#" class="list-group-item" data-parent="#sub-sub-menu">
+                        <img src="/Content/images/ThapCau/film.png" />
+                        Camera hành trình
+                    </a>
+                    <a id="menu-dn-ngugat" href="#" class="list-group-item" data-parent="#sub-sub-menu">
+                        <img src="/Content/images/ThapCau/warning.png" />
+                        Cảnh báo ngủ gật
+                    </a>
+                </div>
+            </div>
+
+            <div id="content-dn-tonghop" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO TỔNG HỢP HOẠT ĐỘNG</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-tonghop-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>&nbsp;
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_tonghop" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TongHop();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_tonghop" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                        <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                        <th class="headerAlignCenter">Tốc độ trung bình</th>
+                                        <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_tonghop"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-chitiet" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO CHI TIẾT HOẠT ĐỘNG</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-chitiet-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_chitiet" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_ChiTiet();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_chitiet" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">Thời gian bắt đầu</th>
+                                        <th class="headerAlignCenter">Thời gian kết thúc</th>
+                                        <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                        <th class="headerAlignCenter">Quảng đường</th>
+                                        <th class="headerAlignCenter">Tốc độ tối đa</th>
+                                        <th class="headerAlignCenter">Thời gian lái</th>
+                                        <th class="headerAlignCenter">Địa điểm bắt đầu</th>
+                                        <th class="headerAlignCenter">Địa điểm kết thúc</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_chitiet"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-tonghopkm" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO TỔNG HỢP KM XE HOẠT ĐỘNG</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-tonghopkm-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_tonghopkm" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TongHopKm();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_tonghopkm" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:24px">STT</th>
+                                        <th class="headerAlignCenter" style="width:45px">Số hiệu</th>
+                                        <th class="headerAlignCenter" style="width:35px">Ngày</th>
+                                        <th class="headerAlignCenter" style="width:103px">Thời gian bắt đầu</th>
+                                        <th class="headerAlignCenter" style="width:103px">Thời gian kết thúc</th>
+                                        <th class="headerAlignCenter" style="width:120px">Địa chỉ bắt đầu</th>
+                                        <th class="headerAlignCenter" style="width:120px">Địa chỉ kết thúc</th>
+                                        <th class="headerAlignCenter" style="width:45px">Tổng km</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_tonghopkm"></tbody>
+                                <tfoot id="tfoot_dn_tonghopkm" style="display:none">
+                                    <tr>
+                                        <th class="headerAlignCenter">Tổng</th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter"></th>
+                                        <th class="headerAlignCenter" id="sum_tongkm_dn_tonghopkm"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-dungdo" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO DỪNG ĐỖ</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-dungdo-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_dungdo" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_DungDo();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_dungdo" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Thời gian</th>
+                                        <th class="headerAlignCenter">Thời gian ngừng hoạt động</th>
+                                        <th class="headerAlignCenter">Toạ độ</th>
+                                        <th class="headerAlignCenter">Địa chỉ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_dungdo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-maylanh" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO MÁY LẠNH</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-maylanh-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_maylanh" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_MayLanh();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_maylanh" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter" style="width:80px">Kéo dài</th>
+                                        <th class="headerAlignCenter">Mở</th>
+                                        <th class="headerAlignCenter">Tắt</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_maylanh"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-nhienlieu-tonghop" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO TỔNG HỢP TIÊU HAO NHIÊN LIỆU</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-nhienlieu-tonghop-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_listxe_nhienlieu_tonghop" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_NhienLieu_TongHop();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <div>
+                                <canvas id="canvas_oil"></canvas>
+                            </div>
+                            <table id="table_dn_nhienlieu_tonghop" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Ngày</th>
+                                        <th class="headerAlignCenter">Số lượng dầu</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_nhienlieu_tonghop"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-mototai" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Báo cáo tắt/mở mô tơ tải</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-mototai-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_list_mototai" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input id="btn_dn_mototai" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TatMoMoToTai();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_mototai" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter">Kéo dài</th>
+                                        <th class="headerAlignCenter">Thời gian mở</th>
+                                        <th class="headerAlignCenter">Thời gian tắt</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_mototai"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-dn-khoadien" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>BÁO CÁO TẮT/MỞ KHOÁ ĐIỆN</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <input id="content-dn-khoadien-date" class="form-control" type="text" name="datefilter" value="" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_list_khoadien" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input id="btn_dn_khoadien" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_TatMoKhoaDien();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_khoadien" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter" style="width:80px">Kéo dài</th>
+                                        <th class="headerAlignCenter">Mở khoá điện</th>
+                                        <th class="headerAlignCenter">Tắt khoá điện</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_khoadien"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="content-dn-ngugat" style="display:none;" class="content">
+                <div id="signupbox" class="mainbox">
+                    <div class="panel panel-primary">
+                        <div class="jumbotron ">
+                            <h2>Cảnh báo ngủ gật</h2>
+                        </div>
+                        <div class="panel-body container">
+                            <form method="post" action=".">
+                                <div id="" class="form-group row  required">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label for="id_password1" class="control-label  requiredField">Chọn ngày</label>
+                                    </div>
+                                    <div class="controls col-md-7 clearfix">
+                                        <div class="input-group date m-b-5">
+                                            <div class="input-group date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input_dozy" data-link-format="dd-mm-yyyy">
+                                                <input class="form-control" type="text" id="date_form_dozy" style="height:26px" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="dtp_input_dozy" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 clearfix" style="display:none;">#</div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-3 clearfix text-right">
+                                        <label class="control-label "> Số hiệu <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-5 clearfix">
+                                        <select id="dn_list_ngugat" class="form-control select2 fl" style="width:100%"></select>
+                                    </div>
+                                    <div class="col-md-4 clearfix">
+                                        <input id="btn_dn_ngugat" type="button" name="Signup" value="Xem" class="btn btn-primary btn" style="width:135px;" onclick="Report_DN_CanhBaoNguGat();" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="p-10">
+                            <table id="table_dn_khoadien" class="table  table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="headerAlignCenter" style="width:25px">STT</th>
+                                        <th class="headerAlignCenter">Số hiệu</th>
+                                        <th class="headerAlignCenter">Lái tàu</th>
+                                        <th class="headerAlignCenter">Tốc độ</th>
+                                        <th class="headerAlignCenter" style="width:80px">Thời gian</th>
+                                        <th class="headerAlignCenter">Toạ độ</th>
+                                        <th class="headerAlignCenter">Hình ảnh</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_dn_canhbaongugat"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

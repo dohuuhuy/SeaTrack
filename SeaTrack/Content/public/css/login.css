@@ -1,0 +1,241 @@
+﻿/* ---------------------------------------------------
+  LOGIN STYLE
+  ----------------------------------------------------- */
+
+body#login {
+    height: 100%;
+    text-align: center;
+    background-color: #172935;
+    position: relative;
+    display: flex;
+    -webkit-display: flex;
+    -o-display: flex;
+    -moz-display: flex;
+}
+
+#loginPanel {
+    position: relative;
+    top: 85px;
+    padding-left: 10px;
+    width: 50%;
+    color: #FFFFFF;
+    text-align: left;
+}
+
+    #loginPanel h3 {
+        color: #FFFFFF;
+        text-align: left;
+        width: 200px;
+        margin-left: 20px;
+    }
+
+    #loginPanel a {
+        color: #FFFFFF;
+    }
+
+        #loginPanel a:hover {
+            color: #FFFFFF;
+        }
+
+    #loginPanel p.loginText {
+        color: #FFFFFF;
+        margin-left: 20px;
+        text-align: left;
+    }
+
+#loginform {
+    padding-left: 20px;
+    margin: 0 !important;
+}
+
+    #loginform label {
+        .color: #FFFFFF;
+        .text-align: left;
+        .float: left;
+        .width: 110px;
+        .padding: 0px;
+        .margin: 0px;
+        .margin-top: 3px;
+    }
+
+    #loginform input {
+        .margin-right: 0px;
+        .border: 1px solid #626262;
+        .float: none;
+        clear: none;
+    }
+
+        #loginform input:focus, #loginform input:hover {
+            border: 1px solid #FFFFFF;
+        }
+
+#loginError {
+    position: absolute;
+    left: 100px;
+    top: -64px;
+    min-width: 192px;
+    font-size: 11px;
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    padding: 8px 14px 8px 14px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+    #loginError a {
+        color: #b94a48;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        #loginError a:hover {
+            color: #b94a48;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+#newAccountPanel p {
+    font-weight: bold;
+}
+
+#newAccountPanel .content {
+    padding: 22px;
+}
+
+#loginFooterPanel {
+    position: relative;
+    width: 953px;
+    margin: 20px auto 0 auto;
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+    #loginFooterPanel a:hover {
+        color: #FFFFFF;
+    }
+
+.s-conten {
+    display: inline-grid;
+}
+
+.s-label-a {
+    line-height: 28px;
+}
+
+@media(min-width: 481px) {
+    #login #loginBackground {
+        position: relative;
+        height: 300px;
+        border: 1px solid #d7f3ff;
+        background-image: url("../../images/core_login.png");
+        background-repeat: no-repeat;
+        -o-background-repeat: no-repeat;
+        -moz-background-repeat: no-repeat;
+        -webkit-background-repeat: no-repeat;
+    }
+
+    .s-miss-pass {
+        margin-left: 50%;
+    }
+
+    #newAccountPanel {
+        position: relative;
+        height: 100px;
+        background-image: url(../../../Content/images/17348.jpg);
+        background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        color: #000;
+        border: 1px solid #6bcfff;
+        margin: 40px auto 0 auto;
+    }
+
+    .s-bton-subm {
+        margin-bottom: 10px;
+    }
+}
+
+@media(max-width: 480px) {
+    body#login {
+        background: url("../../../Content/images/background/bg_log.png") no-repeat fixed top;
+        background-repeat: no-repeat;
+        -o-background-repeat: no-repeat;
+        -moz-background-repeat: no-repeat;
+        -webkit-background-repeat: no-repeat;
+        background-attachment: fixed;
+        -o-background-attachment: fixed;
+        -moz-background-attachment: fixed;
+        -webkit-background-attachment: fixed;
+        background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+    }
+
+    .s-cla-cont > p {
+        display: none;
+    }
+
+    #login #loginBackground {
+        position: relative;
+        height: 380px;
+        background-repeat: no-repeat;
+        -o-background-repeat: no-repeat;
+        -moz-background-repeat: no-repeat;
+        -webkit-background-repeat: no-repeat;
+    }
+
+    .s-miss-pass {
+        margin-left: 0;
+    }
+
+    #newAccountPanel {
+        color: #fff;
+        margin: 40px auto 0 auto;
+    }
+
+    #loginFooterPanel {
+        position: absolute;
+        bottom: 0;
+    }
+
+    #loginPanel {
+        top: 45px !important;
+    }
+
+    #loginBackground, #newAccountPanel, #loginFooterPanel {
+        width: 100% !important;
+    }
+
+    .s-button-login {
+        text-align: right;
+        padding: 5px 10px 0 0;
+    }
+
+    .s-bton-subm {
+        margin-top: 10px;
+        display: inherit;
+        -o-display: inherit;
+        -moz-display: inherit;
+        -webkit-display: inherit;
+        margin-bottom: 10px;
+    }
+
+    .s-cla-cont {
+        text-align: center;
+    }
+
+    #loginPanel {
+        width: 100% !important;
+        padding: 0;
+    }
+
+    #newAccountPanel {
+        position: absolute;
+    }
+}
