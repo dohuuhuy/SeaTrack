@@ -7,104 +7,102 @@
 
 
 
-    <div class="container-fluid" ng-app="DeviceApp" ng-controller="DeviceController">
-        <h1 class="mt-4">Tables</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active">Tables</li>
-        </ol>
-        <div class="card mb-4">
+<div class="container-fluid" ng-app="DeviceApp" ng-controller="DeviceController">
+    <h1 class="mt-4">Danh Mục Thiết Bị</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Tables</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong class="card-title">Vùng Tìm Kiếm</strong>
+        </div>
+        <div class="card-body">
+            <div class="col col-md-12">
+                <div class="input-group">
 
 
-
-            <div class="card-header">
-                <strong class="card-title">Vùng Tìm Kiếm</strong>
-            </div>
-            <div class="card-body">
-                <div class="col col-md-12">
-                    <div class="input-group">
-
-
-                        <input type="text" id="input1-group2" name="input1-group2" placeholder="Username" class="form-control"><br />
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="input-group py-md-4">
-                        <label for="checkbox1" class="form-check-label ">
-                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
-                        </label>
-                    </div>
-                    <div class="input-group py-md-4">
-                        <label for="checkbox1" class="form-check-label ">
-                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
-                        </label>
-                    </div>
-                    <div class="input-group py-md-4">
-                        <label for="checkbox1" class="form-check-label ">
-                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
-                        </label>
-
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Username" class="form-control"><br />
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-search"></i> Search
+                        </button>
                     </div>
                 </div>
+                <br />
+                <div class="input-group ">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    </label>
 
-            </div>
-
-
-        </div>
-        <div class="card mb-4">
-            <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
-            <div class="card-body">
-
-                <div class="table-responsive" style="overflow-x: unset;">
-                    <table datatable="ng" dt-options="vm.dtOptions" class="table table-bordered table-striped">
-
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Số hiệu</th>
-                                <th>Tên thiết bị</th>
-                                <th> Phiên </th>
-                                <th> Imei</th>
-                                <th> Nhóm tàu</th>
-                                <th> Ngày hết hạn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="name in namesData">
-                                <td>{{name.DeviceNo}}</td>
-                                <td>{{name.DeviceName}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
-
-
         </div>
 
-        <script>
-            var app = angular.module('DeviceApp', []);
 
-            app.controller('DeviceController', function ($scope, $http) {
-                $scope.fetchData = function () {
-                    $http.get('/Admin/Device/GetListDevice').success(function (data) {
-                        $scope.namesData = data;
-                    });
-                };
+    </div>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Kết Quả Tìm Kiếm</div>
+        <div class="card-body">
 
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
 
-        </script>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Thao tác</th>
+                            <th>Số hiệu</th>
+                            <th>Tên thiết bị</th>
+                            <th> Phiên bản</th>
+                            <th> Imei</th>
+                            <th> Nhóm tàu</th>
+                            <th> Ngày hết hạn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="name in namesData">
+                            <td>{{}}</td>
+                            <td>
+                                <a href="#" ng-click="ViewDetail(a.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a href="#" data-ng-href="@Url.Action("EditUser","HomeAdmin", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit">edit</i></a>|
+                                <a href="#" ng-click="Delete(a.UserID)"><i class="fa fa-times" style="color:red"></i></a>
+                            </td>
+                            <td>{{name.DeviceNo}}</td>
+                            <td>{{name.DeviceName}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{name.DateExpired}}</td>
 
-        <link href="~/Content/public/css/styles.css" rel="stylesheet" />
-        <script src="jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-        <script src="jquery.dataTables.min.js"></script>
-        <script src="angular-datatables.min.js"></script>
-        <script src="bootstrap.min.js"></script>
-        <link rel="stylesheet" href="bootstrap.min.css">
-        <link rel="stylesheet" href="datatables.bootstrap.css">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Areas/Admin/AngularJS/Device/DeviceApp.js"></script>
+<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="~/vendors/jszip/dist/jszip.min.js"></script>
+<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="~/vendors/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/Content/public/js/main/datatables-init.js"></script>

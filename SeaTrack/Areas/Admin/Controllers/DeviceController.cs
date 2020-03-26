@@ -28,7 +28,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         public ActionResult GetListDevice()
         {
             var data = TrackDataService.GetListDevice();
-            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult GetListDeviceStatus()
