@@ -4,5 +4,36 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
 
+<script type="text/javascript" src="~/Content/public/js/main/DeviceControllerJS.js"></script>
+
+
+<div class="tab-content">
+    <div class="tab-pane active" id="sublefttab_1">
+        <div id="s-tab-table">
+            <table id="tbldata" class="table-bordered table table-sm text-center">
+                <thead style="white-space:nowrap;">
+                    <tr>
+                        <th class="headerAlignCenter">
+                            STT
+                        </th>
+                        <th class="headerAlignCenter">
+                            Số hiệu
+                        </th>
+                        <th class="headerAlignCenter">
+                            Vận tốc
+                        </th>
+                        <th class="headerAlignCenter">
+                            Thời gian
+                        </th>
+                        <th class="headerAlignCenter">
+                            Vị trí
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tblbodydata"></tbody>
+            </table>
+            <div class="p-10 text-center text-danger" id="tongsoxe"></div>
+        </div>
+    </div>
+</div>
