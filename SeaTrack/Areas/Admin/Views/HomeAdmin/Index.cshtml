@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid">
+<div class="container-fluid" ng-app="AdminModule" ng-controller="AdminController">
     <h1 class="mt-4">Tables</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -55,58 +55,54 @@
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
         <div class="card-body">
+            <input ng-model="SearchKey" type="text" ng-text-change="KeyFilter()" />
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    
+
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <td>#</td>
+                            <td>Thao tác</td>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Phone</th>
+                            <th>CreateDate</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                        <tr ng-repeat="a in Agencys">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <a href="#" ng-click="ViewDetail(a.UserID)"><i class="fa fa-eye" style="color:aqua"></i></a>
+                                <a href="#" data-ng-href="@Url.Action("EditUser","HomeAdmin", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit"></i></a>
+                                <a href="#" ng-click="Delete(a.UserID)"><i class="fa fa-times" style="color:red"></i></a>
+                            </td>
+                            <td>{{a.Username}}</td>
+                            <td>{{a.Fullname}}</td>
+                            <td>{{a.Phone}}</td>
+                            <td>{{a.CreateDate}}</td>
+                            <td ng-show="a.Status==0">Tạm khóa</td>
+                            <td ng-show="a.Status==1">Đã kích hoạt</td>
+                            <td ng-show="a.Status==2">Vô hiệu</td>
                         </tr>
-                        <tr>
-                            <td>Garrett Winters</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>63</td>
-                            <td>2011/07/25</td>
-                            <td>$170,750</td>
-                        </tr>
-                        <tr>
-                            <td>Ashton Cox</td>
-                            <td>Junior Technical Author</td>
-                            <td>San Francisco</td>
-                            <td>66</td>
-                            <td>2009/01/12</td>
-                            <td>$86,000</td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Areas/Admin/AngularJS/Admin/AdminModule.js"></script>
+    <script src="~/Areas/Admin/AngularJS/Admin/AdminService.js"></script>
+    <script src="~/Areas/Admin/AngularJS/Admin/AdminController.js"></script>
+    @*<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>*@
+
+    <link href="~/Content/public/css/styles.css" rel="stylesheet" />
+    @*<script src="~/Content/public/assets/demo/datatables-demo.js"></script>*@
+
 </div>
