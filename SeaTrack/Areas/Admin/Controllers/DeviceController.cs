@@ -19,8 +19,10 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
-      
-
+        public ActionResult Show()
+        {
+            return View();
+        }
         [HttpGet]
         public ActionResult GetListDevice()
         {
