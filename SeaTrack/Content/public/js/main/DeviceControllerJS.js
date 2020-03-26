@@ -16,7 +16,7 @@ function setup_DataTable() {
         data: {},
         success: function (data, txtStatus, XMLHttpRequest) {
             dad = data.Result;
-            //console.log(data);
+            console.log(data);
             if (dad.length > 0) {
 
                 var _tb = "";
