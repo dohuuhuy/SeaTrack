@@ -54,6 +54,10 @@
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <button type="button" class="btn btn-info" data-target="#AddNew" data-toggle="modal">
+            Thêm mới
+        </button>
+
         <div class="card-body">
             <input ng-model="SearchKey" type="text" ng-text-change="KeyFilter()" />
             <div class="table-responsive">
@@ -96,31 +100,36 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="text-info">Thêm đại lý</h3>
-                        <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="resetSave()">x</button>
+                        <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Resetsave()">x</button>
                     </div>
                     <div class="modal-body" style="margin-left:20px">
                         <form class="form-horizontal" name="AddNewForm">
                             <div class="form-group">
                                 <label class="control-label"> Username</label>
-                                <input class="form-control" name="TenDeThi" ng-model="Username" type="text" placeholder="Username" required maxlength="50" />
-                                <span ng-show="AddNewForm.Username.$error.required" class="error-msg">Vui lòng nhập username</span>
-                                <span ng-show="AddNewForm.Username.$error.maxlength" class="error-msg">Tối đa 30 ký tự</span>
+                                <input class="form-control" name="Username" ng-model="Username" type="text" placeholder="Username" required maxlength="50" />
 
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Password</label>
-                                <input class="form-control" name="SoCauHoi" ng-model="Password" type="text" placeholder="password" required />
-                                <span ng-show="AddNewForm.Password.$error.required" class="error-msg">Vui lòng nhập password</span>
-                                <span ng-show="AddNewForm.Password.$error.maxlength" class="error-msg">Tối đa 30 ký tự</span>
-
+                                <input class="form-control" name="Password" ng-model="Password" type="password" placeholder="password" required maxlength="30" />
                             </div>
-
-
+                            <div class="form-group">
+                                <label class="control-label"> Fullname</label>
+                                <input class="form-control" name="Fullname" ng-model="Fullname" type="text" placeholder="Fullname" required maxlength="50" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Phone</label>
+                                <input class="form-control" name="Phone" ng-model="Phone" type="text" placeholder="Phone" required maxlength="10" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Address</label>
+                                <input class="form-control" name="Address" ng-model="Address" type="text" placeholder="Address" required maxlength="200" />
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="AddNewForm.$invalid" ng-click="save()">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetSave()">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Resetsave()">Close</button>
                     </div>
                 </div>
             </div>
@@ -131,7 +140,6 @@
     <script src="~/Areas/Admin/AngularJS/Admin/AdminModule.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminService.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminController.js"></script>
-    <link href="~/Content/public/css/styles.css" rel="stylesheet" />
 
 
 </div>
