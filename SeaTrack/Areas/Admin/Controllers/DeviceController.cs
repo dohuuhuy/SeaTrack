@@ -23,15 +23,6 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
-        //[HttpGet]
-        //public HttpResponseMessage listdevice(int )
-        //{
-        //    var rs = AdminService.GetListUser(RoleID);
-        //    return Request.CreateResponse(HttpStatusCode.OK, new
-        //    {
-        //        STATUSCODE = rs != null ? Util.Static.SUCCESS_CODE : Util.Static.ERROR_CODE,
-        //        DATA = rs
-        //    });
-        //}
+    
     }
 }
