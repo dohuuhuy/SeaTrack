@@ -449,7 +449,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Device\GetListDevice.cshtml" />
-    <Content Include="Areas\Admin\Views\Device\GetListDeviceStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\hgh.cshtml" />
     <Content Include="Areas\Admin\Views\abc\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
