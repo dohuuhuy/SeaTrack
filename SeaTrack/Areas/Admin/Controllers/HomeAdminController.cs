@@ -33,17 +33,19 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             try
             {
+                user.CreateBy = Request.Cookies["userName"].Value.ToString();
+                user.CreateDate = DateTime.Now;
                 var rs = AdminService.CreateUser(user, roleID);
-                return Json("Susscess", JsonRequestBehavior.AllowGet);
+                return Json(new { success = true });
             }
             catch (Exception)
             {
-                return Json("Error", JsonRequestBehavior.AllowGet);
+                return Json(new { success = false });
             }
         }
 
         [HttpGet]
-        public ActionResult EditUser(int id)
+        public ActionResult Detail(int id)
         {
             //if (!CheckRole(1))
             //{
@@ -98,9 +100,9 @@ namespace SeaTrack.Areas.Admin.Controllers
             bool res = AdminService.DeleteUser(id);
             if (res)
             {
-                return Json("Susscess", JsonRequestBehavior.AllowGet);
+                return Json(new { success = true });
             }
-            return Json("Error", JsonRequestBehavior.AllowGet);
+            return Json(new { success = false });
 
         }
 
