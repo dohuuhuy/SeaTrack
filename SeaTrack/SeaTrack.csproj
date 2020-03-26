@@ -213,6 +213,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -264,6 +265,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\public\assets\demo\chart-area-demo.js" />
+    <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
+    <Content Include="Content\public\assets\demo\chart-pie-demo.js" />
+    <Content Include="Content\public\assets\demo\datatables-demo.js" />
+    <Content Include="Content\public\assets\img\error-404-monochrome.svg" />
+    <Content Include="Content\public\css\styles.css" />
+    <Content Include="Content\public\js\scripts.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -431,6 +439,8 @@
     <Content Include="Lib\css\font-icons\entypo\font\entypo.ttf" />
     <Content Include="Lib\css\font-icons\entypo\font\entypo.woff" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -473,9 +483,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\images\background\" />
   </ItemGroup>
   <ItemGroup>

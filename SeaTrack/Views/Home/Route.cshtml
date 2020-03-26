@@ -4,176 +4,176 @@
     Layout = "~/Views/Shared/_Route.cshtml";
 }
 
-    <main id="rounded" class="s-auto-height">
-        <div class="s-full s-flexible-wrap">
-            <div class="s-no-padding s-full">
-                <nav id="s-sidebar" class="s-absolute s-main-sidebar">
-                    <div class="sidebar-header s-flexible s-just-center">
-                        <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
-                    </div>
-                    <hr>
-                    <div class="s-left-tab">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a onclick="//GiamSat();" class="nav-link active" href="#lefttab_1" data-toggle="tab">Giám sát tàu</a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="setDate();" class="nav-link" href="#lefttab_2" data-toggle="tab">Xem lại lộ trình</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="lefttab_1">
-                                <div class="m-b-5 m-t-5 input-group">
-                                    <div class="input-group-prepend">
-                                        <select class="custom-select" id="selectState" onchange="//createTable(dataListStatus);">
-                                            <option value="0">Tất cả</option>
-                                            <option value="1">Mở máy</option>
-                                            <option value="2">Tắt máy</option>
-                                            <option value="3">Di chuyển</option>
-                                            <option value="4">Dừng đỗ</option>
-                                            <option value="5">Mất tín hiệu</option>
-                                            <option value="6">Hết hạn</option>
-                                        </select>
-                                    </div>
-                                    <input id="search_dsxe" type="text" class="form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
+<main id="rounded" class="s-auto-height">
+    <div class="s-full s-flexible-wrap">
+        <div class="s-no-padding s-full">
+            <nav id="s-sidebar" class="s-absolute s-main-sidebar">
+                <div class="sidebar-header s-flexible s-just-center">
+                    <img src="/Content/public/img/logo-vinasia.png" class="s-logo-dom">
+                </div>
+                <hr>
+                <div class="s-left-tab">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a onclick="//GiamSat();" class="nav-link active" href="#lefttab_1" data-toggle="tab">Giám sát tàu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a onclick="setDate();" class="nav-link" href="#lefttab_2" data-toggle="tab">Xem lại lộ trình</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="lefttab_1">
+                            <div class="m-b-5 m-t-5 input-group">
+                                <div class="input-group-prepend">
+                                    <select class="custom-select" id="selectState" onchange="//createTable(dataListStatus);">
+                                        <option value="0">Tất cả</option>
+                                        <option value="1">Mở máy</option>
+                                        <option value="2">Tắt máy</option>
+                                        <option value="3">Di chuyển</option>
+                                        <option value="4">Dừng đỗ</option>
+                                        <option value="5">Mất tín hiệu</option>
+                                        <option value="6">Hết hạn</option>
+                                    </select>
                                 </div>
-                                <hr>
-                                <div class="s-sub-left-tab s-relative">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#sublefttab_1" data-toggle="tab">Tàu cá</a>
-                                        </li>
-                                        <button id="s-info-button" class="float-right btn btn-info s-absolute-right" data-toggle="" data-placement="right" data-trigger="hover" data-html="true" title="Ý NGHĨA MÀU" data-content=''>
-                                            <i class="fas fa-info"></i>
-                                        </button>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="sublefttab_1">
-                                            <div id="s-tab-table">
-                                                <table id="tbldata" class="table-bordered table table-sm text-center">
-                                                    <thead style="white-space:nowrap;">
-                                                        <tr>
-                                                            <th class="headerAlignCenter">
-                                                                STT
-                                                            </th>
-                                                            <th class="headerAlignCenter">
-                                                                Số hiệu
-                                                            </th>
-                                                            <th class="headerAlignCenter">
-                                                                Vận tốc
-                                                            </th>
-                                                            <th class="headerAlignCenter">
-                                                                Thời gian
-                                                            </th>
-                                                            <th class="headerAlignCenter">
-                                                                Vị trí
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tblbodydata"></tbody>
-                                                </table>
-                                                <div class="p-10 text-center text-danger" id="tongsoxe"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <input id="search_dsxe" type="text" class="form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
                             </div>
-                            <div class="tab-pane" id="lefttab_2">
-                                <div class="m-b-5 m-t-5 input-group">
-                                    <div class="m-b-5 m-t-5 input-group">
-                                        <div class="input-group-prepend">
-                                        </div>
-                                        <input id="search_dsxe" type="text" class="d-none form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="s-pickup-datetime">
-                                    <div class="form-date m-t-5">
-                                        <label>Từ</label>
-                                        <div class="input-group mb-3 date form_time m-l-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-                                            <input class="form-control" size="5" id="date_form_h" type="text" style="height:26px" readonly>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-clock" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="dtp_input3" />
-                                        <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
-                                            <input class="form-control" type="text" id="date_form_d" style="height:26px" readonly>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="dtp_input2" />
-                                    </div>
-                                    <div class="form-date m-t-5">
-                                        <label>Đến</label>
-                                        <div class="input-group mb-3 date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-                                            <input class="form-control" size="5" type="text" id="date_t_h" style="height:26px" readonly>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-clock" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="dtp_input3" />
-                                        <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
-                                            <input class="form-control" type="text" id="date_t_d" style="height:26px" readonly>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="dtp_input2" />
-                                    </div>
-                                </div>
-                                <div class="s-training-to">
-                                    <div class="input-group mb-3 ">
-                                        <select id="list_xelotrinh" class="custom-select select2 fl"></select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-info" onclick="setdrawingLinePoint(1); interval_draw();">
-                                                <i class="fa fa-search"></i>
-                                                Xem
-                                            </button>
+                            <hr>
+                            <div class="s-sub-left-tab s-relative">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#sublefttab_1" data-toggle="tab">Tàu cá</a>
+                                    </li>
+                                    <button id="s-info-button" class="float-right btn btn-info s-absolute-right" data-toggle="" data-placement="right" data-trigger="hover" data-html="true" title="Ý NGHĨA MÀU" data-content=''>
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="sublefttab_1">
+                                        <div id="s-tab-table">
+                                            <table id="tbldata" class="table-bordered table table-sm text-center">
+                                                <thead style="white-space:nowrap;">
+                                                    <tr>
+                                                        <th class="headerAlignCenter">
+                                                            STT
+                                                        </th>
+                                                        <th class="headerAlignCenter">
+                                                            Số hiệu
+                                                        </th>
+                                                        <th class="headerAlignCenter">
+                                                            Vận tốc
+                                                        </th>
+                                                        <th class="headerAlignCenter">
+                                                            Thời gian
+                                                        </th>
+                                                        <th class="headerAlignCenter">
+                                                            Vị trí
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblbodydata"></tbody>
+                                            </table>
+                                            <div class="p-10 text-center text-danger" id="tongsoxe"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div id="sublefttab_4" class="s-sub-left-tab">
-                                    <table id="tbldataline" class="table-bordered table table-sm text-center">
-                                        <thead style="white-space:nowrap;">
-                                            <tr>
-                                                <th class="headerAlignCenter">
-                                                    Tọa độ
-                                                </th>
-                                                <th class="headerAlignCenter">
-                                                    Vận tốc
-                                                </th>
-                                                <th class="headerAlignCenter">
-                                                    Thời gian
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblbodydataline"></tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div id="popUpBox_theMeaningOfIcon" class="d-none popUpBox_theMeaningOfIcon" style="display: block;"><div class="content"><table><tbody><tr><td colspan="3"><div class="fl header-title">Ý nghĩa biểu tượng tàu</div><div class="fr"><a href="#"><img id="closeMeaningOfIcon" src="/Content/public/img/icon/delete-icon.png" alt="" title="Đóng"></a></div></td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-black.png" alt=""></td><td>Xe dừng đỗ</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-green.png" alt=""></td><td>Xe di chuyển</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-red.png" alt=""></td><td>Xe mất tín hiệu GPS, hết hạn dịch vụ, cảnh báo sự cố, quá tốc độ ...</td></tr></tbody></table></div></div>
-
+                        <div class="tab-pane" id="lefttab_2">
+                            <div class="m-b-5 m-t-5 input-group">
+                                <div class="m-b-5 m-t-5 input-group">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input id="search_dsxe" type="text" class="d-none form-control" placeholder="Tìm kiếm" onkeyup="ListDeviceSearch('search_dsxe', 'tblbodydata');">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="s-pickup-datetime">
+                                <div class="form-date m-t-5">
+                                    <label>Từ</label>
+                                    <div class="input-group mb-3 date form_time m-l-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                                        <input class="form-control" size="5" id="date_form_h" type="text" style="height:26px" readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-clock" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="dtp_input3" />
+                                    <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                        <input class="form-control" type="text" id="date_form_d" style="height:26px" readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="dtp_input2" />
+                                </div>
+                                <div class="form-date m-t-5">
+                                    <label>Đến</label>
+                                    <div class="input-group mb-3 date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                                        <input class="form-control" size="5" type="text" id="date_t_h" style="height:26px" readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-clock" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="dtp_input3" />
+                                    <div class="input-group mb-3 date form_date" data-date="" data-date-format="dd-mm-yyyy" data-link-field="dtp_input2" data-link-format="dd-mm-yyyy">
+                                        <input class="form-control" type="text" id="date_t_d" style="height:26px" readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="dtp_input2" />
+                                </div>
+                            </div>
+                            <div class="s-training-to">
+                                <div class="input-group mb-3 ">
+                                    <select id="list_xelotrinh" class="custom-select select2 fl"></select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-info" onclick="setdrawingLinePoint(1); interval_draw();">
+                                            <i class="fa fa-search"></i>
+                                            Xem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sublefttab_4" class="s-sub-left-tab">
+                                <table id="tbldataline" class="table-bordered table table-sm text-center">
+                                    <thead style="white-space:nowrap;">
+                                        <tr>
+                                            <th class="headerAlignCenter">
+                                                Tọa độ
+                                            </th>
+                                            <th class="headerAlignCenter">
+                                                Vận tốc
+                                            </th>
+                                            <th class="headerAlignCenter">
+                                                Thời gian
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblbodydataline"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </nav>
-                <div id="style-selector-control" class="map-control">
-                    <select id="style-selector" class="selector-control">
-                        <option value="default" selected>Mặc định</option>
-                        <option value="satellite">Vệ tinh</option>
-                        <option value="night">Đêm</option>
-                    </select>
+                    <div id="popUpBox_theMeaningOfIcon" class="d-none popUpBox_theMeaningOfIcon" style="display: block;"><div class="content"><table><tbody><tr><td colspan="3"><div class="fl header-title">Ý nghĩa biểu tượng tàu</div><div class="fr"><a href="#"><img id="closeMeaningOfIcon" src="/Content/public/img/icon/delete-icon.png" alt="" title="Đóng"></a></div></td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-black.png" alt=""></td><td>Xe dừng đỗ</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-green.png" alt=""></td><td>Xe di chuyển</td></tr><tr><td><img src="/Content/public/img/Xe-tai/truck-red.png" alt=""></td><td>Xe mất tín hiệu GPS, hết hạn dịch vụ, cảnh báo sự cố, quá tốc độ ...</td></tr></tbody></table></div></div>
+
                 </div>
-                <div id="map" class="s-map s-full"></div>
+            </nav>
+            <div id="style-selector-control" class="map-control">
+                <select id="style-selector" class="selector-control">
+                    <option value="default" selected>Mặc định</option>
+                    <option value="satellite">Vệ tinh</option>
+                    <option value="night">Đêm</option>
+                </select>
             </div>
+            <div id="map" class="s-map s-full"></div>
         </div>
-    </main>
+    </div>
+</main>

@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Tables</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Tables</li>
+    </ol>
+    <div class="card mb-4">
+
+
+
+        <div class="card-header">
+            <strong class="card-title">Vùng Tìm Kiếm</strong>
+        </div>
+        <div class="card-body">
+            <div class="col col-md-12">
+                <div class="input-group">
+
+
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Username" class="form-control"><br />
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="input-group py-md-4">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    </label>
+                </div>
+                <div class="input-group py-md-4">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
+                    </label>
+                </div>
+                <div class="input-group py-md-4">
+                    <label for="checkbox1" class="form-check-label ">
+                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    </label>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td>2011/07/25</td>
+                            <td>$170,750</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                            <td>2009/01/12</td>
+                            <td>$86,000</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
