@@ -19,10 +19,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult ActionResult ()
-        {
-            return View();
-        }
+      
 
         [HttpGet]
         public ActionResult GetListDevice()
@@ -36,15 +33,6 @@ namespace SeaTrack.Areas.Admin.Controllers
             var data = TrackDataService.GetListDeviceStatus();
             return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
-        //[HttpGet]
-        //public HttpResponseMessage listdevice(int )
-        //{
-        //    var rs = AdminService.GetListUser(RoleID);
-        //    return Request.CreateResponse(HttpStatusCode.OK, new
-        //    {
-        //        STATUSCODE = rs != null ? Util.Static.SUCCESS_CODE : Util.Static.ERROR_CODE,
-        //        DATA = rs
-        //    });
-        //}
+       
     }
 }
