@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using SeaTrack.Lib.DTO;
 using SeaTrack.Models;
+using System.Web.Mvc;
 
 namespace SeaTrack.Areas.Admin.Controllers
 {
@@ -18,19 +19,19 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult ()
+        public ActionResult ActionResult ()
         {
             return View();
         }
-        [HttpGet]
-        public HttpResponseMessage listdevice(int )
-        {
-            var rs = AdminService.GetListUser(RoleID);
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-                STATUSCODE = rs != null ? Util.Static.SUCCESS_CODE : Util.Static.ERROR_CODE,
-                DATA = rs
-            });
-        }
+        //[HttpGet]
+        //public HttpResponseMessage listdevice(int )
+        //{
+        //    var rs = AdminService.GetListUser(RoleID);
+        //    return Request.CreateResponse(HttpStatusCode.OK, new
+        //    {
+        //        STATUSCODE = rs != null ? Util.Static.SUCCESS_CODE : Util.Static.ERROR_CODE,
+        //        DATA = rs
+        //    });
+        //}
     }
 }

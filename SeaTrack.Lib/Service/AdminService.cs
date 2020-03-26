@@ -42,6 +42,7 @@ namespace SeaTrack.Lib.Service
                         Password = reader["Password"].ToString(),
                         Fullname = reader["Fullname"].ToString(),
                         Phone = reader["Phone"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
                         CreateDate = Convert.ToDateTime(reader["CreateDate"]),
                     };
                     lst.Add(data);
