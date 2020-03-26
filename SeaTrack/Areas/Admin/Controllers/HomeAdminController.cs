@@ -45,7 +45,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditUser(int id)
+        public ActionResult Detail(int id)
         {
             //if (!CheckRole(1))
             //{
