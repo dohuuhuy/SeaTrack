@@ -266,6 +266,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\AngularJS\Admin\AdminController.js" />
+    <Content Include="Areas\Admin\AngularJS\Admin\AdminModule.js" />
+    <Content Include="Areas\Admin\AngularJS\Admin\AdminService.js" />
     <Content Include="Content\public\assets\demo\chart-area-demo.js" />
     <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
     <Content Include="Content\public\assets\demo\chart-pie-demo.js" />
