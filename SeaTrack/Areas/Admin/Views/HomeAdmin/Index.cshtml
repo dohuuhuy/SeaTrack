@@ -54,6 +54,11 @@
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <button type="button" class="btn btn-info"
+                data-target="#AddNew" data-toggle="modal">
+            Thêm mới
+        </button>
+
         <div class="card-body">
             <input ng-model="SearchKey" type="text" ng-text-change="KeyFilter()" />
             <div class="table-responsive">
@@ -74,8 +79,8 @@
                         <tr ng-repeat="a in Agencys">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" ng-click="ViewDetail(a.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>
-                                <a href="#" data-ng-href="@Url.Action("EditUser","HomeAdmin", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit"></i></a>
+                                <a href="#" ng-click="ViewDetail(a.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a href="#" data-ng-href="@Url.Action("EditUser","HomeAdmin", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit">edit</i></a>|
                                 <a href="#" ng-click="Delete(a.UserID)"><i class="fa fa-times" style="color:red"></i></a>
                             </td>
                             <td>{{a.Username}}</td>
@@ -90,12 +95,53 @@
                 </table>
             </div>
         </div>
+
+        <div class="modal" id="AddNew" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-info">Thêm đại lý</h3>
+                        <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Resetsave()">x</button>
+                    </div>
+                    <div class="modal-body" style="margin-left:20px">
+                        <form class="form-horizontal" name="AddNewForm">
+                            <div class="form-group">
+                                <label class="control-label"> Username</label>
+                                <input class="form-control" name="Username" ng-model="Username" type="text" placeholder="Username" required maxlength="50" />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Password</label>
+                                <input class="form-control" name="Password" ng-model="Password" type="password" placeholder="password" required maxlength="30"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Fullname</label>
+                                <input class="form-control" name="Fullname" ng-model="Fullname" type="text" placeholder="Fullname" required maxlength="50"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Phone</label>
+                                <input class="form-control" name="Phone" ng-model="Phone" type="text" placeholder="Phone" required maxlength="10"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"> Address</label>
+                                <input class="form-control" name="Address" ng-model="Address" type="text" placeholder="Address" required maxlength="200" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="AddNewForm.$invalid" ng-click="save()">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Resetsave()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminModule.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminService.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminController.js"></script>
     <link href="~/Content/public/css/styles.css" rel="stylesheet" />
-
-
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
 </div>
