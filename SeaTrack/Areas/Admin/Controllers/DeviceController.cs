@@ -5,10 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using SeaTrack.Lib.DTO;
 using SeaTrack.Models;
 using System.Web.Mvc;
+using SeaTrack.Lib.Service;
 
 namespace SeaTrack.Areas.Admin.Controllers
 {
@@ -22,6 +22,19 @@ namespace SeaTrack.Areas.Admin.Controllers
         public ActionResult ActionResult ()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetListDevice()
+        {
+            var data = TrackDataService.GetListDevice();
+            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetListDeviceStatus()
+        {
+            var data = TrackDataService.GetListDeviceStatus();
+            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
         //[HttpGet]
         //public HttpResponseMessage listdevice(int )
