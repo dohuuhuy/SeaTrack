@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
+using DotNetNuke.Common.Utilities;
 using SeaTrack.Lib.DTO;
+using SeaTrack.Lib.Service;
 using SeaTrack.Models;
 
 namespace SeaTrack.Areas.Admin.Controllers
@@ -18,19 +21,17 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult ()
+        [HttpGet]
+        public ActionResult GetListDevice()
         {
-            return View();
+            var data = TrackDataService.GetListDevice();
+            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public HttpResponseMessage listdevice(int )
+        public ActionResult GetListDeviceStatus()
         {
-            var rs = AdminService.GetListUser(RoleID);
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-                STATUSCODE = rs != null ? Util.Static.SUCCESS_CODE : Util.Static.ERROR_CODE,
-                DATA = rs
-            });
+            var data = TrackDataService.GetListDeviceStatus();
+            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
     }
 }

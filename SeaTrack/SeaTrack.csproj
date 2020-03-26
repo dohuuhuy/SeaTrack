@@ -213,6 +213,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\abcController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -275,6 +276,7 @@
     <Content Include="Content\public\assets\demo\datatables-demo.js" />
     <Content Include="Content\public\assets\img\error-404-monochrome.svg" />
     <Content Include="Content\public\css\styles.css" />
+    <Content Include="Content\public\js\main\DeviceControllerJS.js" />
     <Content Include="Content\public\js\scripts.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
@@ -445,9 +447,10 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Device\ShowListDevice.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Device\listdevice.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\GetListDevice.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\GetListDeviceStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\abc\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

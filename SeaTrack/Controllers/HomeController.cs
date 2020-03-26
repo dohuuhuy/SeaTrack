@@ -181,11 +181,7 @@ namespace SeaTrack.Controllers
             var data = TrackDataService.GetRoadmapByDateTime(deviceID, fromtime, totime);
             return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetListDevice()
-        {
-            var data = TrackDataService.GetListDevice();
-            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
-        }
+       
 
 
 
