@@ -273,11 +273,14 @@
     <Content Include="Areas\Admin\AngularJS\Admin\AdminModule.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\AdminService.js" />
     <Content Include="Areas\Admin\AngularJS\Device\DeviceApp.js" />
+    <Content Include="Areas\Admin\AngularJS\myAPP.js" />
     <Content Include="Content\public\assets\demo\chart-area-demo.js" />
     <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
     <Content Include="Content\public\assets\demo\chart-pie-demo.js" />
     <Content Include="Content\public\assets\demo\datatables-demo.js" />
     <Content Include="Content\public\assets\img\error-404-monochrome.svg" />
+    <Content Include="Content\public\css\bootstrap.css" />
+    <Content Include="Content\public\css\jquery.dataTables.min.css" />
     <Content Include="Content\public\css\styles.css" />
     <Content Include="Content\public\js\main\datatables-init.js" />
     <Content Include="Content\public\js\main\DeviceControllerJS.js" />
@@ -2261,6 +2264,7 @@
     <Content Include="Lib\js\toastr.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\angular-datatables.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -2888,7 +2892,6 @@
     <Content Include="Content\vendors\themify-icons\README.md" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Show.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout1.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -2896,6 +2899,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

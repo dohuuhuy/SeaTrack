@@ -1,10 +1,9 @@
 ﻿var app = angular.module("DeviceApp", []);
 
-app.controller("DeviceController", function ($scope, $http) 
+app.controller("DeviceController", function ($scope, $http)
 {
-    fetchData();
-    function fetchData()
-    {
+    GetListDevice();
+    function GetListDevice() {
         $http({
             method: "GET",
             url: '/Admin/Device/GetListDevice/-1'
@@ -15,5 +14,5 @@ app.controller("DeviceController", function ($scope, $http)
             console.log(error, 'can not get data.');
         });
     };
-})
-
+   
+});
