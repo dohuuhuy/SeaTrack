@@ -7,7 +7,7 @@ app.controller("DeviceController", function ($scope, $http)
     {
         $http({
             method: "GET",
-            url: '/Admin/Device/GetListDevice'
+            url: '/Admin/Device/GetListDevice/-1'
         }).then(function (response) {
             console.log(response, 'res');
             $scope.namesData = response.data;

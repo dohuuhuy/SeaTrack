@@ -217,6 +217,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -2196,6 +2197,19 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\.gitignore" />
+    <Content Include="images\admin.jpg" />
+    <Content Include="images\avatar\1.jpg" />
+    <Content Include="images\avatar\2.jpg" />
+    <Content Include="images\avatar\3.jpg" />
+    <Content Include="images\avatar\4.jpg" />
+    <Content Include="images\avatar\5.jpg" />
+    <Content Include="images\avatar\6.jpg" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\logo2.png" />
+    <Content Include="images\placeholder.png" />
+    <Content Include="images\twitter_corner_black.png" />
+    <Content Include="images\twitter_corner_blue.png" />
     <Content Include="Lib\css\bootstrap.css" />
     <Content Include="Lib\css\custom-moon.css" />
     <Content Include="Lib\css\custom-soi.css" />
@@ -2874,7 +2888,8 @@
     <Content Include="Content\vendors\themify-icons\README.md" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Show.cshtml" />
-    <Content Include="Areas\Admin\Views\demo\View.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout1.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

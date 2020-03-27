@@ -23,12 +23,14 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
+     
         [HttpGet]
-        public ActionResult GetListDevice()
+        public ActionResult GetListDevice(int id)  //id = -1 lấy tất cả thiết bị, id!= -1 lấy theo userID
         {
-            var data = TrackDataService.GetListDevice();
+            var data = AdminService.GetListtDeviceByID(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public ActionResult GetListDeviceStatus()
         {
