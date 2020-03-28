@@ -3,66 +3,81 @@
     ViewBag.Title = "Detail";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@model SeaTrack.Lib.DTO.Admin.UserInfoDTO
 
 <div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID')">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <strong>Thông Tin Admin </strong>
-            </div>
-            <div class="card-body card-block">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label class=" form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9">
-                            <p class="form-control-static">@Model.Username</p>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="Password" name="Password" placeholder="Text" class="form-control" value="@Model.Password"><small class="form-text text-muted">This is a help text</small></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Họ tên</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="Fullname" name="Fullname" placeholder="Text" class="form-control" value="@Model.Fullname"><small class="form-text text-muted">This is a help text</small></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Số điện thoại</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="Phone" name="Fullname" placeholder="Text" class="form-control" value="@Model.Phone"><small class="form-text text-muted">This is a help text</small></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Địa chỉ</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="Address" name="Fullname" placeholder="Text" class="form-control" value="@Model.Address"><small class="form-text text-muted">This is a help text</small></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label class=" form-control-label">Quyền tài khoản</label></div>
-                        <div class="col col-md-9">
-                            <div class="form-check-inline form-check">
-                                <label for="inline-radio1" class="form-check-label col-md-4 ">
-                                    <input ng-checked="@Model.RoleID==2" type="radio" id="inline-radio1" name="inline-radios" value="2" class="form-check-input">Đại lý
-                                </label>
-                                <label for="inline-radio2" class="form-check-label col-md-4">
-                                    <input ng-checked="@Model.RoleID==3" type="radio" id="inline-radio2" name="inline-radios" value="3" class="form-check-input">Khách hàng
-                                </label>
-                                <label for="inline-radio3" class="form-check-label col-md-4 ">
-                                    <input ng-checked="@Model.RoleID==4" type="radio" id="inline-radio3" name="inline-radios" value="4" class="form-check-input">Người dùng
-                                </label>
+
+        <div >
+            <div class="card">
+                <div class="card-header">
+                    <strong>Thông Tin Admin </strong>
+                </div>
+@using (Html.BeginForm("EditUser","HomeAdmin"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="card-body card-block">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class="form-control-label">Username</label></div>
+                            <div class="col-12 col-md-9">
+                                @Html.HiddenFor(m => m.UserID)
+                                @Html.DisplayFor(m => m.Username, new { @class = "form-control-static" })
+                                @*<p class="form-control-static">@Model.Username</p>*@
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Submit
-                </button>
-                <button type="reset" class="btn btn-danger btn-sm">
-                    <i class="fa fa-ban"></i> Reset
-                </button>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Password</label></div>
+                            <div class="col-12 col-md-9">@Html.PasswordFor(model => model.Password, new { @value = @Model.Password, @required = "required", @class = "form-control", placeholder = "Text" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Họ tên</label></div>
+                            <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Fullname, new { @value = @Model.Fullname, @required = "required", @class = "form-control", placeholder = "Họ tên" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Số điện thoại</label></div>
+                            <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Phone, new { @value = @Model.Phone, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
+                            <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class="form-control-label">Quyền tài khoản</label></div>
+                            <div class="col col-md-9">
+                                <div class="form-check-inline form-check">
+                                    <label for="inline-radio1" class="form-check-label">
+                                        @Html.RadioButtonFor(model => model.RoleID, 2, Model.RoleID == 2 ? new { @checked = "checked", @id = "inline-radio1", @class = "form-check-input" } : null) Đại lý
+                                        @*<input ng-checked="@Model.RoleID==2" type="radio" id="inline-radio1" name="inline-radios" value="2" class="form-check-input">Đại lý*@
+                                    </label>
+                                    <label for="inline-radio2" class="form-check-label">
+                                        @Html.RadioButtonFor(model => model.RoleID, 3, Model.RoleID == 3 ? new { @checked = "checked", @id = "inline-radio2", @class = "form-check-input" } : null) Khách hàng
+                                        @*<input ng-checked="@Model.RoleID==3" type="radio" id="inline-radio2" name="inline-radios" value="3" class="form-check-input">Khách hàng*@
+                                    </label>
+                                    <label for="inline-radio3" class="form-check-label ">
+                                        @Html.RadioButtonFor(model => model.RoleID, 4, Model.RoleID == 4 ? new { @checked = "checked", @id = "inline-radio3", @class = "form-check-input" } : null) Người dùng
+                                        @*<input ng-checked="@Model.RoleID==4" type="radio" id="inline-radio3" name="inline-radios" value="4" class="form-check-input">Người dùng*@
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    @*<input type="submit" value="Submit" />*@
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+
+                </div>
+                @*<div class="card-footer">
+                    <button type="reset" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Reset
+                    </button>
+                </div>*@
+
+}
+
+
             </div>
         </div>
-    </div>
 
     <div class="col-md-6">
         <div class="card">
@@ -117,27 +132,27 @@
 </div>
 <script src="~/Scripts/angular.js"></script>
 <script>
-var app = angular.module("App", []);
+    var app = angular.module("App", []);
 
-app.controller("Controller", function ($scope, $http) {
-    $scope.UserID = function (id) {
-        $scope.id = id;
-        fetchData(id);
-    }
+    app.controller("Controller", function ($scope, $http) {
+        $scope.UserID = function (id) {
+            $scope.id = id;
+            fetchData(id);
+        }
 
-    function fetchData(id) {
-        $http({
-            method: "GET",
-            url: '/Admin/Device/GetListDevice/'+id
-        }).then(function (response) {
-            console.log(response, 'res');
-            $scope.Devices = response.data;
-        }, function (error) {
-            console.log(error, 'can not get data.');
-        });
-    };
+        function fetchData(id) {
+            $http({
+                method: "GET",
+                url: '/Admin/Device/GetListDeviceByUserID/' + id
+            }).then(function (response) {
+                console.log(response, 'res');
+                $scope.Devices = response.data;
+            }, function (error) {
+                console.log(error, 'can not get data.');
+            });
+        };
 
-})
+    })
 </script>
 <script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>

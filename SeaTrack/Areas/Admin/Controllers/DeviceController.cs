@@ -28,12 +28,18 @@ namespace SeaTrack.Areas.Admin.Controllers
             var data = AdminService.GetListDevice();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetListDeviceByID( int id)
+        [HttpGet]
+        public ActionResult GetDeviceByID(int id)
         {
-            var data = AdminService.GetListDeviceByID(id);
+            var data = AdminService.GetDeviceByID(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        
+        [HttpGet]
+        public ActionResult GetListDeviceByUserID(int id)
+        {
+            var data = AdminService.GetListDeviceByUserID(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult GetListDeviceStatus()
         {

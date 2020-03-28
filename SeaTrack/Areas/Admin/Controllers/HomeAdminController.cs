@@ -66,30 +66,28 @@ namespace SeaTrack.Areas.Admin.Controllers
             try
             {
                 UserInfoDTO us = AdminService.GetUserByID(user.UserID);
-                us.Username = user.Username;
                 us.Password = user.Password;
                 us.Fullname = user.Fullname;
                 us.Phone = user.Phone;
                 us.Address = user.Address;
-                us.Status = user.Status;
                 us.UpdateBy = "admin";
                 us.LastUpdateDate = DateTime.Now;
                 bool res = AdminService.EditUser(us);
                 if (res)
                 {
                     TempData["EditResult"] = "Cập nhật thành công";
-                    return RedirectToAction("EditUser", us);
+                    return RedirectToAction("Detail", new { id = us.UserID });
                 }
                 else
                 {
                     TempData["EditResult"] = "Chưa được cập nhật";
-                    return RedirectToAction("EditUser", us);
+                    return RedirectToAction("Detail", new { id = us.UserID });
                 }
             }
             catch (Exception)
             {
                 TempData["EditResult"] = "Xảy ra lỗi trong quá trình cập nhật";
-                return RedirectToAction("EditUser", user);
+                return RedirectToAction("Detail", new { id = user.UserID });
                 throw;
             }
         }

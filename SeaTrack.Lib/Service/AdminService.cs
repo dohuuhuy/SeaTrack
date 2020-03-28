@@ -116,47 +116,6 @@ namespace SeaTrack.Lib.Service
                 return false;
             }
         }
-        public static List<Device> GetListDeviceByUserID(int UserID)
-        {
-            List<Device> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByUserID", UserID);
-            if (reader.HasRows)
-            {
-                lst = new List<Device>();
-
-                while (reader.Read())
-                {
-                    var data = new Device()
-                    {
-                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        DeviceName = reader["DeviceName"].ToString(),
-                    };
-                    lst.Add(data);
-                }
-            }
-            return lst;
-        }
-        public static List<Device> GetListDeviceByID(int deviceID)
-        {
-            List<Device> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", deviceID);
-            if (reader.HasRows)
-            {
-                lst = new List<Device>();
-
-                while (reader.Read())
-                {
-                    var data = new Device()
-                    {
-                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        DeviceName = reader["DeviceName"].ToString(),
-                    };
-                    lst.Add(data);
-                }
-            }
-            return lst;
-        }
-
 
         #region
         public static int CreateDevice(Device device)
@@ -200,12 +159,29 @@ namespace SeaTrack.Lib.Service
                 }
             }
             return lst;
-        }
-
-        public static List<Device> GetListtDeviceByID(int UserID)
+        } //Lấy danh sách tất cả device
+        public static Device GetDeviceByID(int deviceID)
+        {
+            Device device = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", deviceID);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var data = new Device()
+                    {
+                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceName = reader["DeviceName"].ToString(),
+                    };
+                    device = data;
+                }
+            }
+            return device;
+        }//Lấy device theo ID
+        public static List<Device> GetListDeviceByUserID(int UserID)
         {
             List<Device> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", UserID);
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByUserID", UserID);
             if (reader.HasRows)
             {
                 lst = new List<Device>();
@@ -221,7 +197,8 @@ namespace SeaTrack.Lib.Service
                 }
             }
             return lst;
-        }
+        } //Lấy danh sách device theo UserID
+
         #endregion
     }
 }
