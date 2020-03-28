@@ -149,6 +149,27 @@ namespace SeaTrack.Lib.Service
             }
             return lst;
         }
+
+        public static List<Device> GetListtDeviceByID(int UserID)
+        {
+            List<Device> lst = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", UserID);
+            if (reader.HasRows)
+            {
+                lst = new List<Device>();
+
+                while (reader.Read())
+                {
+                    var data = new Device()
+                    {
+                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceName = reader["DeviceName"].ToString(),
+                    };
+                    lst.Add(data);
+                }
+            }
+            return lst;
+        }
         #endregion
     }
 }

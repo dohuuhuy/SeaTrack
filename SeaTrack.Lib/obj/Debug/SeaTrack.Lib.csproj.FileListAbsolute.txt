@@ -100,3 +100,4 @@ E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CoreCompileInputs.cache
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
+D:\Work\git\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojResolveAssemblyReference.cache
