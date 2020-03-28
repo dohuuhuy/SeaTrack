@@ -116,13 +116,65 @@ namespace SeaTrack.Lib.Service
                 return false;
             }
         }
+        public static List<Device> GetListDeviceByUserID(int UserID)
+        {
+            List<Device> lst = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByUserID", UserID);
+            if (reader.HasRows)
+            {
+                lst = new List<Device>();
+
+                while (reader.Read())
+                {
+                    var data = new Device()
+                    {
+                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceName = reader["DeviceName"].ToString(),
+                    };
+                    lst.Add(data);
+                }
+            }
+            return lst;
+        }
+        public static List<Device> GetListDeviceByID(int deviceID)
+        {
+            List<Device> lst = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", deviceID);
+            if (reader.HasRows)
+            {
+                lst = new List<Device>();
+
+                while (reader.Read())
+                {
+                    var data = new Device()
+                    {
+                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceName = reader["DeviceName"].ToString(),
+                    };
+                    lst.Add(data);
+                }
+            }
+            return lst;
+        }
 
 
         #region
         public static int CreateDevice(Device device)
         {
-            return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_CreateDevice", device.DeviceNo, device.DeviceName, device.DateExpired, device.DeviceNote,
-                device.CreateBy);
+            return SqlHelper.ExecuteNonQuery
+                (
+                ConnectData.ConnectionString,
+                "sp_CreateDevice",
+              
+                device.DeviceNo,
+                device.DeviceName,
+                device.DeviceVersion,
+                device.DeviceImei,
+                device.DeviceGroup,
+                device.DateExpired,
+                device.DeviceNote
+              
+                );
         }
         public static int UpdateDevice(Device device)
         {

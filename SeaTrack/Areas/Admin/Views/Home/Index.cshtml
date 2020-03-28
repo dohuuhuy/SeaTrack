@@ -1,11 +1,22 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Huy";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout1.cshtml";
 }
 
+@* CSS *@
+<link href="~/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+@* JS for angularJS and Datatable *@
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-datatables.js"></script>
+@* JS for our angularjs module, controller etc. *@
+<script src="~/Scripts/myApp.js"></script>
+@* HTML *@
 
-<div class="container-fluid" ng-app="DeviceApp">
+<div class="container-fluid" ng-app="DeviceApp" ng-controller="DeviceController">
     <h1 class="mt-4">Danh Mục Thiết Bị</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -43,14 +54,9 @@
 
 
     </div>
-    <div class="card mb-4" >
+    <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Kết Quả Tìm Kiếm</div>
         <div class="card-body">
-
-
-            <button type="button" class="btn btn-info mb-1" data-toggle="modal" data-target="#ThemThietBi">
-                <i class="fa fa-plus"></i> Thêm mới
-            </button>
 
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-striped text-center">
@@ -67,24 +73,20 @@
                             <th> Ngày hết hạn</th>
                         </tr>
                     </thead>
-                    <tbody ng-controller="DeviceController">
-                        <tr ng-repeat="a in namesData">
+                    <tbody>
+                        <tr ng-repeat="name in namesData">
                             <td>{{$index+1}}</td>
-
                             <td>
-                               
-                                <a href="#" ng-click="GetID(a.DeviceID)" data-toggle="modal" data-target="#XemThietBi">
-                                    <i class="fa fa-eye" style="color:aqua">as</i>
-                                </a>|
-                                <a href="#" ><i class="fa fa-edit">edit</i></a>|
-                                <a href="#"><i class="fa fa-times" style="color:red"></i></a>
+                                <a href="#" ng-click="ViewDetail(name.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a href="#" data-ng-href="@Url.Action("EditDevice","Device", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit">edit</i></a>|
+                                <a href="#" ng-click="Delete(name.UserID)"><i class="fa fa-times" style="color:red"></i></a>
                             </td>
-                            <td>{{a.DeviceNo}}</td>
-                            <td>{{a.DeviceName}}</td>
-                            <td>{{a.DeviceVersion}}</td>
-                            <td>{{a.DeviceImei}}</td>
-                            <td>{{a.DeviceGroup}}</td>
-                            <td>{{a.DateExpired}}</td>
+                            <td>{{name.DeviceNo}}</td>
+                            <td>{{name.DeviceName}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{name.DateExpired}}</td>
 
                         </tr>
                     </tbody>
@@ -92,9 +94,6 @@
             </div>
         </div>
     </div>
-
-    
-
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Areas/Admin/AngularJS/Device/DeviceApp.js"></script>
 </div>
