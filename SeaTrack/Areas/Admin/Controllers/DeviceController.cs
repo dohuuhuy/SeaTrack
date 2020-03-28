@@ -59,8 +59,44 @@ namespace SeaTrack.Areas.Admin.Controllers
                 return Json(new { success = false });
             }
         }
+        [HttpGet]
+        public JsonResult GetListDeviceNotUsedByUser(int id) //id = UserID
+        {
+            var data = AdminService.GetListDeviceNotUsedByUser(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult RemoveDeviceFromUser(User_Device ud)
+        {
+            try
+            {
+                var rs = AdminService.RemoveDeviceFromUser(ud.UserID, ud.DeviceID);
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
 
-     
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddDeviceToUser(User_Device ud)
+        {
+            try
+            {
+                //string CreateBy = Request.Cookies["Username"].Value;
+                var rs = AdminService.AddDeviceToUser(ud.UserID, ud.DeviceID, "Admin");
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+
+                throw;
+            }
+        }
 
         //[HttpPost]
         //public ActionResult Editdevice(Device device, int deviceID)
@@ -69,7 +105,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         //    {
         //        Device tb = AdminService.GetListDeviceByID(deviceID);
         //        //tb.devicename = device.devicename;
-         
+
         //        bool res = AdminService.UpdateDevice(tb);
         //        if (res)
         //        {

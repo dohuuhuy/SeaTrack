@@ -135,11 +135,13 @@ namespace SeaTrack.Lib.Service
               
                 );
         }
+
         public static int UpdateDevice(Device device)
         {
             return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_UpdateDevice", device.DeviceID, device.DeviceNo, device.DeviceName,
                 device.DateExpired, device.DeviceNote, device.Status, device.LastUpdateBy);
         }
+
         public static List<Device> GetListDevice()
         {
             List<Device> lst = null;
@@ -160,6 +162,7 @@ namespace SeaTrack.Lib.Service
             }
             return lst;
         } //Lấy danh sách tất cả device
+
         public static Device GetDeviceByID(int deviceID)
         {
             Device device = null;
@@ -178,6 +181,7 @@ namespace SeaTrack.Lib.Service
             }
             return device;
         }//Lấy device theo ID
+
         public static List<Device> GetListDeviceByUserID(int UserID)
         {
             List<Device> lst = null;
@@ -198,6 +202,37 @@ namespace SeaTrack.Lib.Service
             }
             return lst;
         } //Lấy danh sách device theo UserID
+
+        public static List<Device> GetListDeviceNotUsedByUser(int UserID)
+        {
+            List<Device> lst = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceNotUsedByUser", UserID);
+            if (reader.HasRows)
+            {
+                lst = new List<Device>();
+
+                while (reader.Read())
+                {
+                    var data = new Device()
+                    {
+                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceName = reader["DeviceName"].ToString(),
+                    };
+                    lst.Add(data);
+                }
+            }
+            return lst;
+        }
+
+        public static int RemoveDeviceFromUser(int UserID, int DeviceID)
+        {
+            return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_RemoveDeviceFromUser", UserID, DeviceID);
+        }
+
+        public static int AddDeviceToUser(int UserID, int DeviceID, string CreateBy)
+        {
+            return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_AddDeviceToUser", UserID, DeviceID, CreateBy);
+        }
 
         #endregion
     }

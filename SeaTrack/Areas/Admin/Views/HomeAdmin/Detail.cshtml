@@ -103,6 +103,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong class="card-title">Danh Sách Thiết Bị</strong>
+                    <button ng-click="AddDevice(id)" class="btn btn-info" data-target="#AddNew" data-toggle="modal"><i class="fa fa plus"></i></button>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered text-center">
@@ -116,10 +117,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="d in Devices">
-                                <th>{{$index}}</th>
+                                <th>{{$index + 1}}</th>
                                 <td>{{d.DeviceName}}</td>
                                 <td align="center">
-                                    <a href="#" data-ng-href="@Url.Action("EditUser","HomeAdmin", new {area = "Admin" })/{{a.UserID}}"><i class="fa fa-edit">edit</i></a>
+                                    <a ng-click="RemoveDeviceFromUser(id, d.DeviceID)"><i class="fa fa-remove">edit</i></a>
                                 </td>
                             </tr>
 
@@ -128,32 +129,48 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="AddNew" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-info">Danh sách thiết bị</h3>
+                        <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="LoadDevice(id)">x</button>
+                    </div>
+                    <div class="modal-body" style="margin-left:20px">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên thiết bị</th>
+
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dv in DevicesNotUsed">
+                                    <th>{{$index + 1}}</th>
+                                    <td>{{dv.DeviceName}}</td>
+                                    <td align="center">
+                                        <a ng-click="AddDeviceToUser(id, dv.DeviceID)"><i class="fa fa-remove">edit</i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="LoadDevice(id)">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <script src="~/Scripts/angular.js"></script>
-<script>
-    var app = angular.module("App", []);
-
-    app.controller("Controller", function ($scope, $http) {
-        $scope.UserID = function (id) {
-            $scope.id = id;
-            fetchData(id);
-        }
-
-        function fetchData(id) {
-            $http({
-                method: "GET",
-                url: '/Admin/Device/GetListDeviceByUserID/' + id
-            }).then(function (response) {
-                console.log(response, 'res');
-                $scope.Devices = response.data;
-            }, function (error) {
-                console.log(error, 'can not get data.');
-            });
-        };
-
-    })
-</script>
+<script src="~/Areas/Admin/AngularJS/Admin/UserDetailApp.js"></script>
 <script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
 <script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
