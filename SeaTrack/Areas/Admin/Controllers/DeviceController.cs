@@ -1,17 +1,10 @@
 ﻿using SeaTrack.Lib.DTO;
+using SeaTrack.Lib.DTO.Admin;
 using SeaTrack.Lib.Service;
-
-using System.Web.Http.Results;
-
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-
-using SeaTrack.Models;
+using System.Web;
 using System.Web.Mvc;
 
 
@@ -35,9 +28,9 @@ namespace SeaTrack.Areas.Admin.Controllers
             var data = AdminService.GetListDevice();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetListDeviceByID(int deviceID)
+        public ActionResult GetListDeviceByID( int id)
         {
-            var data = AdminService.GetListDeviceByID(deviceID);
+            var data = AdminService.GetListDeviceByID(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         

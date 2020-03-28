@@ -75,7 +75,7 @@
                         <tr ng-repeat="a in Agencys">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" ng-click="ViewDetail(a.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a href="#" ng-click="ViewDetail(id = a.UserID)"><i class="fa fa-eye" style="color:aqua">as</i></a>|
                                 <a href="#" data-ng-href="@Url.Action("Detail","HomeAdmin")/{{a.UserID}}"><i class="fa fa-edit">edit</i></a>|
                                 <a href="#" ng-click="Delete(a.UserID)"><i class="fa fa-times" style="color:red"></i></a>
                             </td>
