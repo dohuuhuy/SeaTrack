@@ -3,7 +3,7 @@
     ViewBag.Title = "Detail";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-@model SeaTrack.Lib.DTO.Admin.UserInfoDTO
+@model SeaTrack.Lib.DTO.Admin.UserViewModel
 
 <div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID')">
 
@@ -49,8 +49,11 @@
                     {
                         <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class="form-control-label">Đại lý</label></div>
-                            @Html.DropDownListFor(m => m.ManageBy, new SelectList(ViewBag.ListAgencys, "Text", "Value"))
+                            <div class="col-12 col-md-9">
+                                @Html.DropDownListFor(m => m.ManageBy, new SelectList(ViewBag.ListAgencys, "Text", "Value"), new { @class = "form-control" })
+                            </div>
                         </div>
+
                     }
                     @if (Model.RoleID == 4)
                     {
@@ -100,37 +103,38 @@
     </div>
 
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <i class="fa fa-user"></i><strong class="card-title pl-2">Hình Đại Diện</strong>
-            </div>
-            <div class="card-body">
-                <div class="mx-auto d-block">
-                    <img class="rounded-circle mx-auto d-block" src="~/images/admin.jpg" alt="Card image cap">
-                    <h5 class="text-sm-center mt-2 mb-1">Steven Lee</h5>
-                    <div class="location text-sm-center"><i class="fa fa-map-marker"></i> California, United States</div>
+        @*<div class="card">
+                <div class="card-header">
+                    <i class="fa fa-user"></i><strong class="card-title pl-2">Hình Đại Diện</strong>
                 </div>
-                <hr>
-                <div class="card-text text-sm-center">
-                    <input type="file" class="btn btn-warning" />
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="fa fa-dot-circle-o"></i> Submit
-                    </button>
+                <div class="card-body">
+                    <div class="mx-auto d-block">
+                        <img class="rounded-circle mx-auto d-block" src="~/images/admin.jpg" alt="Card image cap">
+                        <h5 class="text-sm-center mt-2 mb-1">Steven Lee</h5>
+                        <div class="location text-sm-center"><i class="fa fa-map-marker"></i> California, United States</div>
+                    </div>
+                    <hr>
+                    <div class="card-text text-sm-center">
+                        <input type="file" class="btn btn-warning" />
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>*@
         <div class="card">
             <div class="card">
                 <div class="card-header">
                     <a href="#" ng-click="AddDevice(id)" data-target="#AddNew" data-toggle="modal"><i class="fa fa-plus-circle" style="color:black"></i></a>
                     <strong class="card-title">Danh Sách Thiết Bị</strong>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height:400px; overflow-y:scroll; ">
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Tên thiết bị</th>
+                                <th scope="col">Ngày hết hạn</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>
@@ -138,6 +142,7 @@
                             <tr ng-repeat="d in Devices">
                                 <th>{{$index + 1}}</th>
                                 <td>{{d.DeviceName}}</td>
+                                <td>{{d.DateExpired}}</td>
                                 <td align="center">
                                     <a ng-click="RemoveDeviceFromUser(id, $index)"><i class="fa fa-trash"></i></a>
                                 </td>
@@ -162,6 +167,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Tên thiết bị</th>
+                                    <th scope="col">Ngày hết hạn</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
@@ -169,6 +175,7 @@
                                 <tr ng-repeat="dv in DevicesNotUsed">
                                     <th>{{$index + 1}}</th>
                                     <td>{{dv.DeviceName}}</td>
+                                    <td>{{dv.DateExpired}}</td>
                                     <td align="center">
                                         <a ng-click="AddDeviceToUser(id, $index)"><i class="fa fa-plus-circle"></i></a>
                                     </td>

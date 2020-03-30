@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\ConnectData.cs" />
+    <Compile Include="DTO\Admin\DeviceViewModel.cs" />
     <Compile Include="DTO\Admin\UserInfoDTO.cs" />
+    <Compile Include="DTO\Admin\UserViewModel.cs" />
     <Compile Include="DTO\Device.cs" />
     <Compile Include="DTO\DeviceStatus.cs" />
     <Compile Include="DTO\InfoDTO.cs" />

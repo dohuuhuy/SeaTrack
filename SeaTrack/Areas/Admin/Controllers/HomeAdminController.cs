@@ -62,11 +62,11 @@ namespace SeaTrack.Areas.Admin.Controllers
             {
                 ViewBag.EditResult = TempData["EditResult"].ToString();
             }
-            UserInfoDTO us = new UserInfoDTO();
+            UserViewModel us = new UserViewModel();
             us = AdminService.GetUserByID(id);
             if (us.RoleID == 3)
             {
-                List<UserInfoDTO> Agencys = AdminService.GetListUser(2);
+                List<UserViewModel> Agencys = AdminService.GetListUser(2);
                 List<SelectListItem> items = new List<SelectListItem>();
                 foreach (var a in Agencys)
                 {
@@ -76,7 +76,7 @@ namespace SeaTrack.Areas.Admin.Controllers
             }
             if (us.RoleID == 4)
             {
-                List<UserInfoDTO> Customer = AdminService.GetListUser(3);
+                List<UserViewModel> Customer = AdminService.GetListUser(3);
                 List<SelectListItem> items = new List<SelectListItem>();
                 foreach (var a in Customer)
                 {
@@ -93,15 +93,22 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             try
             {
-                UserInfoDTO us = AdminService.GetUserByID(user.UserID);
-                us.Password = user.Password;
-                us.Fullname = user.Fullname;
-                us.Phone = user.Phone;
-                us.Address = user.Address;
-                us.UpdateBy = "admin";
-                us.ManageBy = user.ManageBy;
-                us.LastUpdateDate = DateTime.Now;
-                bool res = AdminService.EditUser(us);
+                UserViewModel us = AdminService.GetUserByID(user.UserID);
+                UserInfoDTO UserEdit = new UserInfoDTO();
+                UserEdit.UserID = us.UserID;
+                UserEdit.Username = us.Username;
+                UserEdit.Status = us.Status;
+                UserEdit.CreateBy = us.CreateBy;
+                UserEdit.CreateDate = Convert.ToDateTime(us.CreateDate);
+                UserEdit.RoleID = user.RoleID;
+                UserEdit.Password = user.Password;
+                UserEdit.Fullname = user.Fullname;
+                UserEdit.Phone = user.Phone;
+                UserEdit.Address = user.Address;
+                UserEdit.UpdateBy = "admin";
+                UserEdit.ManageBy = user.ManageBy;
+                UserEdit.LastUpdateDate = DateTime.Now;
+                bool res = AdminService.EditUser(UserEdit);
                 if (res)
                 {
                     TempData["EditResult"] = "Cập nhật thành công";

@@ -9,6 +9,7 @@ using Microsoft.ApplicationBlocks.Data;
 using SeaTrack.Lib.Database;
 using SeaTrack.Lib.DTO;
 using SeaTrack.Lib.DTO.Admin;
+using SeaTrack.Areas.Admin.Model;
 
 namespace SeaTrack.Lib.Service
 {
@@ -25,17 +26,17 @@ namespace SeaTrack.Lib.Service
                 user.UserID, user.Status);
 
         }
-        public static List<UserInfoDTO> GetListUser(int RoleID)
+        public static List<UserViewModel> GetListUser(int RoleID)
         {
-            List<UserInfoDTO> lst = null;
+            List<UserViewModel> lst = null;
             var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListUser", RoleID);
             if (reader.HasRows)
             {
-                lst = new List<UserInfoDTO>();
+                lst = new List<UserViewModel>();
 
                 while (reader.Read())
                 {
-                    var data = new UserInfoDTO()
+                    var data = new UserViewModel()
                     {
                         UserID = Convert.ToInt32(reader["UserID"]),
                         Username = reader["Username"].ToString(),
@@ -43,7 +44,7 @@ namespace SeaTrack.Lib.Service
                         Fullname = reader["Fullname"].ToString(),
                         Phone = reader["Phone"].ToString(),
                         Status = Convert.ToInt32(reader["Status"]),
-                        CreateDate = Convert.ToDateTime(reader["CreateDate"].ToString()),
+                        CreateDate = reader["CreateDate"].ToString(),
                         ManageBy = reader["ManageBy"].ToString()
                     };
                     lst.Add(data);
@@ -52,16 +53,16 @@ namespace SeaTrack.Lib.Service
             return lst;
         }
 
-        public static UserInfoDTO GetUserByID(int UserID)
+        public static UserViewModel GetUserByID(int UserID)
         {
-            UserInfoDTO user = null;
+            UserViewModel user = null;
             var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetUserByID", UserID);
             if (reader.HasRows)
             {
-                user = new UserInfoDTO();
+                user = new UserViewModel();
                 while (reader.Read())
                 {
-                    var data = new UserInfoDTO()
+                    var data = new UserViewModel()
                     {
                         UserID = Convert.ToInt16(reader["UserID"]),
                         Username = reader["Username"].ToString(),
@@ -71,9 +72,9 @@ namespace SeaTrack.Lib.Service
                         Address = reader["Address"].ToString(),
                         Status = Convert.ToInt16(reader["Status"]),
                         CreateBy = reader["CreateBy"].ToString(),
-                        CreateDate = Convert.ToDateTime(reader["CreateDate"]),
+                        CreateDate = reader["CreateDate"].ToString(),
                         UpdateBy = reader["UpdateBy"].ToString(),
-                        LastUpdateDate = Convert.ToDateTime(reader["LastUpdateDate"]),
+                        LastUpdateDate = reader["LastUpdateDate"].ToString(),
                         RoleID = Convert.ToInt16(reader["RoleID"]),
                         ManageBy = reader["ManageBy"].ToString()
                     };
@@ -89,7 +90,7 @@ namespace SeaTrack.Lib.Service
         {
             try
             {
-                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_EditUser", user.UserID, user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.Status, user.UpdateBy, user.LastUpdateDate, user.RoleID);
+                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_EditUser", user.UserID, user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.Status, user.UpdateBy, user.LastUpdateDate, user.RoleID, user.ManageBy);
                 if (res == 0)
                 {
                     return false;
@@ -213,26 +214,22 @@ namespace SeaTrack.Lib.Service
             return device;
         }//Lấy device theo ID
 
-        public static List<Device> GetListDeviceByUserID(int UserID)
+        public static List<DeviceViewModel> GetListDeviceByUserID(int UserID)
         {
-            List<Device> lst = null;
+            List<DeviceViewModel> lst = null;
             var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByUserID", UserID);
             if (reader.HasRows)
             {
-                lst = new List<Device>();
+                lst = new List<DeviceViewModel>();
 
                 while (reader.Read())
                 {
-                    var data = new Device()
+                    var data = new DeviceViewModel()
                     {
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        //DeviceNo = reader["DeviceNo"].ToString(),
+                        DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
-                        //DeviceImei = reader["DeviceImei"].ToString(),
-                        //DeviceVersion = reader["DeviceVersion"].ToString(),
-                        //DeviceGroup = reader["DeviceGroup"].ToString(),
-                        //DeviceNote = reader["DeviceNote"].ToString(),
-                        //DateExpired = Convert.ToDateTime(reader["DateExpired"].ToString())
+                        DateExpired = reader["DateExpired"].ToString()
                     };
                     lst.Add(data);
                 }
@@ -240,20 +237,22 @@ namespace SeaTrack.Lib.Service
             return lst;
         } //Lấy danh sách device theo UserID
 
-        public static List<Device> GetListDeviceNotUsedByUser(int UserID)
+        public static List<DeviceViewModel> GetListDeviceNotUsedByUser(int UserID)
         {
-            List<Device> lst = null;
+            List<DeviceViewModel> lst = null;
             var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceNotUsedByUser", UserID);
             if (reader.HasRows)
             {
-                lst = new List<Device>();
+                lst = new List<DeviceViewModel>();
 
                 while (reader.Read())
                 {
-                    var data = new Device()
+                    var data = new DeviceViewModel()
                     {
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
+                        DateExpired = reader["DateExpired"].ToString()
                     };
                     lst.Add(data);
                 }
