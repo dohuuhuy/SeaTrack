@@ -217,7 +217,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -2892,8 +2891,8 @@
     <Content Include="Content\vendors\themify-icons\README.md" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Show.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Detaile.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Customer.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\User.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

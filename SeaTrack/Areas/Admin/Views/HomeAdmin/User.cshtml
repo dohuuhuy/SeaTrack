@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid" ng-app="AdminModule" ng-controller="AdminController" ng-init="Role(2)">
+<div class="container-fluid" ng-app="AdminModule" ng-controller="AdminController" ng-init="Role(4)">
     <h1 class="mt-4">Tables</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -51,7 +51,7 @@
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
-        <button type="button" class="btn btn-info" data-target="#AddNew" data-toggle="modal">
+        <button type="button" class="btn btn-info" data-target="#AddNew" data-toggle="modal" ng-click="AddUser()">
             Thêm mới
         </button>
         <div class="card-body">
@@ -67,24 +67,25 @@
                             <th>Fullname</th>
                             <th>Phone</th>
                             <th>CreateDate</th>
+                            <th>Khách hàng</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="a in Agencys">
+                        <tr ng-repeat="u in Users">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{a.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
-                                <a ng-if="a.Status==1" ng-click="LockUser(a.UserID)"><i class="fa fa-lock"></i></a>|
-                                <a ng-if="a.Status==-1" ng-click="UnLockUser(a.UserID)"><i class="fa fa-unlock"></i></a>|
+                                <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{u.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a ng-if="u.Status==1" ng-click="LockUser(u.UserID)"><i class="fa fa-lock"></i></a>
+                                <a ng-if="u.Status==-1" ng-click="UnLockUser(u.UserID)"><i class="fa fa-unlock"></i></a>
                             </td>
-                            <td>{{a.Username}}</td>
-                            <td>{{a.Fullname}}</td>
-                            <td>{{a.Phone}}</td>
-                            <td>{{a.CreateDate}}</td>
-                            <td ng-show="a.Status==-1">Tạm khóa</td>
-                            <td ng-show="a.Status==1">Đã kích hoạt</td>
-                            <td ng-show="a.Status==2">Vô hiệu</td>
+                            <td>{{u.Username}}</td>
+                            <td>{{u.Fullname}}</td>
+                            <td>{{u.Phone}}</td>
+                            <td>{{u.CreateDate}}</td>
+                            <td>{{u.ManageBy}}</td>
+                            <td ng-if="u.Status==-1">Tạm khóa</td>
+                            <td ng-if="u.Status==1">Đã kích hoạt</td>
                         </tr>
                     </tbody>
                 </table>
@@ -95,7 +96,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="text-info">Thêm đại lý</h3>
+                        <h3 class="text-info">Thêm khách hàng</h3>
                         <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Resetsave()">x</button>
                     </div>
                     <div class="modal-body" style="margin-left:20px">
@@ -121,6 +122,13 @@
                                 <label class="control-label"> Address</label>
                                 <input class="form-control" name="Address" ng-model="Address" type="text" placeholder="Address" required maxlength="200" />
                             </div>
+                            <div class="form-group">
+                                <label class="control-label"> Khách hàng</label>
+                                <select class="form-control" name="ManageBySelect" id="ManageBySelect" ng-model="ManageBy" required>
+                                    <option value="">Chọn khách hàng</option>
+                                    <option ng-repeat="c in Customers" value="{{c.Username}}">{{c.Username}}</option>
+                                </select>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -139,3 +147,4 @@
 
 
 </div>
+

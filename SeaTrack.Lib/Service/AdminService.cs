@@ -17,7 +17,7 @@ namespace SeaTrack.Lib.Service
         public static int CreateUser(UserInfoDTO user, int RoleID)
         {
             return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_CreateUser",
-                 user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.CreateBy, user.CreateDate, RoleID);
+                 user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.CreateBy, user.CreateDate, RoleID, user.ManageBy, user.Status);
         }
         public static int UpdateUser(UserInfoDTO user)
         {
@@ -44,6 +44,7 @@ namespace SeaTrack.Lib.Service
                         Phone = reader["Phone"].ToString(),
                         Status = Convert.ToInt32(reader["Status"]),
                         CreateDate = Convert.ToDateTime(reader["CreateDate"]),
+                        ManageBy = reader["ManageBy"].ToString()
                     };
                     lst.Add(data);
                 }
@@ -74,6 +75,7 @@ namespace SeaTrack.Lib.Service
                         UpdateBy = reader["UpdateBy"].ToString(),
                         LastUpdateDate = Convert.ToDateTime(reader["LastUpdateDate"]),
                         RoleID = Convert.ToInt16(reader["RoleID"]),
+                        ManageBy = reader["ManageBy"].ToString()
                     };
                     user = data;
                 }
@@ -116,7 +118,23 @@ namespace SeaTrack.Lib.Service
                 return false;
             }
         }
-
+        public static bool UpdateStatusUser(int UserID, int Status)
+        {
+            try
+            {
+                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_UpdateUser", UserID, Status);
+                if (res == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
         #region
         public static int CreateDevice(Device device)
         {

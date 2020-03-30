@@ -11,12 +11,21 @@ namespace SeaTrack.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         // GET: Admin/HomeAdmin
-        public ActionResult Index()
+        public ActionResult Index() //Quản lý đại lý
         {
             //yêu cầu check role
-            return View("Index");
+            return View();
         }
 
+        public ActionResult Customer()
+        {
+            return View();
+        }
+
+        public new ActionResult User()
+        {
+            return View();
+        }
         [HttpGet]
         public JsonResult ListUser(int id) //id = roleID
         {
@@ -31,17 +40,15 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateUser(UserInfoDTO user, int roleID)
         {
-            try
-            {
-                user.CreateBy = Request.Cookies["userName"].Value.ToString();
-                user.CreateDate = DateTime.Now;
-                var rs = AdminService.CreateUser(user, roleID);
-                return Json(new { success = true });
-            }
-            catch (Exception)
-            {
-                return Json(new { success = false });
-            }
+
+            user.CreateBy = Request.Cookies["userName"].Value.ToString();
+            user.CreateDate = DateTime.Now;
+            user.UpdateBy = "admin";
+            user.LastUpdateDate = DateTime.Now;
+            user.Status = 1;
+            var rs = AdminService.CreateUser(user, roleID);
+            return Json(new { success = true });
+
         }
 
         [HttpGet]
@@ -57,6 +64,27 @@ namespace SeaTrack.Areas.Admin.Controllers
             }
             UserInfoDTO us = new UserInfoDTO();
             us = AdminService.GetUserByID(id);
+            if (us.RoleID == 3)
+            {
+                List<UserInfoDTO> Agencys = AdminService.GetListUser(2);
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (var a in Agencys)
+                {
+                    items.Add(new SelectListItem { Text = a.Username, Value = a.Username, Selected = a.ManageBy == us.ManageBy ? true : false });
+                }
+                ViewBag.ListAgencys = items;
+            }
+            if (us.RoleID == 4)
+            {
+                List<UserInfoDTO> Customer = AdminService.GetListUser(3);
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (var a in Customer)
+                {
+                    items.Add(new SelectListItem { Text = a.Username, Value = a.Username, Selected = a.ManageBy == us.ManageBy ? true : false });
+                }
+                ViewBag.ListCustomer = items;
+            }
+
             return View(us);
         }
 
@@ -71,6 +99,7 @@ namespace SeaTrack.Areas.Admin.Controllers
                 us.Phone = user.Phone;
                 us.Address = user.Address;
                 us.UpdateBy = "admin";
+                us.ManageBy = user.ManageBy;
                 us.LastUpdateDate = DateTime.Now;
                 bool res = AdminService.EditUser(us);
                 if (res)
@@ -98,13 +127,33 @@ namespace SeaTrack.Areas.Admin.Controllers
             bool res = AdminService.DeleteUser(id);
             if (res)
             {
-                return Json(new { success = true });
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false });
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
         }
 
+        [HttpGet]
+        public JsonResult LockUser(int id)
+        {
+            bool res = AdminService.UpdateStatusUser(id, -1);
+            if (res)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpGet]
+        public JsonResult UnLockUser(int id)
+        {
+            bool res = AdminService.UpdateStatusUser(id, 1);
+            if (res)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
         public bool CheckRole(int role)
         {
             if (Request.Cookies["userName"] != null && Request.Cookies["pass"] != null && Request.Cookies["role"].Value == role.ToString())

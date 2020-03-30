@@ -18,8 +18,8 @@ namespace SeaTrack.Lib.DTO.Admin
         public string CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public string UpdateBy { get; set; }
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
         public int RoleID { get; set; }
-
+        public string ManageBy { get; set; }
     }
 }
