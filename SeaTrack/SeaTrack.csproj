@@ -268,11 +268,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\AngularJS\Admin\AdminController.js" />
+    <Content Include="Areas\Admin\AngularJS\Admin\AdminFilter.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\AdminModule.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\AdminService.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\UserDetailApp.js" />
     <Content Include="Areas\Admin\AngularJS\Device\DeviceApp.js" />
-    <Content Include="Areas\Admin\AngularJS\myAPP.js" />
     <Content Include="Content\public\assets\demo\chart-area-demo.js" />
     <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
     <Content Include="Content\public\assets\demo\chart-pie-demo.js" />

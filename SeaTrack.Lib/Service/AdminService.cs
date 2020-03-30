@@ -43,7 +43,7 @@ namespace SeaTrack.Lib.Service
                         Fullname = reader["Fullname"].ToString(),
                         Phone = reader["Phone"].ToString(),
                         Status = Convert.ToInt32(reader["Status"]),
-                        CreateDate = Convert.ToDateTime(reader["CreateDate"]),
+                        CreateDate = Convert.ToDateTime(reader["CreateDate"].ToString()),
                         ManageBy = reader["ManageBy"].ToString()
                     };
                     lst.Add(data);
@@ -141,8 +141,8 @@ namespace SeaTrack.Lib.Service
             return SqlHelper.ExecuteNonQuery
                 (
                 ConnectData.ConnectionString,
-                "sp_CreateDevice",
-              
+                "View_CreateDevice",
+
                 device.DeviceNo,
                 device.DeviceName,
                 device.DeviceVersion,
@@ -150,7 +150,7 @@ namespace SeaTrack.Lib.Service
                 device.DeviceGroup,
                 device.DateExpired,
                 device.DeviceNote
-              
+
                 );
         }
 
@@ -163,7 +163,7 @@ namespace SeaTrack.Lib.Service
         public static List<Device> GetListDevice()
         {
             List<Device> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDevice");
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "View_GetListDevice");
             if (reader.HasRows)
             {
                 lst = new List<Device>();
@@ -173,18 +173,25 @@ namespace SeaTrack.Lib.Service
                     var data = new Device()
                     {
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
+                        DeviceImei = reader["DeviceImei"].ToString(),
+                        DeviceVersion = reader["DeviceVersion"].ToString(),
+                        DeviceGroup = reader["DeviceGroup"].ToString(),
+                        DeviceNote = reader["DeviceNote"].ToString(),
+                        DateExpired = Convert.ToDateTime(reader["DateExpired"].ToString())
+
                     };
                     lst.Add(data);
                 }
             }
             return lst;
-        } //Lấy danh sách tất cả device
+        }//Lấy danh sách tất cả device
 
         public static Device GetDeviceByID(int deviceID)
         {
             Device device = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceByID", deviceID);
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "View_GetDeviceByID", deviceID);
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -192,7 +199,13 @@ namespace SeaTrack.Lib.Service
                     var data = new Device()
                     {
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
+                        DeviceImei = reader["DeviceImei"].ToString(),
+                        DeviceVersion = reader["DeviceVersion"].ToString(),
+                        DeviceGroup = reader["DeviceGroup"].ToString(),
+                        DeviceNote = reader["DeviceNote"].ToString(),
+                        DateExpired = Convert.ToDateTime(reader["DateExpired"].ToString())
                     };
                     device = data;
                 }
@@ -213,7 +226,13 @@ namespace SeaTrack.Lib.Service
                     var data = new Device()
                     {
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                        //DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
+                        //DeviceImei = reader["DeviceImei"].ToString(),
+                        //DeviceVersion = reader["DeviceVersion"].ToString(),
+                        //DeviceGroup = reader["DeviceGroup"].ToString(),
+                        //DeviceNote = reader["DeviceNote"].ToString(),
+                        //DateExpired = Convert.ToDateTime(reader["DateExpired"].ToString())
                     };
                     lst.Add(data);
                 }
@@ -252,6 +271,22 @@ namespace SeaTrack.Lib.Service
             return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_AddDeviceToUser", UserID, DeviceID, CreateBy);
         }
 
+        public static bool DeleteDevice(int DeviceID)
+        {
+            try
+            {
+                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "View_DeleteDevice", DeviceID);
+                if (res == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }

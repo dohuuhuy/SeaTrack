@@ -76,13 +76,13 @@
                             <td>{{$index+1}}</td>
                             <td>
                                 <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{c.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
-                                <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)"><i class="fa fa-lock"></i></a>|
-                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)"><i class="fa fa-unlock"></i></a>|
+                                <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)"><i class="fa fa-lock"></i></a>
+                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)"><i class="fa fa-unlock"></i></a>
                             </td>
                             <td>{{c.Username}}</td>
                             <td>{{c.Fullname}}</td>
                             <td>{{c.Phone}}</td>
-                            <td>{{c.CreateDate}}</td>
+                            <td>{{c.CreateDate|date: "yyyy-MM-ddTHH:mm:ss"}}</td>
                             <td>{{c.ManageBy}}</td>
                             <td ng-show="c.Status==-1">Tạm khóa</td>
                             <td ng-show="c.Status==1">Đã kích hoạt</td>
@@ -144,7 +144,7 @@
     <script src="~/Areas/Admin/AngularJS/Admin/AdminModule.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminService.js"></script>
     <script src="~/Areas/Admin/AngularJS/Admin/AdminController.js"></script>
-
+    <script src="~/Areas/Admin/AngularJS/Admin/AdminFilter.js"></script>
 
 </div>
 

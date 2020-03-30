@@ -1,11 +1,10 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
-<div class="container-fluid" ng-app="DeviceApp">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<div class="container-fluid" ng-app="DeviceApp" ng-controller="DeviceController">
     <h1 class="mt-4">Danh Mục Thiết Bị</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -43,7 +42,7 @@
 
 
     </div>
-    <div class="card mb-4" >
+    <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Kết Quả Tìm Kiếm</div>
         <div class="card-body">
 
@@ -53,6 +52,7 @@
             </button>
 
             <div class="table-responsive">
+
                 <table id="dataTable" class="table table-bordered table-striped text-center">
 
                     <thead>
@@ -67,17 +67,17 @@
                             <th> Ngày hết hạn</th>
                         </tr>
                     </thead>
-                    <tbody ng-controller="DeviceController">
+                    <tbody>
                         <tr ng-repeat="a in namesData">
                             <td>{{$index+1}}</td>
 
                             <td>
-                               
-                                <a href="#" ng-click="GetID(a.DeviceID)" data-toggle="modal" data-target="#XemThietBi">
+
+                                <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
                                     <i class="fa fa-eye" style="color:aqua">as</i>
                                 </a>|
-                                <a href="#" ><i class="fa fa-edit">edit</i></a>|
-                                <a href="#"><i class="fa fa-times" style="color:red"></i></a>
+                                <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>|
+                                <a ng-click="Delete($index)"><i class="fa fa-times" style="color:red"></i></a>
                             </td>
                             <td>{{a.DeviceNo}}</td>
                             <td>{{a.DeviceName}}</td>
@@ -85,16 +85,150 @@
                             <td>{{a.DeviceImei}}</td>
                             <td>{{a.DeviceGroup}}</td>
                             <td>{{a.DateExpired}}</td>
-
+                            Tổng:
+                            <p ng-bind="total()"></p>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    
+    <div class="modal fade" id="XemThietBi" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" ng-show="Device.DeviceID != '' ">
+                <div class="modal-header">
+                    <h3 class="text-info">Xem Chi Tiết Thiết Bị</h3>
+                    <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Clear()">x</button>
+                </div>
+                <div class="modal-body" style="margin-left:20px">
+                    <form class="form-horizontal" name="XemThietBi">
+                        <div class="form-group">
+                            <label class="control-label"> Số hiệu </label>
+                            <input class="form-control" name="DeviceNo" ng-model="Device.DeviceNo" type="text" disabled maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Tên thiết bị </label>
+                            <input class="form-control" name="DeviceName" ng-model="Device.DeviceName" type="text" disabled maxlength="30" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Phiên bản </label>
+                            <input class="form-control" name="DeviceVersion" ng-model="Device.DeviceVersion" type="text" disabled maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Imei </label>
+                            <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" disabled maxlength="10" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ghi chú </label>
+                            <textarea class="form-control" name="DeviceNote" ng-model="Device.DeviceNote" type="text" disabled rows="3"></textarea>
 
-    <script src="~/Scripts/angular.js"></script>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ngày hết hạn </label>
+                            <input class="form-control" name="DateExpired" ng-model="Device.DateExpired" type="text" disabled maxlength="200" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Clear()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ThemThietBi" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-info">Thêm thiết bị</h3>
+                    <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Clear()">x</button>
+                </div>
+                <div class="modal-body" style="margin-left:20px">
+                    <form class="form-horizontal" name="AddNewForm">
+                        <div class="form-group">
+                            <label class="control-label"> Số hiệu </label>
+                            <input class="form-control" name="DeviceNo" ng-model="Device.DeviceNo" type="text" placeholder="Số hiệu ..." required maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Tên thiết bị </label>
+                            <input class="form-control" name="DeviceName" ng-model="Device.DeviceName" type="text" placeholder="Tên thiết bị ..." required maxlength="30" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Phiên bản </label>
+                            <input class="form-control" name="DeviceVersion" ng-model="Device.DeviceVersion" type="text" placeholder="Phiên bản ..." required maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Imei </label>
+                            <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" placeholder="Imei ..." required maxlength="10" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ghi chú </label>
+                            <textarea class="form-control" name="DeviceNote" ng-model="Device.DeviceNote" type="text" placeholder="Ghi chú ..." required rows="3"></textarea>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ngày hết hạn </label>
+                            <input class="form-control" name="DateExpired" ng-model="Device.DateExpired" type="date" placeholder="Ngày hết hạn ..." required maxlength="200" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="AddNewForm.$invalid" ng-click="Save()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Clear()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SuaThietBi" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-info">Cập Nhật Thiết Bị</h3>
+                    <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Clear()">x</button>
+                </div>
+                <div class="modal-body" style="margin-left:20px">
+                    <form class="form-horizontal" name="">
+                        <div class="form-group">
+                            <label class="control-label"> Số hiệu </label>
+                            <input class="form-control" name="DeviceNo" ng-model="Device.DeviceNo" type="text" required maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Tên thiết bị </label>
+                            <input class="form-control" name="DeviceName" ng-model="Device.DeviceName" type="text" required maxlength="30" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Phiên bản </label>
+                            <input class="form-control" name="DeviceVersion" ng-model="Device.DeviceVersion" type="text" required maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Imei </label>
+                            <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" required maxlength="10" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ghi chú </label>
+                            <textarea class="form-control" name="DeviceNote" ng-model="Device.DeviceNote" type="text" required rows="3"></textarea>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Ngày hết hạn </label>
+                            <input class="form-control" name="DateExpired" ng-model="Device.DateExpired" type="date" required maxlength="200" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="AddNewForm.$invalid" ng-click="Update()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Clear()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="~/Areas/Admin/AngularJS/Device/DeviceApp.js"></script>
 </div>
+
+
+
+
+
+Nhập tin nhắn

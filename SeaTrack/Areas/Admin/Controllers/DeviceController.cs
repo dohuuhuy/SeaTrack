@@ -49,15 +49,15 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateDevice(Device device)
         {
-            try
-            {
+            //try
+            //{
                 var rs = AdminService.CreateDevice(device);
                 return Json(new { success = true });
-            }
-            catch (Exception)
-            {
-                return Json(new { success = false });
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Json(new { success = false });
+            //}
         }
         [HttpGet]
         public JsonResult GetListDeviceNotUsedByUser(int id) //id = UserID
@@ -97,50 +97,22 @@ namespace SeaTrack.Areas.Admin.Controllers
                 throw;
             }
         }
-
-        //[HttpPost]
-        //public ActionResult Editdevice(Device device, int deviceID)
-        //{
-        //    try
-        //    {
-        //        Device tb = AdminService.GetListDeviceByID(deviceID);
-        //        //tb.devicename = device.devicename;
-
-        //        bool res = AdminService.UpdateDevice(tb);
-        //        if (res)
-        //        {
-        //            TempData["EditResult"] = "Cập nhật thành công";
-        //            return RedirectToAction("Editdevice", tb);
-        //        }
-        //        else
-        //        {
-        //            TempData["EditResult"] = "Chưa được cập nhật";
-        //            return RedirectToAction("Editdevice", tb);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        TempData["EditResult"] = "Xảy ra lỗi trong quá trình cập nhật";
-        //        return RedirectToAction("Editdevice", device);
-        //        throw;
-        //    }
-        //}
-
-        //[HttpPost]
-        //public JsonResult Deletedevice(int id)
-        //{
-        //    bool res = AdminService.Deletedevice(id);
-        //    if (res)
-        //    {
-        //        return Json(new { success = true });
-        //    }
-        //    return Json(new { success = false });
-
-        //}
+        [HttpPost]
+        public ActionResult EditDevice(Device device)
+        {
 
 
+            var data = AdminService.UpdateDevice(device);
+            return Json(data, JsonRequestBehavior.AllowGet);
 
+        }
 
+        [HttpGet]
+        public ActionResult DeleteDevice(int id)
+        {
+            var data = AdminService.DeleteDevice(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
