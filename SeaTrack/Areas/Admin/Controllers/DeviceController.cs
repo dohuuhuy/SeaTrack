@@ -75,12 +75,12 @@ namespace SeaTrack.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public JsonResult GetListDeviceOfCustomer(int UserID, string Username) //id = UserID
+        [HttpPost]
+        public JsonResult GetListDeviceOfCustomer(UserInfoDTO user) //id = UserID
         {
             //int AgencyID = UsersService.CheckUsers(Request.Cookies["Username"].Value.ToString(), Request.Cookies["Password"].Value.ToString()).RoleID;
             var us = (Users)Session["User"];
-            var data = AdminService.GetListDeviceOfCustomer(Username, UserID);
+            var data = AdminService.GetListDeviceOfCustomer(user.ManageBy, user.UserID);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

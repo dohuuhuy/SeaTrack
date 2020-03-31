@@ -73,9 +73,11 @@ app.controller("Controller", function ($scope, $http) {
         });
     };
     function GetListDeviceOfCustomer(ManageBy, UserID) {
+        var user = { UserID: UserID, ManageBy: ManageBy };
         $http({
-            method: "GET",
-            url: '/Admin/Device/GetListDeviceOfCustomer?Username=' + ManageBy
+            method: "POST",
+            url: '/Admin/Device/GetListDeviceOfCustomer',
+            data: user
         }).then(function (response) {
             console.log(response, 'res');
             $scope.DevicesNotUsed = response.data;

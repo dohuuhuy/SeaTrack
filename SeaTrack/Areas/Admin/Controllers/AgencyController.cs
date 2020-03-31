@@ -21,6 +21,11 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Device()
+        {
+            return View();
+        }
         public ActionResult Detail(int id)
         {
             if (TempData["EditResult"] != null)
