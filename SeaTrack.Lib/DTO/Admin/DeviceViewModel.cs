@@ -21,5 +21,6 @@ namespace SeaTrack.Areas.Admin.Model
         public string Status { get; set; }
         public int LastUpdateBy { get; set; }
         public string LastUpdateDate { get; set; }
+        public int ExpireStatus { get; set; }
     }
 }

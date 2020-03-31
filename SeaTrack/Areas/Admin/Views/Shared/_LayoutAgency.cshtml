@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Tables - SB Admin</title>
+    <title>Tables - SB Agency</title>
     <link href="~/Content/public/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
 
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Sea Track Admin</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+        <a class="navbar-brand" href="index.html">Sea Track Agency</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button><!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -49,15 +49,15 @@
                         </a>
 
                         <div class="sb-sidenav-menu-heading">Quản Trị</div>
-                        <a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("Index","HomeAdmin", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
+                        @*<a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("Index","HomeAdmin", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý đại lý
-                        </a>
-                        <a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("Customer","HomeAdmin", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
+                        </a>*@
+                        <a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("Customer","Agency", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý Khách hàng
                         </a>
-                        <a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("User","HomeAdmin", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" onclick="location.href='@Url.Action("User","Agency", new { area = "Admin" })'" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý Người dùng
                         </a>
@@ -121,6 +121,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/Content/public/js/scripts.js"></script>
-  
+
 </body>
 </html>

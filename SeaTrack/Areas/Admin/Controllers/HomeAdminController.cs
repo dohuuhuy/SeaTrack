@@ -1,4 +1,5 @@
-﻿using SeaTrack.Lib.DTO.Admin;
+﻿using SeaTrack.Lib.DTO;
+using SeaTrack.Lib.DTO.Admin;
 using SeaTrack.Lib.Service;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public JsonResult ListUser(int id) //id = roleID
         {
@@ -41,11 +43,17 @@ namespace SeaTrack.Areas.Admin.Controllers
         public JsonResult CreateUser(UserInfoDTO user, int roleID)
         {
 
-            user.CreateBy = Request.Cookies["userName"].Value.ToString();
+            //user.CreateBy = Request.Cookies["userName"].Value.ToString();
+            var us = (Users)Session["User"];
+            user.CreateBy = us.Username;
             user.CreateDate = DateTime.Now;
-            user.UpdateBy = "admin";
+            user.UpdateBy = "";
             user.LastUpdateDate = DateTime.Now;
             user.Status = 1;
+            if (user.ManageBy==null)
+            {
+                user.ManageBy = us.Username;
+            }
             var rs = AdminService.CreateUser(user, roleID);
             return Json(new { success = true });
 
@@ -112,17 +120,32 @@ namespace SeaTrack.Areas.Admin.Controllers
                 if (res)
                 {
                     TempData["EditResult"] = "Cập nhật thành công";
+                    var u = Session["User"] as Users;
+                    if (u.RoleID==2)
+                    {
+                        return RedirectToAction("Detail", "Agency", new { id = us.UserID });
+                    }
                     return RedirectToAction("Detail", new { id = us.UserID });
                 }
                 else
                 {
                     TempData["EditResult"] = "Chưa được cập nhật";
+                    var u = Session["User"] as Users;
+                    if (u.RoleID == 2)
+                    {
+                        return RedirectToAction("Detail", "Agency", new { id = us.UserID });
+                    }
                     return RedirectToAction("Detail", new { id = us.UserID });
                 }
             }
             catch (Exception)
             {
                 TempData["EditResult"] = "Xảy ra lỗi trong quá trình cập nhật";
+                var u = Session["User"] as Users;
+                if (u.RoleID == 2)
+                {
+                    return RedirectToAction("Detail", "Agency", new { id = user.UserID });
+                }
                 return RedirectToAction("Detail", new { id = user.UserID });
                 throw;
             }

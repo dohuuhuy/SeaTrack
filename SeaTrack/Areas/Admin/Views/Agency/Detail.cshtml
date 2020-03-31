@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAgency.cshtml";
+}
+
+@model SeaTrack.Lib.DTO.Admin.UserViewModel
+
+<div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID','@Model.RoleID','@Model.ManageBy')">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong ng-if="@Model.RoleID==4">Thông Tin Người Dùng </strong>
+                <strong ng-if="@Model.RoleID==3">Thông Tin Khách Hàng </strong>
+
+            </div>
+            @using (Html.BeginForm("EditUser", "HomeAdmin"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="card-body card-block">
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label class="form-control-label">Username</label></div>
+                        <div class="col-12 col-md-9">
+                            @Html.HiddenFor(m => m.UserID)
+                            @Html.DisplayFor(m => m.Username, new { @class = "form-control-static" })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Password</label></div>
+                        <div class="col-12 col-md-9">@Html.PasswordFor(model => model.Password, new { @value = @Model.Password, @required = "required", @class = "form-control", placeholder = "Text" })</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Họ tên</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Fullname, new { @value = @Model.Fullname, @required = "required", @class = "form-control", placeholder = "Họ tên" })</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Số điện thoại</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Phone, new { @value = @Model.Phone, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                    </div>
+                    @if (Model.RoleID == 4)
+                    {
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Khách hàng</label></div>
+                            <div class="col-12 col-md-9">
+                                @Html.DropDownListFor(m => m.ManageBy, new SelectList(ViewBag.ListCustomer, "Text", "Value"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label class="form-control-label">Quyền tài khoản</label></div>
+                        <div class="col col-md-9">
+                            <div class="form-check-inline form-check">
+                                <label for="inline-radio2" class="form-check-label">
+                                    @Html.RadioButtonFor(model => model.RoleID, 3, Model.RoleID == 3 ? new { @checked = "checked", @id = "inline-radio2", @class = "form-check-input" } : null) Khách hàng
+                                    @*<input ng-checked="@Model.RoleID==3" type="radio" id="inline-radio2" name="inline-radios" value="3" class="form-check-input">Khách hàng*@
+                                </label>&nbsp;
+                                <label for="inline-radio3" class="form-check-label ">
+                                    @Html.RadioButtonFor(model => model.RoleID, 4, Model.RoleID == 4 ? new { @checked = "checked", @id = "inline-radio3", @class = "form-check-input" } : null) Người dùng
+                                    @*<input ng-checked="@Model.RoleID==4" type="radio" id="inline-radio3" name="inline-radios" value="4" class="form-check-input">Người dùng*@
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card">
+                <div class="card-header">
+                    <a href="#" ng-click="AddDevice(id, manageby)" data-target="#AddNew" data-toggle="modal"><i class="fa fa-plus-circle" style="color:black"></i></a>
+                    <strong class="card-title">Danh Sách Thiết Bị</strong>
+                </div>
+                <div class="card-body" style="height:400px; overflow-y:scroll; ">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên thiết bị</th>
+                                <th scope="col">Ngày hết hạn</th>
+                                <th scope="col">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="d in Devices">
+                                <th>{{$index + 1}}</th>
+                                <td>{{d.DeviceName}}</td>
+                                <td>{{d.DateExpired}}</td>
+                                <td align="center">
+                                    <a ng-click="RemoveDeviceFromUser(id, $index)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="AddNew" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-info">Danh sách thiết bị</h3>
+                        <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="LoadDevice(id)">x</button>
+                    </div>
+                    <div class="modal-body" style="margin-left:20px">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên thiết bị</th>
+                                    <th scope="col">Ngày hết hạn</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dv in DevicesNotUsed">
+                                    <th>{{$index + 1}}</th>
+                                    <td>{{dv.DeviceName}}</td>
+                                    <td>{{dv.DateExpired}}</td>
+                                    <td align="center">
+                                        <a ng-click="AddDeviceToUser(id, $index)"><i class="fa fa-plus-circle"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="LoadDevice(id)">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Areas/Admin/AngularJS/Agency/DetailApp.js"></script>

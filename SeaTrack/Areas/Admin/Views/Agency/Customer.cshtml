@@ -1,10 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "Customer";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAgency.cshtml";
 }
 
-<div class="container-fluid" ng-app="AdminModule" ng-controller="AdminController" ng-init="Role(3)">
+<div class="container-fluid" ng-app="AgencyModule" ng-controller="AgencyController" ng-init="Role(3)">
     <h1 class="mt-4">Tables</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -60,7 +60,6 @@
                             <th>Fullname</th>
                             <th>Phone</th>
                             <th>CreateDate</th>
-                            <th>Đại lý</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -68,7 +67,7 @@
                         <tr ng-repeat="c in Customers">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{c.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
+                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
                                 <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)"><i class="fa fa-lock"></i></a>
                                 <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)"><i class="fa fa-unlock"></i></a>
                             </td>
@@ -76,9 +75,8 @@
                             <td>{{c.Fullname}}</td>
                             <td>{{c.Phone}}</td>
                             <td>{{c.CreateDate|date: "yyyy-MM-ddTHH:mm:ss"}}</td>
-                            <td>{{c.ManageBy}}</td>
-                            <td ng-show="c.Status==-1">Tạm khóa</td>
-                            <td ng-show="c.Status==1">Đã kích hoạt</td>
+                            <td ng-if="c.Status==-1"><label style="color:red">Tạm khóa</label></td>
+                            <td ng-if="c.Status==1"><label style="color:green">Đã kích hoạt</label></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,13 +113,6 @@
                                 <label class="control-label"> Address</label>
                                 <input class="form-control" name="Address" ng-model="Address" type="text" placeholder="Address" required maxlength="200" />
                             </div>
-                            <div class="form-group">
-                                <label class="control-label"> Đại lý</label>
-                                <select name="ManageBySelect" id="ManageBySelect" ng-model="ManageBy">
-                                    <option value="">Chọn đại lý</option>
-                                    <option ng-repeat="a in Agencys" value="{{a.Username}}">{{a.Username}}</option>
-                                </select>
-                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -134,10 +125,8 @@
 
     </div>
     <script src="~/Scripts/angular.js"></script>
-    <script src="~/Areas/Admin/AngularJS/Admin/AdminModule.js"></script>
-    <script src="~/Areas/Admin/AngularJS/Admin/AdminService.js"></script>
-    <script src="~/Areas/Admin/AngularJS/Admin/AdminController.js"></script>
-    <script src="~/Areas/Admin/AngularJS/Admin/AdminFilter.js"></script>
-
+    <script src="~/Areas/Admin/AngularJS/Agency/AgencyModule.js"></script>
+    <script src="~/Areas/Admin/AngularJS/Agency/AgencyService.js"></script>
+    <script src="~/Areas/Admin/AngularJS/Agency/AgencyController.js"></script>
 </div>
 

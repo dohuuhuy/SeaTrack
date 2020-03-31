@@ -1,13 +1,25 @@
 ﻿var app = angular.module("App", []);
 
 app.controller("Controller", function ($scope, $http) {
-    $scope.UserID = function (id) {
+    $scope.UserID = function (id, role, manageby) {
         $scope.id = id;
-        fetchData(id);
+        $scope.role = role;
+        $scope.manageby = manageby;
+            fetchData(id);
+            if (role == 3) {
+    
+}
+
         //GetListDeviceNotUsedByUser(id);
     }
-    $scope.AddDevice = function (UserID) {
+    $scope.AddDevice = function (UserID, ManageBy) {
+        if ($scope.role == 3) {
         GetListDeviceNotUsedByUser(UserID);
+        }
+        if ($scope.role == 4) {
+        GetListDeviceOfCustomer(ManageBy, UserID);
+        }
+
     }
     $scope.RemoveDeviceFromUser = function (UserID, index) {
         DeviceToRemove = $scope.Devices[index];
@@ -52,7 +64,7 @@ app.controller("Controller", function ($scope, $http) {
     function GetListDeviceNotUsedByUser(UserID) {
         $http({
             method: "GET",
-            url: '/Admin/Device/GetListDeviceNotUsedByUser/' + UserID
+            url: '/Admin/Device/GetListDeviceBelongToAgencyNotUsedByUser/' + UserID
         }).then(function (response) {
             console.log(response, 'res');
             $scope.DevicesNotUsed = response.data;
@@ -60,6 +72,18 @@ app.controller("Controller", function ($scope, $http) {
             console.log(error, 'can not get data.');
         });
     };
+    function GetListDeviceOfCustomer(ManageBy, UserID) {
+        $http({
+            method: "GET",
+            url: '/Admin/Device/GetListDeviceOfCustomer?Username=' + ManageBy
+        }).then(function (response) {
+            console.log(response, 'res');
+            $scope.DevicesNotUsed = response.data;
+        }, function (error) {
+            console.log(error, 'can not get data.');
+        });
+    };
+
     function fetchData(UserID) {
         $http({
             method: "GET",

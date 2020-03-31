@@ -215,6 +215,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AgencyController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -272,6 +273,10 @@
     <Content Include="Areas\Admin\AngularJS\Admin\AdminModule.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\AdminService.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\UserDetailApp.js" />
+    <Content Include="Areas\Admin\AngularJS\Agency\AgencyController.js" />
+    <Content Include="Areas\Admin\AngularJS\Agency\AgencyModule.js" />
+    <Content Include="Areas\Admin\AngularJS\Agency\AgencyService.js" />
+    <Content Include="Areas\Admin\AngularJS\Agency\DetailApp.js" />
     <Content Include="Areas\Admin\AngularJS\Device\DeviceApp.js" />
     <Content Include="Content\public\assets\demo\chart-area-demo.js" />
     <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
@@ -2893,6 +2898,10 @@
     <Content Include="Areas\Admin\Views\Device\Show.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Customer.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\User.cshtml" />
+    <Content Include="Areas\Admin\Views\Agency\Customer.cshtml" />
+    <Content Include="Areas\Admin\Views\Agency\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAgency.cshtml" />
+    <Content Include="Areas\Admin\Views\Agency\User.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

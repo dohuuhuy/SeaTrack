@@ -17,7 +17,7 @@ namespace SeaTrack.Lib.DTO
         public int Status { get; set; }
         public String CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime UpdateBy { get; set; }
+        public string UpdateBy { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public int RoleID { get; set; }
 

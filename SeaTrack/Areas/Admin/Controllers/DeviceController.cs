@@ -65,6 +65,24 @@ namespace SeaTrack.Areas.Admin.Controllers
             var data = AdminService.GetListDeviceNotUsedByUser(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetListDeviceBelongToAgencyNotUsedByUser() //id = UserID
+        {
+            //int AgencyID = UsersService.CheckUsers(Request.Cookies["Username"].Value.ToString(), Request.Cookies["Password"].Value.ToString()).RoleID;
+            var us = (Users)Session["User"];
+            var data = AdminService.GetListDeviceBelongToAgencyNotUsedByUser(us.UserID, us.Username);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetListDeviceOfCustomer(int UserID, string Username) //id = UserID
+        {
+            //int AgencyID = UsersService.CheckUsers(Request.Cookies["Username"].Value.ToString(), Request.Cookies["Password"].Value.ToString()).RoleID;
+            var us = (Users)Session["User"];
+            var data = AdminService.GetListDeviceOfCustomer(Username, UserID);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult RemoveDeviceFromUser(User_Device ud)
         {

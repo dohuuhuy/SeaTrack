@@ -31,9 +31,9 @@ namespace SeaTrack.Lib.Service
                         Address = reader["Address"].ToString(),
                         Status = Convert.ToInt16(reader["Status"]),
                         CreateBy = reader["CreateBy"].ToString(),
-                        CreateDate = Convert.ToDateTime(reader["CreateDate"]),
-                        UpdateBy = Convert.ToDateTime(reader["UpdateBy"]),
-                        LastUpdateDate = Convert.ToDateTime(reader["LastUpdateDate"]),
+                        CreateDate = Convert.ToDateTime(reader["CreateDate"].ToString()),
+                        UpdateBy = (reader["UpdateBy"].ToString()),
+                        LastUpdateDate = Convert.ToDateTime(reader["LastUpdateDate"].ToString()),
                         RoleID = Convert.ToInt16(reader["RoleID"]),
 
                     };
