@@ -192,26 +192,38 @@ namespace SeaTrack.Lib.Service
         #region
         public static int CreateDevice(Device device)
         {
-            return SqlHelper.ExecuteNonQuery
+            var reader = SqlHelper.ExecuteReader
                 (
                 ConnectData.ConnectionString,
-                "View_CreateDevice",
-
+                "[sp_CreateDevice]",
                 device.DeviceNo,
                 device.DeviceName,
                 device.DeviceVersion,
                 device.DeviceImei,
                 device.DeviceGroup,
                 device.DateExpired,
-                device.DeviceNote
-
+                device.DeviceNote,
+                device.StatusDevice,
+                device.CreateBy,
+                device.DateCreate
                 );
+            if (reader.HasRows)
+            {
+                int ID = 0;
+                while (reader.Read())
+                {
+                    ID = Convert.ToInt32(reader["DeviceID"]);
+                }
+                return ID;
+
+            }
+            return 0;
         }
 
         public static int UpdateDevice(Device device)
         {
             return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_UpdateDevice", device.DeviceID, device.DeviceNo, device.DeviceName,
-                device.DateExpired, device.DeviceNote, device.Status, device.LastUpdateBy);
+                device.DateExpired, device.DeviceNote, device.StatusDevice, device.LastUpdateBy);
         }
 
         public static List<DeviceViewModel> GetListDevice()
@@ -282,111 +294,117 @@ namespace SeaTrack.Lib.Service
                         DeviceID = Convert.ToInt32(reader["DeviceID"]),
                         DeviceNo = reader["DeviceNo"].ToString(),
                         DeviceName = reader["DeviceName"].ToString(),
-                        DateExpired = reader["DateExpired"].ToString()
-                    };
-                    lst.Add(data);
-                }
+                        DeviceImei = reader["DeviceImei"].ToString(),
+                        DeviceVersion = reader["DeviceVersion"].ToString(),
+                        DeviceGroup = reader["DeviceGroup"].ToString(),
+                        DeviceNote = reader["DeviceNote"].ToString(),
+                        DateExpired = (reader["DateExpired"].ToString()),
+                        StatusDevice = Convert.ToInt32(reader["StatusDevice"]),
+                        ExpireStatus = DateTime.Compare(Convert.ToDateTime(reader["DateExpired"]), DateTime.Now) > 0 ? 1 : -1
+                };
+                lst.Add(data);
             }
+        }
             return lst;
         } //Lấy danh sách device theo UserID
 
-        public static List<DeviceViewModel> GetListDeviceNotUsedByUser(int UserID)
+    public static List<DeviceViewModel> GetListDeviceNotUsedByUser(int UserID)
+    {
+        List<DeviceViewModel> lst = null;
+        var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceNotUsedByUser", UserID);
+        if (reader.HasRows)
         {
-            List<DeviceViewModel> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceNotUsedByUser", UserID);
-            if (reader.HasRows)
-            {
-                lst = new List<DeviceViewModel>();
+            lst = new List<DeviceViewModel>();
 
-                while (reader.Read())
+            while (reader.Read())
+            {
+                var data = new DeviceViewModel()
                 {
-                    var data = new DeviceViewModel()
-                    {
-                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        DeviceNo = reader["DeviceNo"].ToString(),
-                        DeviceName = reader["DeviceName"].ToString(),
-                        DateExpired = reader["DateExpired"].ToString()
-                    };
-                    lst.Add(data);
-                }
+                    DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                    DeviceNo = reader["DeviceNo"].ToString(),
+                    DeviceName = reader["DeviceName"].ToString(),
+                    DateExpired = reader["DateExpired"].ToString()
+                };
+                lst.Add(data);
+            }
+        }
+        return lst;
+    }
+
+    public static List<DeviceViewModel> GetListDeviceBelongToAgencyNotUsedByUser(int AgencyID, string Username)
+    {
+        List<DeviceViewModel> lst = null;
+        var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceBelongToAgencyNotUsedByUser", AgencyID, Username);
+        if (reader.HasRows)
+        {
+            lst = new List<DeviceViewModel>();
+            while (reader.Read())
+            {
+                var data = new DeviceViewModel()
+                {
+                    DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                    DeviceNo = reader["DeviceNo"].ToString(),
+                    DeviceName = reader["DeviceName"].ToString(),
+                    DateExpired = reader["DateExpired"].ToString()
+                };
+                lst.Add(data);
             }
             return lst;
-        }
 
-        public static List<DeviceViewModel> GetListDeviceBelongToAgencyNotUsedByUser(int AgencyID, string Username)
+        }
+        return null;
+    }
+
+    public static List<DeviceViewModel> GetListDeviceOfCustomer(string Username, int UserID)
+    {
+        List<DeviceViewModel> lst = null;
+        var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceOfCustomer", Username, UserID);
+        if (reader.HasRows)
         {
-            List<DeviceViewModel> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceBelongToAgencyNotUsedByUser", AgencyID, Username);
-            if (reader.HasRows)
+            lst = new List<DeviceViewModel>();
+            while (reader.Read())
             {
-                lst = new List<DeviceViewModel>();
-                while (reader.Read())
+                var data = new DeviceViewModel()
                 {
-                    var data = new DeviceViewModel()
-                    {
-                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        DeviceNo = reader["DeviceNo"].ToString(),
-                        DeviceName = reader["DeviceName"].ToString(),
-                        DateExpired = reader["DateExpired"].ToString()
-                    };
-                    lst.Add(data);
-                }
-                return lst;
-
+                    DeviceID = Convert.ToInt32(reader["DeviceID"]),
+                    DeviceNo = reader["DeviceNo"].ToString(),
+                    DeviceName = reader["DeviceName"].ToString(),
+                    DateExpired = reader["DateExpired"].ToString()
+                };
+                lst.Add(data);
             }
-            return null;
-        }
-
-        public static List<DeviceViewModel> GetListDeviceOfCustomer(string Username, int UserID)
-        {
-            List<DeviceViewModel> lst = null;
-            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_GetListDeviceOfCustomer", Username, UserID);
-            if (reader.HasRows)
-            {
-                lst = new List<DeviceViewModel>();
-                while (reader.Read())
-                {
-                    var data = new DeviceViewModel()
-                    {
-                        DeviceID = Convert.ToInt32(reader["DeviceID"]),
-                        DeviceNo = reader["DeviceNo"].ToString(),
-                        DeviceName = reader["DeviceName"].ToString(),
-                        DateExpired = reader["DateExpired"].ToString()
-                    };
-                    lst.Add(data);
-                }
-                return lst;
-
-            }
-            return null;
+            return lst;
 
         }
-        public static int RemoveDeviceFromUser(int UserID, int DeviceID)
-        {
-            return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_RemoveDeviceFromUser", UserID, DeviceID);
-        }
+        return null;
 
-        public static int AddDeviceToUser(int UserID, int DeviceID, string CreateBy)
-        {
-            return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_AddDeviceToUser", UserID, DeviceID, CreateBy);
-        }
+    }
+    public static int RemoveDeviceFromUser(int UserID, int DeviceID)
+    {
+        return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_RemoveDeviceFromUser", UserID, DeviceID);
+    }
 
-        public static bool DeleteDevice(int DeviceID)
+    public static int AddDeviceToUser(int UserID, int DeviceID, string CreateBy)
+    {
+        return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_AddDeviceToUser", UserID, DeviceID, CreateBy);
+    }
+
+    public static bool DeleteDevice(int DeviceID)
+    {
+        try
         {
-            try
-            {
-                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "View_DeleteDevice", DeviceID);
-                if (res == 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception)
+            int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_DeleteDevice", DeviceID);
+            if (res == 0)
             {
                 return false;
             }
+            return true;
         }
-        #endregion
+        catch (Exception)
+        {
+            return false;
+        }
     }
+    #endregion
+}
 }

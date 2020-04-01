@@ -18,8 +18,8 @@ namespace SeaTrack.Lib.DTO
         public DateTime DateExpired { get; set; }
         public string DeviceNote { get; set; }
 
-        public int CreateBy { get; set; }
-        public string Status { get; set; }
+        public string CreateBy { get; set; }
+        public int StatusDevice { get; set; }
         public int LastUpdateBy { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }

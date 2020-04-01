@@ -35,9 +35,10 @@ namespace SeaTrack.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult GetListDeviceByUserID(int id)
+        public ActionResult GetListDeviceByUserID()
         {
-            var data = AdminService.GetListDeviceByUserID(id);
+            var user = (Users)Session["User"];
+            var data = AdminService.GetListDeviceByUserID(user.UserID);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
@@ -58,6 +59,18 @@ namespace SeaTrack.Areas.Admin.Controllers
             //{
             //    return Json(new { success = false });
             //}
+        }
+        [HttpPost]
+        public JsonResult AgencyCreateDevice(Device device)
+        {
+            
+            var user = (Users)Session["User"];
+            device.CreateBy = user.Username;
+            device.DateCreate = DateTime.Now;
+            device.StatusDevice = 1;
+            var rs = AdminService.CreateDevice(device);
+            var rs1 = AdminService.AddDeviceToUser(user.UserID, rs, user.Username);
+            return Json(new { success = true });
         }
         [HttpGet]
         public JsonResult GetListDeviceNotUsedByUser(int id) //id = UserID

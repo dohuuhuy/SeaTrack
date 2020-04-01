@@ -274,6 +274,7 @@
     <Content Include="Areas\Admin\AngularJS\Admin\AdminService.js" />
     <Content Include="Areas\Admin\AngularJS\Admin\UserDetailApp.js" />
     <Content Include="Areas\Admin\AngularJS\Agency\AgencyController.js" />
+    <Content Include="Areas\Admin\AngularJS\Agency\AgencyDeviceApp.js" />
     <Content Include="Areas\Admin\AngularJS\Agency\AgencyModule.js" />
     <Content Include="Areas\Admin\AngularJS\Agency\AgencyService.js" />
     <Content Include="Areas\Admin\AngularJS\Agency\DetailApp.js" />
@@ -2902,6 +2903,8 @@
     <Content Include="Areas\Admin\Views\Agency\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAgency.cshtml" />
     <Content Include="Areas\Admin\Views\Agency\User.cshtml" />
+    <Content Include="Areas\Admin\Views\Agency\Device.cshtml" />
+    <Content Include="Areas\Admin\Views\Agency\DeviceDetail.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

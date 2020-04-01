@@ -18,7 +18,7 @@ namespace SeaTrack.Areas.Admin.Model
         public string DeviceNote { get; set; }
 
         public int CreateBy { get; set; }
-        public string Status { get; set; }
+        public int StatusDevice { get; set; }
         public int LastUpdateBy { get; set; }
         public string LastUpdateDate { get; set; }
         public int ExpireStatus { get; set; }
