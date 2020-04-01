@@ -72,27 +72,6 @@ namespace SeaTrack.Areas.Admin.Controllers
             }
             UserViewModel us = new UserViewModel();
             us = AdminService.GetUserByID(id);
-            if (us.RoleID == 3)
-            {
-                List<UserViewModel> Agencys = AdminService.GetListUser(2);
-                List<SelectListItem> items = new List<SelectListItem>();
-                foreach (var a in Agencys)
-                {
-                    items.Add(new SelectListItem { Text = a.Username, Value = a.Username, Selected = a.ManageBy == us.ManageBy ? true : false });
-                }
-                ViewBag.ListAgencys = items;
-            }
-            if (us.RoleID == 4)
-            {
-                List<UserViewModel> Customer = AdminService.GetListUser(3);
-                List<SelectListItem> items = new List<SelectListItem>();
-                foreach (var a in Customer)
-                {
-                    items.Add(new SelectListItem { Text = a.Username, Value = a.Username, Selected = a.ManageBy == us.ManageBy ? true : false });
-                }
-                ViewBag.ListCustomer = items;
-            }
-
             return View(us);
         }
 

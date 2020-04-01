@@ -1,13 +1,23 @@
 ﻿var app = angular.module("App", []);
 
 app.controller("Controller", function ($scope, $http) {
-    $scope.UserID = function (id) {
+    $scope.UserID = function (id, role, managey) {
+        $scope.role = role;
         $scope.id = id;
+        $scope.manageby = managey;
         fetchData(id);
         //GetListDeviceNotUsedByUser(id);
     }
-    $scope.AddDevice = function (UserID) {
-        GetListDeviceNotUsedByUser(UserID);
+    $scope.AddDevice = function (Username, id) {
+        if($scope.role == 2){
+        GetListDeviceNotUsedByUser(); //lấy danh sách thiết bị chưa được sử dụng
+        }
+        if($scope.role == 3){
+        GetListDeviceNotUsedByUser(Username);//Lấy danh sách thiết bị của đại lý chưa được sử dụng
+        }        
+        if($scope.role == 4){
+        GetListDeviceOfCustomer(Username, id);//Lây danh sách thiết bị của khách hàng
+        }
     }
     $scope.RemoveDeviceFromUser = function (UserID, index) {
         DeviceToRemove = $scope.Devices[index];
@@ -49,10 +59,10 @@ app.controller("Controller", function ($scope, $http) {
     $scope.LoadDevice = function (UserID) {
         fetchData(UserID);
     }
-    function GetListDeviceNotUsedByUser(UserID) {
+    function GetListDeviceNotUsedByUser(Username) {
         $http({
             method: "GET",
-            url: '/Admin/Device/GetListDeviceNotUsedByUser/' + UserID
+            url: '/Admin/Device/GetListDeviceNotUsedByUser?Username='+Username
         }).then(function (response) {
             console.log(response, 'res');
             $scope.DevicesNotUsed = response.data;
@@ -60,6 +70,20 @@ app.controller("Controller", function ($scope, $http) {
             console.log(error, 'can not get data.');
         });
     };
+    function GetListDeviceOfCustomer(ManageBy, UserID) { //ManageBy: Username khách hàng, UserID: UserID người dùng
+        var user = { UserID: UserID, ManageBy: ManageBy };
+        $http({
+            method: "POST",
+            url: '/Admin/Device/GetListDeviceOfCustomer',
+            data: user
+        }).then(function (response) {
+            console.log(response, 'res');
+            $scope.DevicesNotUsed = response.data;
+        }, function (error) {
+            console.log(error, 'can not get data.');
+        });
+    };
+
     function fetchData(UserID) {
         $http({
             method: "GET",

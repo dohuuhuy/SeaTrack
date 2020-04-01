@@ -27,9 +27,10 @@ namespace SeaTrack.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult DeviceDetail()
+        public ActionResult DeviceDetail(int id)
         {
-            return View();
+            DeviceViewModel device = AdminService.GetDeviceByID(id);
+            return View(device);
         }
         public ActionResult Detail(int id)
         {
@@ -38,7 +39,7 @@ namespace SeaTrack.Areas.Admin.Controllers
                 ViewBag.EditResult = TempData["EditResult"].ToString();
             }
             UserViewModel us = new UserViewModel();
-            us = AdminService.GetUserByID(id);         
+            us = AdminService.GetUserByID(id);
             if (us.RoleID == 4)
             {
                 //string Username = Request.Cookies["Username"].Value.ToString();
@@ -54,7 +55,21 @@ namespace SeaTrack.Areas.Admin.Controllers
 
             return View(us);
         }
-
+        [HttpPost]
+        public ActionResult Update(DeviceViewModel device)
+        {
+            Device dv = new Lib.DTO.Device();
+            dv.DeviceID = device.DeviceID;
+            dv.DeviceNo = device.DeviceNo;
+            dv.DeviceName = device.DeviceName;
+            dv.DeviceVersion = device.DeviceVersion;
+            dv.DeviceImei = device.DeviceImei;
+            dv.DeviceGroup = device.DeviceGroup;
+            dv.DeviceNote = device.DeviceNote;
+            dv.DateExpired = device.ExpireDate;
+            var res = AdminService.UpdateDevice(dv);
+            return RedirectToAction("DeviceDetail", new { id = dv.DeviceID });
+        }
         [HttpGet]
         public JsonResult GetListUserByUserID(int id) //id = RoleID
         {

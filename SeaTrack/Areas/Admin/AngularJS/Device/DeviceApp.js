@@ -61,7 +61,8 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
                 url: '/Admin/Device/CreateDevice',
                 data: JSON.stringify($scope.Device)
             }).then(function successCallback(response) {
-                $scope.namesData.push(response.data);
+                LoadDevice();
+                //$scope.namesData.push(response.data);
                 $scope.Clear();
                 alert(" Added Successfully !!!");
             }, function errorCallback(response) {
@@ -137,12 +138,22 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
             method: 'GET',
             url: '/Admin/Device/DeleteDevice/' + $scope.namesData[index].DeviceID
         }).then(function successCallback(response) {
-            $scope.namesData.splice(index, 1);
+            //$scope.namesData.splice(index, 1);
+            LoadDevice();
             alert("Customer Deleted Successfully !!!");
         }, function errorCallback(response) {
             alert("Error : " + response.data.ExceptionMessage);
         });
     };
+
+    function LoadDevice(){
+        DeviceService.GetAllRecords().then(function (d) {
+        $scope.namesData = d.data;
+    }, function () {
+        alert('Unable to Get Data !!!');
+    });
+
+    }
 });
 
 

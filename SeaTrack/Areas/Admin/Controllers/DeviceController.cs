@@ -17,6 +17,27 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult Detail(int id)
+        {
+            var device = AdminService.GetDeviceByID(id);
+            return View(device);
+        }
+
+        [HttpPost]
+        public ActionResult Update(DeviceViewModel device)
+        {
+            Device dv = new Lib.DTO.Device();
+            dv.DeviceID = device.DeviceID;
+            dv.DeviceNo = device.DeviceNo;
+            dv.DeviceName = device.DeviceName;
+            dv.DeviceVersion = device.DeviceVersion;
+            dv.DeviceImei = device.DeviceImei;
+            dv.DeviceGroup = device.DeviceGroup;
+            dv.DeviceNote = device.DeviceNote;
+            dv.DateExpired = device.ExpireDate;
+            var res = AdminService.UpdateDevice(dv);
+            return RedirectToAction("Detail", new { id = dv.DeviceID });
+        }
         public ActionResult Show()
         {
             return View();
@@ -35,11 +56,20 @@ namespace SeaTrack.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult GetListDeviceByUserID()
+        public ActionResult GetListDeviceByUserID(int? id)
         {
-            var user = (Users)Session["User"];
-            var data = AdminService.GetListDeviceByUserID(user.UserID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            if (id == null)
+            {
+                var user = (Users)Session["User"];
+                var data = AdminService.GetListDeviceByUserID(user.UserID);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = AdminService.GetListDeviceByUserID((int)id);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
         }
         [HttpGet]
         public ActionResult GetListDeviceStatus()
@@ -72,10 +102,13 @@ namespace SeaTrack.Areas.Admin.Controllers
             var rs1 = AdminService.AddDeviceToUser(user.UserID, rs, user.Username);
             return Json(new { success = true });
         }
+
+        //UserID != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
+        //UserID == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
         [HttpGet]
-        public JsonResult GetListDeviceNotUsedByUser(int id) //id = UserID
+        public JsonResult GetListDeviceNotUsedByUser(string Username) //id = UserID
         {
-            var data = AdminService.GetListDeviceNotUsedByUser(id);
+            var data = AdminService.GetListDeviceNotUsedByUser(Username);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

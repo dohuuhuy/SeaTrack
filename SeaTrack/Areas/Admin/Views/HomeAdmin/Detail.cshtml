@@ -5,7 +5,7 @@
 }
 @model SeaTrack.Lib.DTO.Admin.UserViewModel
 
-<div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID')">
+<div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID','@Model.RoleID','@Model.ManageBy')">
 
     <div class="col-md-6">
         <div class="card">
@@ -45,45 +45,14 @@
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
                         <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
                     </div>
-                    @if (Model.RoleID == 3)
-                    {
-                        <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Đại lý</label></div>
-                            <div class="col-12 col-md-9">
-                                @Html.DropDownListFor(m => m.ManageBy, new SelectList(ViewBag.ListAgencys, "Text", "Value"), new { @class = "form-control" })
-                            </div>
-                        </div>
-
-                    }
-                    @if (Model.RoleID == 4)
-                    {
-                        <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Khách hàng</label></div>
-                            <div class="col-12 col-md-9">
-                                @Html.DropDownListFor(m => m.ManageBy, new SelectList(ViewBag.ListCustomer, "Text", "Value"), new { @class = "form-control" })
-                            </div>
-                        </div>
-                    }
-
                     <div class="row form-group">
-                        <div class="col col-md-3"><label class="form-control-label">Quyền tài khoản</label></div>
-                        <div class="col col-md-9">
-                            <div class="form-check-inline form-check">
-                                <label for="inline-radio1" class="form-check-label">
-                                    @Html.RadioButtonFor(model => model.RoleID, 2, Model.RoleID == 2 ? new { @checked = "checked", @id = "inline-radio1", @class = "form-check-input" } : null) Đại lý
-                                    @*<input ng-checked="@Model.RoleID==2" type="radio" id="inline-radio1" name="inline-radios" value="2" class="form-check-input">Đại lý*@
-                                </label>&nbsp;
-                                <label for="inline-radio2" class="form-check-label">
-                                    @Html.RadioButtonFor(model => model.RoleID, 3, Model.RoleID == 3 ? new { @checked = "checked", @id = "inline-radio2", @class = "form-check-input" } : null) Khách hàng
-                                    @*<input ng-checked="@Model.RoleID==3" type="radio" id="inline-radio2" name="inline-radios" value="3" class="form-check-input">Khách hàng*@
-                                </label>&nbsp;
-                                <label for="inline-radio3" class="form-check-label ">
-                                    @Html.RadioButtonFor(model => model.RoleID, 4, Model.RoleID == 4 ? new { @checked = "checked", @id = "inline-radio3", @class = "form-check-input" } : null) Người dùng
-                                    @*<input ng-checked="@Model.RoleID==4" type="radio" id="inline-radio3" name="inline-radios" value="4" class="form-check-input">Người dùng*@
-                                </label>
-                            </div>
+                        <div class="col col-md-3"><label class="form-control-label">Manage By: </label></div>
+                        <div class="col-12 col-md-9">
+                            @Html.DisplayFor(m => m.ManageBy, new { @class = "form-control-static" })
+                            @*<p class="form-control-static">@Model.Username</p>*@
                         </div>
                     </div>
+
                     @*<input type="submit" value="Submit" />*@
                     <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> Submit
@@ -125,7 +94,7 @@
         <div class="card">
             <div class="card">
                 <div class="card-header">
-                    <a href="#" ng-click="AddDevice(id)" data-target="#AddNew" data-toggle="modal"><i class="fa fa-plus-circle" style="color:black"></i></a>
+                    <a href="#" ng-click="AddDevice(manageby, id)" data-target="#AddNew" data-toggle="modal"><i class="fa fa-plus-circle" style="color:black"></i></a>
                     <strong class="card-title">Danh Sách Thiết Bị</strong>
                 </div>
                 <div class="card-body" style="height:400px; overflow-y:scroll; ">

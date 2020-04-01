@@ -100,7 +100,6 @@ E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CoreCompileInputs.cache
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
 E:\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
-D:\Work\git\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojResolveAssemblyReference.cache
 E:\oke\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll.config
 E:\oke\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.dll
 E:\oke\SeaTrack\SeaTrack.Lib\bin\Debug\SeaTrack.Lib.pdb
@@ -138,3 +137,4 @@ D:\Github\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojAssemblyReference.c
 D:\Github\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csproj.CopyComplete
 D:\Github\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.dll
 D:\Github\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.pdb
+D:\Work\git\SeaTrack\SeaTrack.Lib\obj\Debug\SeaTrack.Lib.csprojResolveAssemblyReference.cache

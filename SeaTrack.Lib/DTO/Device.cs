@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +16,13 @@ namespace SeaTrack.Lib.DTO
         public string DeviceImei { get; set; }
         public DateTime DateCreate { get; set; }
         public string DeviceGroup { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime DateExpired { get; set; }
         public string DeviceNote { get; set; }
 
         public string CreateBy { get; set; }
         public int StatusDevice { get; set; }
-        public int LastUpdateBy { get; set; }
+        public string LastUpdateBy { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }
 }

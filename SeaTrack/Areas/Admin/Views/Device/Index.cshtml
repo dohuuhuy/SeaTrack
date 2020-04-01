@@ -63,8 +63,8 @@
                             <th>Tên thiết bị</th>
                             <th> Phiên bản</th>
                             <th> Imei</th>
-                            <th> Nhóm tàu</th>
                             <th> Ngày hết hạn</th>
+                            <th> Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,6 +72,7 @@
                             <td>{{$index+1}}</td>
 
                             <td>
+                                <a href="#" data-ng-href="@Url.Action("Detail","Device", new { area = "Admin"})/{{a.DeviceID}}">Detail</a>
 
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
                                     <i class="fa fa-eye" style="color:aqua">as</i>
@@ -83,8 +84,12 @@
                             <td>{{a.DeviceName}}</td>
                             <td>{{a.DeviceVersion}}</td>
                             <td>{{a.DeviceImei}}</td>
-                            <td>{{a.DeviceGroup}}</td>
-                            <td>{{a.DateExpired}}</td>
+                            <td ng-if="a.ExpireStatus == -1"><p style="color:red">{{a.DateExpired}}</p></td>
+                            <td ng-if="a.ExpireStatus == 1"><p style="color:forestgreen">{{a.DateExpired}}</p></td>
+                            <td ng-if="a.StatusDevice == 1"><p style="color:forestgreen">Đang kích hoạt</p></td>
+                            <td ng-if="a.StatusDevice == -1"><p style="color:red">Tạm khóa</p></td>
+                            <td ng-if="a.StatusDevice == 0"><p style="color:red">Đã hết hạn</p></td>
+
                             Tổng:
                             <p ng-bind="total()"></p>
                         </tr>

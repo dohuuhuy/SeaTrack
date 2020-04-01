@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SeaTrack.Areas.Admin.Model
+namespace SeaTrack.Lib.DTO.Admin
 {
     public class DeviceViewModel
     {
@@ -22,5 +24,6 @@ namespace SeaTrack.Areas.Admin.Model
         public int LastUpdateBy { get; set; }
         public string LastUpdateDate { get; set; }
         public int ExpireStatus { get; set; }
+        public DateTime ExpireDate { get; set; }
     }
 }

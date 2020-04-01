@@ -73,7 +73,7 @@
                             <td>{{$index+1}}</td>
 
                             <td>
-
+                                <a href="#" data-ng-href="@Url.Action("DeviceDetail","Agency", new { area = "Admin"})/{{a.DeviceID}}">Detail</a>
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
                                     <i class="fa fa-eye" style="color:aqua">as</i>
                                 </a>|
@@ -88,7 +88,6 @@
                             <td ng-if="a.ExpireStatus == 1"><p style="color:forestgreen">{{a.DateExpired}}</p></td>
                             <td ng-if="a.StatusDevice == 1"><p style="color:forestgreen">Đang kích hoạt</p></td>
                             <td ng-if="a.StatusDevice == -1"><p style="color:red">Tạm khóa</p></td>
-                            @*<td ng-if="a.ExpireStatus == -1"><p style="color:gold"></p>Đã hết hạn</td>*@
                             Tổng:
                             <p ng-bind="total()"></p>
                         </tr>

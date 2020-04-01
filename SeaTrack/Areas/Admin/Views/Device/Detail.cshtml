@@ -1,48 +1,53 @@
 ﻿
 @{
     ViewBag.Title = "Detail";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAgency.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@model SeaTrack.Lib.DTO.Admin.UserViewModel
+@model SeaTrack.Lib.DTO.Admin.DeviceViewModel
 
-<div class="row" ng-app="App" ng-controller="Controller" ng-init="UserID('@Model.UserID','@Model.RoleID','@Model.ManageBy')">
+
+<div class="row" ng-app="App" ng-controller="Controller">
 
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <strong ng-if="@Model.RoleID==4">Thông Tin Người Dùng </strong>
-                <strong ng-if="@Model.RoleID==3">Thông Tin Khách Hàng </strong>
-
+                <strong>Thông Tin Thiết Bị </strong>
             </div>
-            @using (Html.BeginForm("EditUser", "HomeAdmin"))
+            @using (Html.BeginForm("Update", "Device"))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="card-body card-block">
+                    @Html.HiddenFor(m => m.DeviceID)
                     <div class="row form-group">
-                        <div class="col col-md-3"><label class="form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9">
-                            @Html.HiddenFor(m => m.UserID)
-                            @Html.DisplayFor(m => m.Username, new { @class = "form-control-static" })
-                        </div>
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Số hiệu</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceNo, new { @required = "required", @class = "form-control", placeholder = "Số hiệu" })</div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9">@Html.PasswordFor(model => model.Password, new { @value = @Model.Password, @required = "required", @class = "form-control", placeholder = "Text" })</div>
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Tên thiết bị</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceName, new { @required = "required", @class = "form-control", placeholder = "Tên thiết bị" })</div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Họ tên</label></div>
-                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Fullname, new { @value = @Model.Fullname, @required = "required", @class = "form-control", placeholder = "Họ tên" })</div>
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Phiên bản</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceVersion, new { @required = "required", @class = "form-control", placeholder = "Phiên bản" })</div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Số điện thoại</label></div>
-                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Phone, new { @value = @Model.Phone, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Imei</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceImei, new { @required = "required", @class = "form-control", placeholder = "Imei" })</div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
-                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Nhóm thiết bị</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceGroup, new { @required = "required", @class = "form-control", placeholder = "Nhóm thiết bị" })</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Ghi chú</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.DeviceNote, new { @required = "required", @class = "form-control", placeholder = "Ghi chú" })</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Ngày hết hạn</label></div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.ExpireDate, "{0:yyyy-MM-dd}", new { @min = DateTime.Today.ToString("yyyy-MM-dd"), @required = "required", @class = "form-control", @type = "date", placeholder = "Ngày hết hạn" })</div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> Submit
@@ -55,7 +60,7 @@
 
     <div class="col-md-6">
         <div class="card">
-            <div class="card">
+            @*<div class="card">
                 <div class="card-header">
                     <a href="#" ng-click="AddDevice(id, manageby)" data-target="#AddNew" data-toggle="modal"><i class="fa fa-plus-circle" style="color:black"></i></a>
                     <strong class="card-title">Danh Sách Thiết Bị</strong>
@@ -83,10 +88,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>*@
         </div>
 
-        <div class="modal" id="AddNew" role="dialog" data-keyboard="false" data-backdrop="static">
+        @*<div class="modal" id="AddNew" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,9 +127,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
     </div>
 </div>
 <script src="~/Scripts/angular.js"></script>
-<script src="~/Areas/Admin/AngularJS/Agency/DetailApp.js"></script>
+@*<script src="~/Areas/Admin/AngularJS/Agency/DetailApp.js"></script>*@
+
+
