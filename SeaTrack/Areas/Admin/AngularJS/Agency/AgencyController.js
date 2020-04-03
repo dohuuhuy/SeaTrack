@@ -83,17 +83,12 @@
     $scope.LockUser = function(UserID){
         var res = AgencyService.LockUser(UserID);
         res.then(function(d) {
-            if(d.data.success === true) {
-                if($scope.role == 2){
-                    LoadListAgency();
-                }
-                if($scope.role == 3){
-                    LoadListCustomer();
-                }
-                if ($scope.role == 4) {
-                    LoadListUser();
-                }
-
+            alert(d.data)
+            if($scope.role == 3){
+                LoadListCustomer();
+            }
+            if ($scope.role == 4) {
+                LoadListUser();
             }
         })
     }
@@ -101,17 +96,12 @@
     $scope.UnLockUser = function(UserID){
         var res = AgencyService.UnLockUser(UserID);
         res.then(function(d) {
-            if(d.data.success === true) {
-                if($scope.role == 2){
-                    LoadListAgency();
-                }
-                if($scope.role == 3){
-                    LoadListCustomer();
-                }
-                if ($scope.role == 4) {
-                    LoadListUser();
-                }
-                
+            alert(d.data)
+            if($scope.role == 3){
+                LoadListCustomer();
+            }
+            if ($scope.role == 4) {
+                LoadListUser();
             }
         })
     }

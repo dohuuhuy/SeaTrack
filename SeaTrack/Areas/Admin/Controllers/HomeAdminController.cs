@@ -145,23 +145,37 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult LockUser(int id)
         {
-            bool res = AdminService.UpdateStatusUser(id, -1);
-            if (res)
+            var user = (Users)Session["User"];
+            if (user.RoleID != 1)
             {
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                var r = AdminService.GetUserByID(id).ManageBy == user.Username ? true : false;
+                if (r || AdminService.CheckUserManage(id, user.Username))
+                {
+                    AdminService.UpdateStatusUser(id, -1);
+                    return Json("Đã khóa", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Không tìm thấy người dùng", JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            AdminService.UpdateStatusUser(id, -1);
+            return Json("Đã khóa", JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult UnLockUser(int id)
         {
-            bool res = AdminService.UpdateStatusUser(id, 1);
-            if (res)
+            var user = (Users)Session["User"];
+            if (user.RoleID != 1)
             {
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                var r = AdminService.GetUserByID(id).ManageBy == user.Username ? true : false;
+                if (r || AdminService.CheckUserManage(id, user.Username))
+                {
+                    AdminService.UpdateStatusUser(id, 1);
+                    return Json("Đã kích hoạt", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Không tìm thấy người dùng", JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            AdminService.UpdateStatusUser(id, 1);
+            return Json("Đã kích hoạt", JsonRequestBehavior.AllowGet);
         }
         public bool CheckRole(int role)
         {

@@ -54,29 +54,29 @@
 
                     <thead>
                         <tr>
-                            <td>#</td>
-                            <td>Thao tác</td>
-                            <th>Username</th>
-                            <th>Fullname</th>
-                            <th>Phone</th>
-                            <th>CreateDate</th>
-                            <th>Status</th>
+                            <th width="5%">#</th>
+                            <th width="10%">Thao tác</th>
+                            <th width="15%">Username</th>
+                            <th width="20%">Fullname</th>
+                            <th width="15%">Phone</th>
+                            <th width="15%">CreateDate</th>
+                            <th width="20%">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="c in Customers">
-                            <td>{{$index+1}}</td>
-                            <td>
-                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
-                                <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)"><i class="fa fa-lock"></i></a>
-                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)"><i class="fa fa-unlock"></i></a>
+                            <td width="5%">{{$index+1}}</td>
+                            <td width="10%">
+                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}" title="Chi tiết khách hàng"><i class="fa fa-eye" style="color:#138496">as</i></a>&nbsp;
+                                <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)" title="Khóa tài khoản"><i class="fa fa-lock" style="color:red"></i></a>
+                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)" title="Mở khóa tài khoản"><i class="fa fa-unlock" style="color:#138496"></i></a>
                             </td>
-                            <td>{{c.Username}}</td>
-                            <td>{{c.Fullname}}</td>
-                            <td>{{c.Phone}}</td>
-                            <td>{{c.CreateDate|date: "yyyy-MM-ddTHH:mm:ss"}}</td>
-                            <td ng-if="c.Status==-1"><label style="color:red">Tạm khóa</label></td>
-                            <td ng-if="c.Status==1"><label style="color:green">Đã kích hoạt</label></td>
+                            <td width="15%">{{c.Username}}</td>
+                            <td width="20%">{{c.Fullname}}</td>
+                            <td width="15%">{{c.Phone}}</td>
+                            <td width="15%">{{c.CreateDate|date: "yyyy-MM-ddTHH:mm:ss"}}</td>
+                            <td width="20%" ng-if="c.Status==-1"><p style="color:red">Tạm khóa</p></td>
+                            <td width="20%" ng-if="c.Status==1"><p style="color:green">Đã kích hoạt</p></td>
                         </tr>
                     </tbody>
                 </table>

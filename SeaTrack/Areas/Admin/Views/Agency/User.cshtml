@@ -54,31 +54,29 @@
 
                     <thead>
                         <tr>
-                            <td>#</td>
-                            <td>Thao tác</td>
-                            <th>Username</th>
-                            <th>Fullname</th>
-                            <th>Phone</th>
-                            <th>CreateDate</th>
-                            <th>Khách hàng</th>
-                            <th>Status</th>
+                            <th width="5%">#</th>
+                            <th width="10%">Thao tác</th>
+                            <th width="15%">Username</th>
+                            <th width="15%">Fullname</th>
+                            <th width="20%">CreateDate</th>
+                            <th width="15%">Khách hàng</th>
+                            <th width="15%">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="u in Users">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{u.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
-                                <a ng-if="u.Status==1" ng-click="LockUser(u.UserID)"><i class="fa fa-lock"></i></a>
-                                <a ng-if="u.Status==-1" ng-click="UnLockUser(u.UserID)"><i class="fa fa-unlock"></i></a>
+                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{u.UserID}}" title="Chi tiết người dùng"><i class="fa fa-eye" style="color:#138496">as</i></a>
+                                <a ng-if="u.Status==1" ng-click="LockUser(u.UserID)" title="Khóa tài khoản"><i class="fa fa-lock" style="color:red"></i></a>
+                                <a ng-if="u.Status==-1" ng-click="UnLockUser(u.UserID)" title="Mở khóa tài khoản"><i class="fa fa-unlock" style="color:#138496"></i></a>
                             </td>
                             <td>{{u.Username}}</td>
                             <td>{{u.Fullname}}</td>
-                            <td>{{u.Phone}}</td>
                             <td>{{u.CreateDate}}</td>
                             <td>{{u.ManageBy}}</td>
-                            <td ng-if="u.Status==-1">Tạm khóa</td>
-                            <td ng-if="u.Status==1">Đã kích hoạt</td>
+                            <td ng-if="u.Status==-1"><p style="color:red">Tạm khóa</p></td>
+                            <td ng-if="u.Status==1"><p style="color:green">kích hoạt</p></td>
                         </tr>
                     </tbody>
                 </table>

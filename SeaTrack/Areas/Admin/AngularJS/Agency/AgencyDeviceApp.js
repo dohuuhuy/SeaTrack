@@ -52,6 +52,32 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
 
         };
     };
+    $scope.NoDeviceExist = function (No) {
+        $scope.NoCheck = "alo";
+        device = { DeviceNo: No };
+        $http({
+            method: 'POST',
+            url: '/Admin/Device/CheckDeviceExist',
+            data: device
+        }).then(function successCallback(response) {
+            console.log("No: " + $scope.Device.DeviceNo);
+            console.log("Check: " + response.data.DeviceNo);
+            $scope.NoCheck = response.data.DeviceNo;
+        })
+    }
+    $scope.ImeiDeviceExist = function (Imei) {
+        $scope.ImeiCheck = "alo";
+        device = { DeviceImei: Imei };
+        $http({
+            method: 'POST',
+            url: '/Admin/Device/CheckDeviceExist',
+            data: device
+        }).then(function successCallback(response) {
+            console.log("Imei: " + $scope.Device.DeviceImei);
+            console.log("Check: " + response.data.DeviceImei);
+            $scope.ImeiCheck = response.data.DeviceImei;
+        })
+    }
 
     $scope.Save = function () {
         if ($scope.Device.DeviceName != "") {
@@ -75,13 +101,11 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
     };
     $scope.update = function () {
         //nếu không trường nào bị null
-        if (
-            $scope.Customer.Name != "") {
             console.log('i am inside update funcr ' +
                 JSON.stringify($scope.Customer));
             $http({
-                method: 'PUT',
-                url: '/Admin/Device/EditDevice/',
+                method: 'POST',
+                url: '/Admin/Device/EditDevice',
                 data: JSON.stringify($scope.Device)
             }).then(function successCallback(response) {
                 $scope.namesData = null;
@@ -91,14 +115,12 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
                     alert('Unable to Get Data !!!');
                 });
                 $scope.Clear();
-                alert(" Updated Successfully !!!");
+                alert(response.data);
             }, function errorCallback(response) {
                 alert("Error : " + response.data.ExceptionMessage);
             });
-        }
-        else {
-            alert('Please Enter All the Values !!');
-        }
+        
+
     };
     $scope.Edit = function (data) {
         console.log('i am inside edit() ' + JSON.stringify($scope.Device));
@@ -137,15 +159,22 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
         $http({
             method: 'GET',
             url: '/Admin/Device/DeleteDevice/' + $scope.namesData[index].DeviceID
-        }).then(function successCallback(response) {
-            //$scope.namesData.splice(index, 1);
+        }).then(function (response) {
             LoadDevice();
-            alert("Device Deleted Successfully !!!");
-        }, function errorCallback(response) {
-            alert("Error : " + response.data.ExceptionMessage);
+            alert(response.data);
         });
     };
+    $scope.Unlock = function (index) {
 
+        console.log('i am inside delete funcr' + JSON.stringify($scope.Device));
+        $http({
+            method: 'GET',
+            url: '/Admin/Device/UnlockDevice/' + $scope.namesData[index].DeviceID
+        }).then(function (response) {
+            LoadDevice();
+            alert(response.data);
+        });
+    };
     function LoadDevice(){
     DeviceService.GetAllRecords().then(function (d) {
         $scope.namesData = d.data;

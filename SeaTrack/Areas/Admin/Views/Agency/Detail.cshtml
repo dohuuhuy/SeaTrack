@@ -25,7 +25,7 @@
                         <div class="col col-md-3"><label class="form-control-label">Username</label></div>
                         <div class="col-12 col-md-9">
                             @Html.HiddenFor(m => m.UserID)
-                            @Html.DisplayFor(m => m.Username, new { @class = "form-control-static" })
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="row form-group">
@@ -44,10 +44,18 @@
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
                         <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
                     </div>
+                    @if (Model.RoleID == 4)
+                    {
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class="form-control-label">ManageBy</label></div>
+                            <div class="col-12 col-md-9">
+                                @Html.TextBoxFor(m => m.ManageBy, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
                     <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> Submit
                     </button>
-
                 </div>
             }
         </div>

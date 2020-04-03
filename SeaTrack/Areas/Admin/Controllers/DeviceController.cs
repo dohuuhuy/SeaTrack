@@ -80,6 +80,10 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateDevice(Device device)
         {
+            var user = (Users)Session["User"];
+            device.CreateBy = user.Username;
+            device.DateCreate = DateTime.Now;
+            device.StatusDevice = 1;
             //try
             //{
                 var rs = AdminService.CreateDevice(device);
@@ -165,17 +169,79 @@ namespace SeaTrack.Areas.Admin.Controllers
         public ActionResult EditDevice(Device device)
         {
 
-
+            var user = (Users)Session["User"];
+            if (user.RoleID != 1)
+            {
+                var res = AdminService.CheckUserDevice(user.UserID, device.DeviceID);
+                if (res)
+                {
+                    AdminService.UpdateDevice(device);
+                    return Json("Đã cập nhật", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Không tìm thấy thiết bị", JsonRequestBehavior.AllowGet);
+            }
             var data = AdminService.UpdateDevice(device);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json("Đã cập nhật", JsonRequestBehavior.AllowGet);
 
         }
 
         [HttpGet]
         public ActionResult DeleteDevice(int id)
         {
+            var user = (Users)Session["User"];
+            if (user.RoleID!=1)
+            {
+                var res = AdminService.CheckUserDevice(user.UserID, id);
+                if (res)
+                {
+                    AdminService.DeleteDevice(id);
+                    return Json("Đã khóa", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Không tìm thấy thiết bị", JsonRequestBehavior.AllowGet);
+            }
             var data = AdminService.DeleteDevice(id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json("đã khóa", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult UnlockDevice(int id)
+        {
+            var user = (Users)Session["User"];
+            if (user.RoleID != 1)
+            {
+                var res = AdminService.CheckUserDevice(user.UserID, id);
+                if (res)
+                {
+                    AdminService.UnlockDevice(id);
+                    return Json("Đã kích hoạt", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Không tìm thấy thiết bị", JsonRequestBehavior.AllowGet);
+            }
+            var data = AdminService.DeleteDevice(id);
+            return Json("Đã kích hoạt", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult CheckDeviceExist(Device device)
+        {
+            Device d = new Device();
+            if (device.DeviceNo != null)
+            {
+                var res = AdminService.CheckDeviceExist(device.DeviceNo, device.DeviceImei);
+                d.DeviceNo = "OK";
+                d.DeviceNo = res;
+                return Json(d, JsonRequestBehavior.AllowGet);
+            }
+            if (device.DeviceImei != null)
+            {
+                var res = AdminService.CheckDeviceExist(device.DeviceNo, device.DeviceImei);
+                d.DeviceNo = "OK";
+                d.DeviceImei = res;
+                return Json(d, JsonRequestBehavior.AllowGet);
+            }
+            d.DeviceNo = "OK";
+            d.DeviceImei = "OK";
+            return Json(d, JsonRequestBehavior.AllowGet);
         }
 
     }

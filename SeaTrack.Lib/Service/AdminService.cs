@@ -4,6 +4,7 @@ using Microsoft.ApplicationBlocks.Data;
 using SeaTrack.Lib.Database;
 using SeaTrack.Lib.DTO;
 using SeaTrack.Lib.DTO.Admin;
+using System.Globalization;
 
 namespace SeaTrack.Lib.Service
 {
@@ -183,24 +184,26 @@ namespace SeaTrack.Lib.Service
             }
         }
 
+        public static bool CheckUserManage(int UserID, string Username)
+        {
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_CheckUserManage", UserID, Username);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    if (Convert.ToInt16(reader["result"]) == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         #region
         public static int CreateDevice(Device device)
         {
-            var reader = SqlHelper.ExecuteReader
-                (
-                ConnectData.ConnectionString,
-                "[sp_CreateDevice]",
-                device.DeviceNo,
-                device.DeviceName,
-                device.DeviceVersion,
-                device.DeviceImei,
-                device.DeviceGroup,
-                device.DateExpired,
-                device.DeviceNote,
-                device.StatusDevice,
-                device.CreateBy,
-                device.DateCreate
-                );
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "[sp_CreateDevice]", device.DeviceNo, device.DeviceName, device.DeviceVersion,
+                device.DeviceImei, device.DeviceGroup, device.DateExpired, device.DeviceNote, device.StatusDevice, device.CreateBy, device.DateCreate);
             if (reader.HasRows)
             {
                 int ID = 0;
@@ -239,9 +242,11 @@ namespace SeaTrack.Lib.Service
                         DeviceVersion = reader["DeviceVersion"].ToString(),
                         DeviceGroup = reader["DeviceGroup"].ToString(),
                         DeviceNote = reader["DeviceNote"].ToString(),
-                        DateExpired = (reader["DateExpired"].ToString()),
+                        DateExpired = (reader["DateExpired"].ToString().Substring(0, 10)),
                         StatusDevice = Convert.ToInt32(reader["StatusDevice"]),
-                        ExpireStatus = DateTime.Compare(Convert.ToDateTime(reader["DateExpired"]), DateTime.Now) > 0 ? 1 : -1
+                        ExpireStatus = DateTime.Compare(Convert.ToDateTime(reader["DateExpired"]), DateTime.Now) > 0 ? 1 : -1,
+                        ExpireDate = Convert.ToDateTime(reader["DateExpired"].ToString())
+
 
 
                     };
@@ -305,7 +310,7 @@ namespace SeaTrack.Lib.Service
                 }
             }
             return lst;
-        } 
+        }
 
         //UserID != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
         //UserID == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
@@ -406,6 +411,57 @@ namespace SeaTrack.Lib.Service
                 return false;
             }
         }
+
+        public static bool UnlockDevice(int DeviceID)
+        {
+            try
+            {
+                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_UnlockDevice", DeviceID);
+                if (res == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        public static string CheckDeviceExist(string DeviceNo, string DeviceImei)
+        {
+            string No = null;
+            string Imei = null;
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_CheckDeviceExist", DeviceNo, DeviceImei);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    if (DeviceNo != null)
+                        No = reader["DeviceNo"].ToString();
+                    else
+                        Imei = reader["DeviceImei"].ToString();
+                }
+                if (No == null)
+                    return Imei;
+                return No;
+            }
+            return null;
+        }
+
+        public static bool CheckUserDevice (int UserID, int DeviceID)
+        {
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_CheckUserDevice", UserID, DeviceID);
+            if (reader.HasRows)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         #endregion
     }
 }

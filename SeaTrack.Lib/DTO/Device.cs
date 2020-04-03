@@ -16,7 +16,6 @@ namespace SeaTrack.Lib.DTO
         public string DeviceImei { get; set; }
         public DateTime DateCreate { get; set; }
         public string DeviceGroup { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime DateExpired { get; set; }
         public string DeviceNote { get; set; }
 
