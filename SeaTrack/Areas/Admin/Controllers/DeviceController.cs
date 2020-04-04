@@ -15,6 +15,11 @@ namespace SeaTrack.Areas.Admin.Controllers
         // GET: Admin/Device
         public ActionResult Index()
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
+
             return View();
         }
         public ActionResult Detail(int id)
@@ -242,6 +247,15 @@ namespace SeaTrack.Areas.Admin.Controllers
             d.DeviceNo = "OK";
             d.DeviceImei = "OK";
             return Json(d, JsonRequestBehavior.AllowGet);
+        }
+        public bool CheckRole(int role)
+        {
+            var user = (Users)Session["User"];
+            if (user != null && user.RoleID != role)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

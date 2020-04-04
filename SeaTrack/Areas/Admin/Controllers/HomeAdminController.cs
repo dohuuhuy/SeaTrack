@@ -14,36 +14,49 @@ namespace SeaTrack.Areas.Admin.Controllers
         // GET: Admin/HomeAdmin
         public ActionResult Index() //Quản lý đại lý
         {
-            //yêu cầu check role
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             return View();
         }
 
         public ActionResult Customer()
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             return View();
         }
 
         public new ActionResult User()
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             return View();
         }
 
         [HttpGet]
-        public JsonResult ListUser(int id) //id = roleID
+        public ActionResult ListUser(int id) //id = roleID
         {
-            //if (!CheckRole(1))
-            //{
-            //    return Json("error", JsonRequestBehavior.AllowGet);
-            //}
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             var rs = AdminService.GetListUser(id);
             return Json(rs, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult CreateUser(UserInfoDTO user, int roleID)
+        public ActionResult CreateUser(UserInfoDTO user, int roleID)
         {
-
-            //user.CreateBy = Request.Cookies["userName"].Value.ToString();
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             var us = (Users)Session["User"];
             user.CreateBy = us.Username;
             user.CreateDate = DateTime.Now;
@@ -56,16 +69,15 @@ namespace SeaTrack.Areas.Admin.Controllers
             }
             var rs = AdminService.CreateUser(user, roleID);
             return Json(new { success = true });
-
         }
 
         [HttpGet]
         public ActionResult Detail(int id)
         {
-            //if (!CheckRole(1))
-            //{
-            //    return RedirectToAction("Login", "Home", new { area = "" });
-            //}
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             if (TempData["EditResult"] != null)
             {
                 ViewBag.EditResult = TempData["EditResult"].ToString();
@@ -78,6 +90,11 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditUser(UserInfoDTO user)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
+
             try
             {
                 UserViewModel us = AdminService.GetUserByID(user.UserID);
@@ -131,8 +148,13 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteUser(int id)
+        public ActionResult DeleteUser(int id)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
+
             bool res = AdminService.DeleteUser(id);
             if (res)
             {
@@ -143,8 +165,13 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public JsonResult LockUser(int id)
+        public ActionResult LockUser(int id)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
+
             var user = (Users)Session["User"];
             if (user.RoleID != 1)
             {
@@ -161,8 +188,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public JsonResult UnLockUser(int id)
+        public ActionResult UnLockUser(int id)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("Login", "Home", new { area = "" });
+            }
             var user = (Users)Session["User"];
             if (user.RoleID != 1)
             {
@@ -179,7 +210,8 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
         public bool CheckRole(int role)
         {
-            if (Request.Cookies["userName"] != null && Request.Cookies["pass"] != null && Request.Cookies["role"].Value == role.ToString())
+            var user = (Users)Session["User"];
+            if (user != null && user.RoleID != role)
             {
                 return true;
             }
