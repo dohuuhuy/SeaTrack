@@ -150,22 +150,6 @@ namespace SeaTrack.Lib.Service
                 return false;
             }
         }
-        public static bool DeleteUser(int UserID)
-        {
-            try
-            {
-                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_DeleteUser", UserID);
-                if (res == 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
         public static bool UpdateStatusUser(int UserID, int Status)
         {
             try
@@ -312,8 +296,8 @@ namespace SeaTrack.Lib.Service
             return lst;
         }
 
-        //UserID != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
-        //UserID == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
+        //Username != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
+        //Username == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
         public static List<DeviceViewModel> GetListDeviceNotUsedByUser(string Username)
         {
             List<DeviceViewModel> lst = null;

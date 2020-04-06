@@ -16,7 +16,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
         }
@@ -25,7 +25,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
         }
@@ -34,7 +34,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
         }
@@ -44,7 +44,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var rs = AdminService.GetListUser(id);
             return Json(rs, JsonRequestBehavior.AllowGet);
@@ -55,7 +55,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var us = (Users)Session["User"];
             user.CreateBy = us.Username;
@@ -76,7 +76,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             if (TempData["EditResult"] != null)
             {
@@ -90,11 +90,11 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditUser(UserInfoDTO user)
         {
-            if (!CheckRole(1))
+            if (!CheckRole(1) && !CheckRole(2))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
-
+            var u = Session["User"] as Users;
             try
             {
                 UserViewModel us = AdminService.GetUserByID(user.UserID);
@@ -116,60 +116,41 @@ namespace SeaTrack.Areas.Admin.Controllers
                 if (res)
                 {
                     TempData["EditResult"] = "Cập nhật thành công";
-                    var u = Session["User"] as Users;
                     if (u.RoleID==2)
                     {
                         return RedirectToAction("Detail", "Agency", new { id = us.UserID });
                     }
-                    return RedirectToAction("Detail", new { id = us.UserID });
+                    return RedirectToAction("Detail", "HomeAdmin",new { id = us.UserID });
                 }
                 else
                 {
                     TempData["EditResult"] = "Chưa được cập nhật";
-                    var u = Session["User"] as Users;
                     if (u.RoleID == 2)
                     {
                         return RedirectToAction("Detail", "Agency", new { id = us.UserID });
                     }
-                    return RedirectToAction("Detail", new { id = us.UserID });
+                    return RedirectToAction("Detail", "HomeAdmin", new { id = us.UserID });
                 }
             }
             catch (Exception)
             {
                 TempData["EditResult"] = "Xảy ra lỗi trong quá trình cập nhật";
-                var u = Session["User"] as Users;
                 if (u.RoleID == 2)
                 {
                     return RedirectToAction("Detail", "Agency", new { id = user.UserID });
                 }
-                return RedirectToAction("Detail", new { id = user.UserID });
+                return RedirectToAction("Detail", "HomeAdmin", new { id = user.UserID });
                 throw;
             }
         }
 
-        [HttpPost]
-        public ActionResult DeleteUser(int id)
-        {
-            if (!CheckRole(1))
-            {
-                return RedirectToAction("Login", "Home", new { area = "" });
-            }
-
-            bool res = AdminService.DeleteUser(id);
-            if (res)
-            {
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-
-        }
 
         [HttpGet]
         public ActionResult LockUser(int id)
         {
-            if (!CheckRole(1))
+            if (!CheckRole(1) && !CheckRole(2))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
 
             var user = (Users)Session["User"];
@@ -190,9 +171,9 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult UnLockUser(int id)
         {
-            if (!CheckRole(1))
+            if (!CheckRole(1) && !CheckRole(2))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var user = (Users)Session["User"];
             if (user.RoleID != 1)
@@ -211,7 +192,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         public bool CheckRole(int role)
         {
             var user = (Users)Session["User"];
-            if (user != null && user.RoleID != role)
+            if (user != null && user.RoleID == role)
             {
                 return true;
             }

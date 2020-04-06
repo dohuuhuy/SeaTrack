@@ -18,23 +18,23 @@
         <div class="card-body">
             <div class="col col-md-12">
                 <div class="input-group">
-                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control"><br />
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control" ng-model="SearchKey"><br />
                     <div class="input-group-btn">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" ng-click="ClearSearch()">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
                 <br />
                 <div class="input-group ">
-                    <label for="checkbox1" class="form-check-label col-md-4 ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio1" class="form-check-label col-md-4 ">
+                        <input type="radio" id="radio1" name="checkbox1" ng-model="Status" value="1" class="form-check-input">Kích hoạt
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
+                    <label for="radio2" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio2" name="checkbox2" ng-model="Status" value="-1" class="form-check-input">Đã khóa
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio3" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio3" name="checkbox3" ng-model="Status" value="0" class="form-check-input">Hết hạn
                     </label>
                 </div>
             </div>
@@ -46,11 +46,10 @@
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Kết Quả Tìm Kiếm</div>
         <div class="card-body">
-
-
-            <button type="button" class="btn btn-info mb-1" data-toggle="modal" data-target="#ThemThietBi">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ThemThietBi">
                 <i class="fa fa-plus"></i> Thêm mới
             </button>
+            <label>Tổng: {{namesData.length}}</label>
 
             <div class="table-responsive">
 
@@ -69,17 +68,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="a in namesData">
+                        <tr ng-repeat="a in namesData" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
+                            || (Status == null && (a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey))
+                            || ((SearchKey == null || SearchKey == '') && a.StatusDevice == Status)
+                            || ((a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey) && a.StatusDevice == Status)
+                                 ">
                             <td>{{$index+1}}</td>
 
                             <td>
                                 @*<a href="#" data-ng-href="@Url.Action("DeviceDetail","Agency", new { area = "Admin"})/{{a.DeviceID}}">Detail</a>*@
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
-                                    <i class="fa fa-eye" style="color:aqua">as</i>
+                                    <i class="fa fa-eye" style="color:black"></i>
                                 </a>|
                                 <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>|
-                                <a ng-click="Delete($index)" ng-if="a.StatusDevice == 1"><i class="fa fa-lock"></i></a>
-                                <a ng-click="Unlock($index)" ng-if="a.StatusDevice == -1"><i class="fa fa-unlock"></i></a>
+                                <a ng-click="Delete($index)" ng-if="a.StatusDevice == 1"><i class="fa fa-lock" style="color:red"></i></a>
+                                <a ng-click="Unlock($index)" ng-if="a.StatusDevice == -1"><i class="fa fa-unlock" style="color:black"></i></a>
 
                             </td>
                             <td>{{a.DeviceNo}}</td>
@@ -91,9 +94,6 @@
                             <td ng-if="a.StatusDevice == 1"><p style="color:forestgreen">Đang kích hoạt</p></td>
                             <td ng-if="a.StatusDevice == -1"><p style="color:red">Tạm khóa</p></td>
                             <td ng-if="a.StatusDevice == 0"><p style="color:red">Đã hết hạn</p></td>
-
-                            Tổng:
-                            <p ng-bind="total()"></p>
                         </tr>
 
                     </tbody>

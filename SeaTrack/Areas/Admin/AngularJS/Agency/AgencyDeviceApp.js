@@ -25,7 +25,10 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
         });
         return total;
     };
-
+    $scope.ClearSearch = function(){
+    $scope.SearchKey = "";
+    $scope.Status = null;
+    }
     $scope.Device = {
         DeviceID: '',
         DeviceNo: '',

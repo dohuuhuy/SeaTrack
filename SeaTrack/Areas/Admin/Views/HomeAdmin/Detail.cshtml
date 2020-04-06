@@ -25,7 +25,7 @@
                         <div class="col col-md-3"><label class="form-control-label">Username</label></div>
                         <div class="col-12 col-md-9">
                             @Html.HiddenFor(m => m.UserID)
-                            @Html.DisplayFor(m => m.Username, new { @class = "form-control-static" })
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @readonly = "readonly" })
                             @*<p class="form-control-static">@Model.Username</p>*@
                         </div>
                     </div>
@@ -45,13 +45,15 @@
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
                         <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Address, new { @value = @Model.Address, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label class="form-control-label">Manage By: </label></div>
-                        <div class="col-12 col-md-9">
-                            @Html.DisplayFor(m => m.ManageBy, new { @class = "form-control-static" })
-                            @*<p class="form-control-static">@Model.Username</p>*@
+                    @if (Model.RoleID != 2)
+                    {
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class="form-control-label">Manage By: </label></div>
+                            <div class="col-12 col-md-9">
+                                @Html.DisplayFor(m => m.ManageBy, new { @class = "form-control-static" })
+                            </div>
                         </div>
-                    </div>
+                    }
 
                     @*<input type="submit" value="Submit" />*@
                     <button type="submit" class="btn btn-primary btn-sm">

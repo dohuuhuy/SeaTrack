@@ -5,7 +5,7 @@
 }
 
 <div class="container-fluid" ng-app="AdminModule" ng-controller="AdminController" ng-init="Role(4)">
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-4">Quản lý người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
         <li class="breadcrumb-item active">Tables</li>
@@ -17,24 +17,24 @@
         <div class="card-body">
             <div class="col col-md-12">
                 <div class="input-group">
-                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control"><br />
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control" ng-model="SearchKey"><br />
                     <div class="input-group-btn">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" ng-click="ClearSearch()">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
                 <br />
                 <div class="input-group ">
-                    <label for="checkbox1" class="form-check-label col-md-4 ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio1" class="form-check-label col-md-4 ">
+                        <input type="radio" id="radio1" name="checkbox1" ng-model="Status" value="1" class="form-check-input">Kích hoạt
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
+                    <label for="radio2" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio2" name="checkbox2" ng-model="Status" value="-1" class="form-check-input">Đã khóa
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
-                    </label>
+                    @*<label for="radio3" class="form-check-label col-md-4  ">
+                <input type="radio" id="radio3" name="checkbox3" ng-model="Status" value="0" class="form-check-input">Hết hạn
+            </label>*@
                 </div>
             </div>
 
@@ -44,41 +44,43 @@
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Danh sách người dùng</div>
-        <button type="button" class="btn btn-info" data-target="#AddNew" data-toggle="modal" ng-click="AddUser()">
-            Thêm mới
-        </button>
         <div class="card-body">
-            <input ng-model="SearchKey" type="text" ng-text-change="KeyFilter()" />
+            <button type="button" class="btn btn-primary" data-target="#AddNew" data-toggle="modal" ng-click="AddUser()">
+                Thêm mới
+            </button>
+            <label>Tổng: {{Users.length}}</label>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
                     <thead>
                         <tr>
-                            <td>#</td>
-                            <td>Thao tác</td>
-                            <th>Username</th>
-                            <th>Fullname</th>
-                            <th>Phone</th>
-                            <th>CreateDate</th>
-                            <th>Khách hàng</th>
-                            <th>Status</th>
+                            <th width="5%">#</th>
+                            <th width="10%">Thao tác</th>
+                            <th width="15%">Username</th>
+                            <th width="15%">Fullname</th>
+                            <th width="20%">CreateDate</th>
+                            <th width="15%">Khách hàng</th>
+                            <th width="15%">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="u in Users">
+                        <tr ng-repeat="u in Users" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
+                            || (Status == null && (u.Username == SearchKey || u.Fullname == SearchKey))
+                            || ((SearchKey == null || SearchKey == '') && u.Status == Status)
+                            || ((u.Username == SearchKey || u.Fullname == SearchKey) && u.Status == Status)
+                                 ">
                             <td>{{$index+1}}</td>
                             <td>
-                                <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{u.UserID}}"><i class="fa fa-eye" style="color:aqua">as</i></a>|
-                                <a ng-if="u.Status==1" ng-click="LockUser(u.UserID)"><i class="fa fa-lock"></i></a>
-                                <a ng-if="u.Status==-1" ng-click="UnLockUser(u.UserID)"><i class="fa fa-unlock"></i></a>
+                                <a href="#" data-ng-href="@Url.Action("Detail", "HomeAdmin")/{{u.UserID}}" title="Chi tiết người dùng"><i class="fa fa-eye" style="color:black"></i></a>
+                                <a ng-if="u.Status==1" ng-click="LockUser(u.UserID)" title="Khóa tài khoản"><i class="fa fa-lock" style="color:red"></i></a>
+                                <a ng-if="u.Status==-1" ng-click="UnLockUser(u.UserID)" title="Mở khóa tài khoản"><i class="fa fa-unlock" style="color:black"></i></a>
                             </td>
                             <td>{{u.Username}}</td>
                             <td>{{u.Fullname}}</td>
-                            <td>{{u.Phone}}</td>
                             <td>{{u.CreateDate}}</td>
                             <td>{{u.ManageBy}}</td>
-                            <td ng-if="u.Status==-1">Tạm khóa</td>
-                            <td ng-if="u.Status==1">Đã kích hoạt</td>
+                            <td ng-if="u.Status==-1"><p style="color:red">Tạm khóa</p></td>
+                            <td ng-if="u.Status==1"><p style="color:green">kích hoạt</p></td>
                         </tr>
                     </tbody>
                 </table>

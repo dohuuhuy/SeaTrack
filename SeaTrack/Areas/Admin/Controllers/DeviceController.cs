@@ -17,7 +17,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         {
             if (!CheckRole(1))
             {
-                return RedirectToAction("Login", "Home", new { area = "" });
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
 
             return View();
@@ -31,6 +31,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Update(DeviceViewModel device)
         {
+
             Device dv = new Lib.DTO.Device();
             dv.DeviceID = device.DeviceID;
             dv.DeviceNo = device.DeviceNo;
@@ -43,14 +44,13 @@ namespace SeaTrack.Areas.Admin.Controllers
             var res = AdminService.UpdateDevice(dv);
             return RedirectToAction("Detail", new { id = dv.DeviceID });
         }
-        public ActionResult Show()
-        {
-            return View();
-        }
-     
         [HttpGet]
-        public ActionResult GetListDevice()  
+        public ActionResult GetListDevice()
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             var data = AdminService.GetListDevice();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -83,26 +83,27 @@ namespace SeaTrack.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult CreateDevice(Device device)
+        public ActionResult CreateDevice(Device device)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             var user = (Users)Session["User"];
             device.CreateBy = user.Username;
             device.DateCreate = DateTime.Now;
             device.StatusDevice = 1;
-            //try
-            //{
-                var rs = AdminService.CreateDevice(device);
-                return Json(new { success = true });
-            //}
-            //catch (Exception)
-            //{
-            //    return Json(new { success = false });
-            //}
+            var rs = AdminService.CreateDevice(device);
+            return Json(new { success = true });
+
         }
         [HttpPost]
-        public JsonResult AgencyCreateDevice(Device device)
+        public ActionResult AgencyCreateDevice(Device device)
         {
-            
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             var user = (Users)Session["User"];
             device.CreateBy = user.Username;
             device.DateCreate = DateTime.Now;
@@ -112,35 +113,53 @@ namespace SeaTrack.Areas.Admin.Controllers
             return Json(new { success = true });
         }
 
-        //UserID != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
-        //UserID == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
+        //Username != null, Lấy danh sách thiết bị thuộc về UserID nhưng chưa được gán cho người dùng khác
+        //Username == null, lấy danh sách thiết bị chưa được gán cho bất kỳ người dùng
         [HttpGet]
-        public JsonResult GetListDeviceNotUsedByUser(string Username) //id = UserID
+        public ActionResult GetListDeviceNotUsedByUser(string Username)
         {
+            if (!CheckRole(1))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             var data = AdminService.GetListDeviceNotUsedByUser(Username);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetListDeviceBelongToAgencyNotUsedByUser() //id = UserID
+        public ActionResult GetListDeviceBelongToAgencyNotUsedByUser() //id = UserID
         {
-            //int AgencyID = UsersService.CheckUsers(Request.Cookies["Username"].Value.ToString(), Request.Cookies["Password"].Value.ToString()).RoleID;
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             var us = (Users)Session["User"];
             var data = AdminService.GetListDeviceBelongToAgencyNotUsedByUser(us.UserID, us.Username);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult GetListDeviceOfCustomer(UserInfoDTO user) //id = UserID
+        public ActionResult GetListDeviceOfCustomer(UserInfoDTO user) //id = UserID
         {
-            //int AgencyID = UsersService.CheckUsers(Request.Cookies["Username"].Value.ToString(), Request.Cookies["Password"].Value.ToString()).RoleID;
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             var us = (Users)Session["User"];
             var data = AdminService.GetListDeviceOfCustomer(user.ManageBy, user.UserID);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult RemoveDeviceFromUser(User_Device ud)
+        public ActionResult RemoveDeviceFromUser(User_Device ud)
         {
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             try
             {
                 var rs = AdminService.RemoveDeviceFromUser(ud.UserID, ud.DeviceID);
@@ -155,8 +174,13 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddDeviceToUser(User_Device ud)
+        public ActionResult AddDeviceToUser(User_Device ud)
         {
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             try
             {
                 //string CreateBy = Request.Cookies["Username"].Value;
@@ -173,7 +197,10 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditDevice(Device device)
         {
-
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             var user = (Users)Session["User"];
             if (user.RoleID != 1)
             {
@@ -193,8 +220,13 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult DeleteDevice(int id)
         {
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             var user = (Users)Session["User"];
-            if (user.RoleID!=1)
+            if (user.RoleID != 1)
             {
                 var res = AdminService.CheckUserDevice(user.UserID, id);
                 if (res)
@@ -211,6 +243,11 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult UnlockDevice(int id)
         {
+            if (!CheckRole(1) && !CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             var user = (Users)Session["User"];
             if (user.RoleID != 1)
             {
@@ -251,7 +288,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         public bool CheckRole(int role)
         {
             var user = (Users)Session["User"];
-            if (user != null && user.RoleID != role)
+            if (user != null && user.RoleID == role)
             {
                 return true;
             }

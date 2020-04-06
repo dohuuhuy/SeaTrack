@@ -48,6 +48,11 @@
         $scope.Address = "";
         $scope.ManageBy = "";
     }
+    $scope.ClearSearch = function(){
+        $scope.SearchKey = "";
+        $scope.Status = null;
+    }
+
     $scope.Resetsave = function () {
         Resetsave();
     }

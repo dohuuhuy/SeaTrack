@@ -3,7 +3,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <div class="container-fluid" ng-app="DeviceApp" ng-controller="DeviceController">
     <h1 class="mt-4">Danh Mục Thiết Bị</h1>
     <ol class="breadcrumb mb-4">
@@ -17,44 +16,37 @@
         <div class="card-body">
             <div class="col col-md-12">
                 <div class="input-group">
-                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control"><br />
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control" ng-model="SearchKey"><br />
                     <div class="input-group-btn">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" ng-click="ClearSearch()">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
                 <br />
-                <div class="input-group ">
-                    <label for="checkbox1" class="form-check-label col-md-4 ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                @*<div class="input-group ">
+                    <label for="radio1" class="form-check-label col-md-4 ">
+                        <input type="radio" id="radio1" name="checkbox1" ng-model="Status" value="1" class="form-check-input">Kích hoạt
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
+                    <label for="radio2" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio2" name="checkbox2" ng-model="Status" value="-1" class="form-check-input">Đã khóa
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio3" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio3" name="checkbox3" ng-model="Status" value="0" class="form-check-input">Hết hạn
                     </label>
-                </div>
+                </div>*@
             </div>
-
         </div>
-
-
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Kết Quả Tìm Kiếm</div>
         <div class="card-body">
-
-
-            <button type="button" class="btn btn-info mb-1" data-toggle="modal" data-target="#ThemThietBi">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ThemThietBi">
                 <i class="fa fa-plus"></i> Thêm mới
             </button>
-
+            <label>Tổng: {{namesData.length}}</label>
             <div class="table-responsive">
-
                 <table id="dataTable" class="table table-bordered table-striped text-center">
-
                     <thead>
                         <tr>
                             <th width="5%">#</th>
@@ -68,19 +60,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="a in namesData">
+                        <tr @*ng-repeat="a in namesData"*@
+                            dir-paginate="a in namesData | filter:SearchKey | itemsPerPage: 7" current-page="currentPage"
+                            @*ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
+                            || (Status == null && (a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey))
+                            || ((SearchKey == null || SearchKey == '') && a.StatusDevice == Status)
+                            || ((a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey) && a.StatusDevice == Status)
+                                 "*@>
                             <td>{{$index+1}}</td>
-
                             <td>
-                                @*<a href="#" data-ng-href="@Url.Action("Detail","Device", new { area = "Admin"})/{{a.DeviceID}}">Detail</a>*@
-
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
-                                    <i class="fa fa-eye" style="color:aqua">as</i>
-                                </a>|
-                                <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>|
+                                    <i class="fa fa-eye" style="color:black"></i>
+                                </a>
+                                <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>
                                 <a ng-click="Delete($index)" ng-if="a.StatusDevice == 1"><i class="fa fa-lock"></i></a>
                                 <a ng-click="Unlock($index)" ng-if="a.StatusDevice == -1"><i class="fa fa-unlock"></i></a>
-
                             </td>
                             <td>{{a.DeviceNo}}</td>
                             <td>{{a.DeviceName}}</td>
@@ -88,20 +82,24 @@
                             <td>{{a.DeviceImei}}</td>
                             <td ng-if="a.ExpireStatus == -1"><p style="color:red">{{a.DateExpired}}</p></td>
                             <td ng-if="a.ExpireStatus == 1"><p style="color:forestgreen">{{a.DateExpired}}</p></td>
-                            <td ng-if="a.StatusDevice == 1"><p style="color:forestgreen">Đang kích hoạt</p></td>
+                            <td ng-if="a.StatusDevice == 1"><p style="color:forestgreen">Kích hoạt</p></td>
                             <td ng-if="a.StatusDevice == -1"><p style="color:red">Tạm khóa</p></td>
-                            <td ng-if="a.StatusDevice == 0"><p style="color:red">Đã hết hạn</p></td>
+                            <td ng-if="a.StatusDevice == 0"><p style="color:red">Hết hạn</p></td>
 
-                            Tổng:
-                            <p ng-bind="total()"></p>
                         </tr>
-
                     </tbody>
                 </table>
+                <div class="other-controller" style="border:1px solid #ccf; padding:5px; margin:3px">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+                        @*<div class="range-label">Displaying {{ range.lower }} - {{ range.upper }} of {{ range.total }}</div>
+                        <a href="" title="Previous page" ng-class="{ disabled : pagination.current == 1 }" ng-click="setCurrent(pagination.current - 1)">&lsaquo;</a>
+                        <a href="" title="Next page" ng-class="{ disabled : pagination.current == pagination.last }" ng-click="setCurrent(pagination.current + 1)">&rsaquo;</a>*@
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="XemThietBi" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" ng-show="Device.DeviceID != '' ">
@@ -159,7 +157,7 @@
                         <div class="col col-md-6">
                             <div class="form-group">
                                 <label class="control-label"> Số hiệu </label>
-                                <input class="form-control" name="DeviceNo" ng-model="Device.DeviceNo" type="text" placeholder="Số hiệu ..." required maxlength="50" ng-blur="NoDeviceExist(Device.DeviceNo)"/>
+                                <input class="form-control" name="DeviceNo" ng-model="Device.DeviceNo" type="text" placeholder="Số hiệu ..." required maxlength="50" ng-blur="NoDeviceExist(Device.DeviceNo)" />
                                 <label ng-if="NoCheck == Device.DeviceNo" style="color:red">Số hiệu đã tồn tại</label>
                             </div>
                             <div class="form-group">
@@ -178,12 +176,12 @@
                         <div class="col col-md-6">
                             <div class="form-group">
                                 <label class="control-label"> Imei </label>
-                                <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" placeholder="Imei ..." required maxlength="10" ng-blur="ImeiDeviceExist(Device.DeviceImei)"/>
+                                <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" placeholder="Imei ..." required maxlength="10" ng-blur="ImeiDeviceExist(Device.DeviceImei)" />
                                 <label ng-if="ImeiCheck == Device.DeviceImei" style="color:red">Imei đã tồn tại</label>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Ngày hết hạn </label>
-                                <input class="form-control" name="DateExpired" ng-model="Device.DateExpired" type="date" placeholder="Ngày hết hạn ..." required id="datefield"/>
+                                <input class="form-control" name="DateExpired" ng-model="Device.DateExpired" type="date" placeholder="Ngày hết hạn ..." required id="datefield" />
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Ghi chú </label>
@@ -233,7 +231,7 @@
                             <div class="form-group">
                                 <label class="control-label"> Ngày hết hạn {{Device.DateExpired}} </label>
                                 {{Device.ExpireDate}}
-                                <input class="form-control" id="datefield1" name="DateExpired" ng-model="Device.DateExpired" type="date" required  />
+                                <input class="form-control" id="datefield1" name="DateExpired" ng-model="Device.DateExpired" type="date" required />
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Ghi chú </label>
@@ -249,23 +247,38 @@
             </div>
         </div>
     </div>
-    <script src="~/Areas/Admin/AngularJS/Device/DeviceApp.js"></script>
-    <script>
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-
-        today = yyyy + '-' + mm + '-' + dd;
-        document.getElementById("datefield").setAttribute("min", today);
-        document.getElementById("datefield1").setAttribute("min", today);
-
-    </script>
 </div>
+
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script data-require="angular.js@1.3.0" data-semver="1.3.0" src="https://code.angularjs.org/1.3.0/angular.js"></script>
+    <script data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/michaelbromley/angularUtils-pagination/master/dirPagination.js"></script>*@
+
+
+@*<link href="~/Content/public/css/bootstrap.css" rel="stylesheet" />*@
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Content/public/js/jquery.min.js"></script>
+<script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="~/Areas/Admin/AngularJS/Device/DeviceApp.js"></script>
+<script src="~/Areas/Admin/Pagination JS/dirPagination.js"></script>
+
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("datefield").setAttribute("min", today);
+    document.getElementById("datefield1").setAttribute("min", today);
+
+</script>
 

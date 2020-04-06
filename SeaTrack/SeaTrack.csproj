@@ -278,6 +278,7 @@
     <Content Include="Areas\Admin\AngularJS\Agency\AgencyService.js" />
     <Content Include="Areas\Admin\AngularJS\Agency\DetailApp.js" />
     <Content Include="Areas\Admin\AngularJS\Device\DeviceApp.js" />
+    <Content Include="Areas\Admin\Pagination JS\dirPagination.js" />
     <Content Include="Content\public\assets\demo\chart-area-demo.js" />
     <Content Include="Content\public\assets\demo\chart-bar-demo.js" />
     <Content Include="Content\public\assets\demo\chart-pie-demo.js" />
@@ -4362,6 +4363,7 @@
     <Content Include="vendors\flot\examples\axes-time-zones\tz\africa" />
     <Content Include="vendors\flot\examples\axes-time-zones\tz\antarctica" />
     <Content Include="vendors\flot\examples\axes-time-zones\tz\asia" />
+    <Content Include="Views\Home\ErrorView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

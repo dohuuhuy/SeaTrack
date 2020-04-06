@@ -5,7 +5,7 @@
 }
 
 <div class="container-fluid" ng-app="AgencyModule" ng-controller="AgencyController" ng-init="Role(3)">
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-4">Quản lý khách hàng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
         <li class="breadcrumb-item active">Tables</li>
@@ -17,23 +17,20 @@
         <div class="card-body">
             <div class="col col-md-12">
                 <div class="input-group">
-                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control"><br />
+                    <input type="text" id="input1-group2" name="input1-group2" placeholder="Nhập từ khóa ..." class="form-control" ng-model="SearchKey"><br />
                     <div class="input-group-btn">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" ng-click="ClearSearch()">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
                 <br />
                 <div class="input-group ">
-                    <label for="checkbox1" class="form-check-label col-md-4 ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio1" class="form-check-label col-md-4 ">
+                        <input type="radio" id="radio1" name="checkbox1" ng-model="Status" value="1" class="form-check-input">Kích hoạt
                     </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo
-                    </label>
-                    <label for="checkbox1" class="form-check-label col-md-4  ">
-                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1" class="form-check-input">Lọc Theo điều kiện
+                    <label for="radio2" class="form-check-label col-md-4  ">
+                        <input type="radio" id="radio2" name="checkbox2" ng-model="Status" value="-1" class="form-check-input">Đã khóa
                     </label>
                 </div>
             </div>
@@ -44,11 +41,11 @@
     </div>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Danh sách khách hàng</div>
-        <button type="button" class="btn btn-info" data-target="#AddNew" data-toggle="modal" ng-click="AddCustomer()">
-            Thêm mới
-        </button>
         <div class="card-body">
-            <input ng-model="SearchKey" type="text" ng-text-change="KeyFilter()" />
+            <button type="button" class="btn btn-primary" data-target="#AddNew" data-toggle="modal" ng-click="AddCustomer()">
+                Thêm mới
+            </button>
+            <label>Tổng: {{Customers.length}}</label>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
@@ -58,25 +55,27 @@
                             <th width="10%">Thao tác</th>
                             <th width="15%">Username</th>
                             <th width="20%">Fullname</th>
-                            <th width="15%">Phone</th>
                             <th width="15%">CreateDate</th>
                             <th width="20%">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="c in Customers">
+                        <tr ng-repeat="c in Customers" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
+                            || (Status == null && (c.Username == SearchKey || c.Fullname == SearchKey))
+                            || ((SearchKey == null || SearchKey == '') && c.Status == Status)
+                            || ((c.Username == SearchKey || c.Fullname == SearchKey) && c.Status == Status)
+                                 ">
                             <td width="5%">{{$index+1}}</td>
                             <td width="10%">
-                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}" title="Chi tiết khách hàng"><i class="fa fa-eye" style="color:#138496">as</i></a>&nbsp;
+                                <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}" title="Chi tiết khách hàng"><i class="fa fa-eye" style="color:black"></i></a>
                                 <a ng-if="c.Status==1" ng-click="LockUser(c.UserID)" title="Khóa tài khoản"><i class="fa fa-lock" style="color:red"></i></a>
-                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)" title="Mở khóa tài khoản"><i class="fa fa-unlock" style="color:#138496"></i></a>
+                                <a ng-if="c.Status==-1" ng-click="UnLockUser(c.UserID)" title="Mở khóa tài khoản"><i class="fa fa-unlock" style="color:black"></i></a>
                             </td>
                             <td width="15%">{{c.Username}}</td>
                             <td width="20%">{{c.Fullname}}</td>
-                            <td width="15%">{{c.Phone}}</td>
                             <td width="15%">{{c.CreateDate|date: "yyyy-MM-ddTHH:mm:ss"}}</td>
                             <td width="20%" ng-if="c.Status==-1"><p style="color:red">Tạm khóa</p></td>
-                            <td width="20%" ng-if="c.Status==1"><p style="color:green">Đã kích hoạt</p></td>
+                            <td width="20%" ng-if="c.Status==1"><p style="color:green">Kích hoạt</p></td>
                         </tr>
                     </tbody>
                 </table>

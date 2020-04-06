@@ -14,65 +14,85 @@ namespace SeaTrack.Areas.Admin.Controllers
         // GET: Admin/Agency
         public ActionResult Customer()
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             return View();
         }
 
         public new ActionResult User()
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             return View();
         }
 
         public ActionResult Device()
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+
             return View();
         }
 
-        public ActionResult DeviceDetail(int id)
-        {
-            DeviceViewModel device = AdminService.GetDeviceByID(id);
-            return View(device);
-        }
+        //public ActionResult DeviceDetail(int id)
+        //{
+
+        //    DeviceViewModel device = AdminService.GetDeviceByID(id);
+        //    return View(device);
+        //}
         public ActionResult Detail(int id)
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
+            var user = (Users)Session["User"];
             if (TempData["EditResult"] != null)
             {
                 ViewBag.EditResult = TempData["EditResult"].ToString();
             }
             UserViewModel us = new UserViewModel();
             us = AdminService.GetUserByID(id);
-            if (us.RoleID == 4)
+            if (us.ManageBy == user.Username || AdminService.CheckUserManage(id, user.Username))
             {
-                //string Username = Request.Cookies["Username"].Value.ToString();
-                var user = (Users)Session["User"];
-                List<UserViewModel> Customer = AdminService.GetListUserByUserID(user.Username, 3);
-                List<SelectListItem> items = new List<SelectListItem>();
-                foreach (var a in Customer)
-                {
-                    items.Add(new SelectListItem { Text = a.Username, Value = a.Username, Selected = a.ManageBy == us.ManageBy ? true : false });
-                }
-                ViewBag.ListCustomer = items;
+                return View(us);
             }
+            if (us.RoleID == 3)
+            {
+                return RedirectToAction("Customer", "Agency");
+            }
+            return RedirectToAction("User", "Agency");
 
-            return View(us);
         }
-        [HttpPost]
-        public ActionResult Update(DeviceViewModel device)
-        {
-            Device dv = new Lib.DTO.Device();
-            dv.DeviceID = device.DeviceID;
-            dv.DeviceNo = device.DeviceNo;
-            dv.DeviceName = device.DeviceName;
-            dv.DeviceVersion = device.DeviceVersion;
-            dv.DeviceImei = device.DeviceImei;
-            dv.DeviceGroup = device.DeviceGroup;
-            dv.DeviceNote = device.DeviceNote;
-            dv.DateExpired = device.ExpireDate;
-            var res = AdminService.UpdateDevice(dv);
-            return RedirectToAction("DeviceDetail", new { id = dv.DeviceID });
-        }
+        //[HttpPost]
+        //public ActionResult Update(DeviceViewModel device)
+        //{
+        //    Device dv = new Lib.DTO.Device();
+        //    dv.DeviceID = device.DeviceID;
+        //    dv.DeviceNo = device.DeviceNo;
+        //    dv.DeviceName = device.DeviceName;
+        //    dv.DeviceVersion = device.DeviceVersion;
+        //    dv.DeviceImei = device.DeviceImei;
+        //    dv.DeviceGroup = device.DeviceGroup;
+        //    dv.DeviceNote = device.DeviceNote;
+        //    dv.DateExpired = device.ExpireDate;
+        //    var res = AdminService.UpdateDevice(dv);
+        //    return RedirectToAction("DeviceDetail", new { id = dv.DeviceID });
+        //}
         [HttpGet]
-        public JsonResult GetListUserByUserID(int id) //id = RoleID
+        public ActionResult GetListUserByUserID(int id) //id = RoleID
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             //string Username = Request.Cookies["Username"].Value.ToString();
             var user = (Users)Session["User"];
             var rs = AdminService.GetListUserByUserID(user.Username, id);
@@ -80,12 +100,26 @@ namespace SeaTrack.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetListUserOfAgency() //id = RoleID
+        public ActionResult GetListUserOfAgency() //id = RoleID
         {
+            if (!CheckRole(2))
+            {
+                return RedirectToAction("ErrorView", "Home", new { area = "" });
+            }
             //string Username = Request.Cookies["Username"].Value.ToString();
             var user = (Users)Session["User"];
             var rs = AdminService.GetListUserOfAgency(user.Username);
             return Json(rs, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool CheckRole(int role)
+        {
+            var user = (Users)Session["User"];
+            if (user != null && user.RoleID == role)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

@@ -22,7 +22,7 @@ namespace SeaTrack.Controllers
         }
         public ActionResult HomeTracking()
         {
-            if (Request.Cookies["userName"] == null && Request.Cookies["pass"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -30,7 +30,7 @@ namespace SeaTrack.Controllers
         }
         public ActionResult Route()
         {
-            if (Request.Cookies["userName"] == null && Request.Cookies["pass"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -47,12 +47,23 @@ namespace SeaTrack.Controllers
             //Session["pass"] = Request.Cookies["pass"] == null ? "" : Request.Cookies["pass"].Value;
             return View("Login");
         }
+        [HttpPost]
         public ActionResult ValidateUser(FormCollection from)
         {
             var user = (Users)Session["User"];
             if (user != null)
             {
-                return RedirectToAction("HomeTracking", "Home");
+                if(user.RoleID == 3 || user.RoleID == 4)
+                    return RedirectToAction("HomeTracking", "Home");
+                else
+                {
+                    if (user.RoleID == 1)
+                    {
+                        return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
+                    }
+                    return RedirectToAction("Customer", "Agency", new { area = "Admin" });
+                }
+
             }
             String username_ = from["username"];
             String password_ = from["password"];
@@ -105,22 +116,15 @@ namespace SeaTrack.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            Session["userName"] = null;
-            Session["pass"] = null;
-
-            if (Request.Cookies["pass"] != null)
-            {
-                HttpCookie myCookie = new HttpCookie("pass");
-                myCookie.Expires = DateTime.Now.AddDays(-1d);
-                Response.Cookies.Add(myCookie);
-            }
-            if (Request.Cookies["userName"] != null)
-            {
-                HttpCookie myCookie = new HttpCookie("userName");
-                myCookie.Expires = DateTime.Now.AddDays(-1d);
-                Response.Cookies.Add(myCookie);
-            }
+            //Session["userName"] = null;
+            //Session["pass"] = null;
+            Session.Remove("User");
             return RedirectToAction("Login", "Home");
+        }
+
+        public ActionResult ErrorView()
+        {
+            return View();
         }
         [HttpGet]
         public ActionResult GetListDeviceStatus()
