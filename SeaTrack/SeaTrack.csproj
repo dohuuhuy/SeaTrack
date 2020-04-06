@@ -256,6 +256,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\KeepAlive.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2205,6 +2206,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Handlers\keepAlive.js" />
     <Content Include="images\.gitignore" />
     <Content Include="images\admin.jpg" />
     <Content Include="images\avatar\1.jpg" />
@@ -2906,6 +2908,7 @@
     <Content Include="Areas\Admin\Views\Agency\Device.cshtml" />
     <Content Include="Areas\Admin\Views\Agency\DeviceDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_waiting.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

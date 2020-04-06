@@ -60,11 +60,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="c in Customers" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
-                            || (Status == null && (c.Username == SearchKey || c.Fullname == SearchKey))
-                            || ((SearchKey == null || SearchKey == '') && c.Status == Status)
-                            || ((c.Username == SearchKey || c.Fullname == SearchKey) && c.Status == Status)
-                                 ">
+                        <tr dir-paginate="c in Customers | filter:SearchKey | itemsPerPage: 7" current-page="currentPage">
                             <td width="5%">{{$index+1}}</td>
                             <td width="10%">
                                 <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{c.UserID}}" title="Chi tiết khách hàng"><i class="fa fa-eye" style="color:black"></i></a>
@@ -79,6 +75,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="text-center">
+                    <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+                </div>
+
             </div>
         </div>
 
@@ -93,12 +93,14 @@
                         <form class="form-horizontal" name="AddNewForm">
                             <div class="form-group">
                                 <label class="control-label"> Username</label>
-                                <input class="form-control" name="Username" ng-model="Username" type="text" placeholder="Username" required maxlength="50" />
-
+                                <input class="form-control" name="Username" ng-model="Username" ng-blur="UsernameExist(Username)" ng-pattern="/^[a-z0-9]\S{5,20}$/" onkeyup="this.value = this.value.toLowerCase();" type="text" placeholder="Username" required maxlength="50" />
+                                <label ng-if="UsernameCheck != 'OK' && UsernameCheck != null" style="color:red">Username đã tồn tại </label>
+                                <span style="color:Red" ng-show="AddNewForm.Username.$error.pattern">Username không phù hợp</span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Password</label>
-                                <input class="form-control" name="Password" ng-model="Password" type="password" placeholder="password" required maxlength="30" />
+                                <input class="form-control" name="Password" ng-model="Password" ng-pattern="/^[a-z0-9 ]{5,30}$/" type="password" placeholder="password" required maxlength="30" />
+                                <span style="color:Red" ng-show="AddNewForm.Password.$error.pattern">Mật khẩu không phù hợp</span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Fullname</label>
@@ -106,7 +108,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Phone</label>
-                                <input class="form-control" name="Phone" ng-model="Phone" type="text" placeholder="Phone" required maxlength="10" />
+                                <input class="form-control" name="Phone" ng-model="Phone" type="text" ng-pattern="/^[0-9]{0,11}$/" placeholder="Phone" required maxlength="10" />
+                                <span style="color:Red" ng-show="AddNewForm.Phone.$error.pattern">Số điện thoại không đúng</span>
+
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Address</label>
@@ -124,8 +128,12 @@
 
     </div>
     <script src="~/Scripts/angular.js"></script>
+    <script src="~/Content/public/js/jquery.min.js"></script>
+    <script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyModule.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyService.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyController.js"></script>
+    <script src="~/Areas/Admin/Pagination JS/dirPagination.js"></script>
+
 </div>
 

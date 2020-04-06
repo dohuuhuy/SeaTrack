@@ -14,6 +14,15 @@
         });
         return request;
     }
+    this.CheckUsername = function (Username) {
+        var User = { Username: Username };
+        var request = $http({
+            method: 'POST',
+            url: '/Admin/HomeAdmin/CheckUsername',
+            data: User
+        });
+        return request;
+    }
     this.LockUser = function (UserID) {
     return $http.get('/Admin/HomeAdmin/LockUser/' + UserID)
     }

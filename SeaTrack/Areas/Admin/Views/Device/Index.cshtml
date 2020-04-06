@@ -60,13 +60,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr @*ng-repeat="a in namesData"*@
-                            dir-paginate="a in namesData | filter:SearchKey | itemsPerPage: 7" current-page="currentPage"
-                            @*ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
-                            || (Status == null && (a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey))
-                            || ((SearchKey == null || SearchKey == '') && a.StatusDevice == Status)
-                            || ((a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey) && a.StatusDevice == Status)
-                                 "*@>
+                        <tr dir-paginate="a in namesData | filter:SearchKey | itemsPerPage: 7" current-page="currentPage">
                             <td>{{$index+1}}</td>
                             <td>
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">

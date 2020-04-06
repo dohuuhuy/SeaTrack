@@ -13,7 +13,7 @@ namespace SeaTrack.Lib.Service
         public static int CreateUser(UserInfoDTO user, int RoleID)
         {
             return SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_CreateUser",
-                 user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.CreateBy, user.CreateDate, RoleID, user.ManageBy, user.Status);
+                 user.Username.Trim(), user.Password, user.Fullname.Trim(), user.Phone, user.Address.Trim(), user.CreateBy, user.CreateDate, RoleID, user.ManageBy, user.Status);
         }
         public static int UpdateUser(UserInfoDTO user)
         {
@@ -138,7 +138,7 @@ namespace SeaTrack.Lib.Service
         {
             try
             {
-                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_EditUser", user.UserID, user.Username, user.Password, user.Fullname, user.Phone, user.Address, user.Status, user.UpdateBy, user.LastUpdateDate, user.RoleID);
+                int res = SqlHelper.ExecuteNonQuery(ConnectData.ConnectionString, "sp_EditUser", user.UserID, user.Username, user.Password, user.Fullname.Trim(), user.Phone, user.Address.Trim(), user.Status, user.UpdateBy, user.LastUpdateDate, user.RoleID);
                 if (res == 0)
                 {
                     return false;
@@ -182,6 +182,20 @@ namespace SeaTrack.Lib.Service
                 }
             }
             return false;
+        }
+
+        public static string CheckUserExist(string Username)
+        {
+
+            var reader = SqlHelper.ExecuteReader(ConnectData.ConnectionString, "sp_CheckUserExist", Username);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    return reader["Username"].ToString();
+                }
+            }
+            return null;
         }
         #region
         public static int CreateDevice(Device device)

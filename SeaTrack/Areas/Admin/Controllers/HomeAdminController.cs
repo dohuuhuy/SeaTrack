@@ -14,8 +14,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         // GET: Admin/HomeAdmin
         public ActionResult Index() //Quản lý đại lý
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1)
             {
+                if (CheckRole(1) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
@@ -23,8 +27,12 @@ namespace SeaTrack.Areas.Admin.Controllers
 
         public ActionResult Customer()
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1)
             {
+                if (CheckRole(1) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
@@ -32,8 +40,12 @@ namespace SeaTrack.Areas.Admin.Controllers
 
         public new ActionResult User()
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1)
             {
+                if (CheckRole(1) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             return View();
@@ -42,8 +54,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult ListUser(int id) //id = roleID
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1)
             {
+                if (CheckRole(1) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var rs = AdminService.GetListUser(id);
@@ -53,8 +69,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserInfoDTO user, int roleID)
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1 && CheckRole(2) == -1)
             {
+                if (CheckRole(1) == 0 && CheckRole(2) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var us = (Users)Session["User"];
@@ -74,8 +94,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Detail(int id)
         {
-            if (!CheckRole(1))
+            if (CheckRole(1) == -1)
             {
+                if (CheckRole(1) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             if (TempData["EditResult"] != null)
@@ -90,8 +114,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditUser(UserInfoDTO user)
         {
-            if (!CheckRole(1) && !CheckRole(2))
+            if (CheckRole(1) == -1 && CheckRole(2) == -1)
             {
+                if (CheckRole(1) == 0 && CheckRole(2) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var u = Session["User"] as Users;
@@ -104,7 +132,7 @@ namespace SeaTrack.Areas.Admin.Controllers
                 UserEdit.Status = us.Status;
                 UserEdit.CreateBy = us.CreateBy;
                 UserEdit.CreateDate = Convert.ToDateTime(us.CreateDate);
-                UserEdit.RoleID = user.RoleID;
+                UserEdit.RoleID = us.RoleID;
                 UserEdit.Password = user.Password;
                 UserEdit.Fullname = user.Fullname;
                 UserEdit.Phone = user.Phone;
@@ -148,8 +176,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult LockUser(int id)
         {
-            if (!CheckRole(1) && !CheckRole(2))
+            if (CheckRole(1) == -1 && CheckRole(2) == -1)
             {
+                if (CheckRole(1) == 0 && CheckRole(2) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
 
@@ -171,8 +203,12 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult UnLockUser(int id)
         {
-            if (!CheckRole(1) && !CheckRole(2))
+            if (CheckRole(1) == -1 && CheckRole(2) == -1)
             {
+                if (CheckRole(1) == 0 && CheckRole(2) == 0)
+                {
+                    return RedirectToAction("Login", "Home", new { area = "" });
+                }
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
             var user = (Users)Session["User"];
@@ -189,14 +225,29 @@ namespace SeaTrack.Areas.Admin.Controllers
             AdminService.UpdateStatusUser(id, 1);
             return Json("Đã kích hoạt", JsonRequestBehavior.AllowGet);
         }
-        public bool CheckRole(int role)
+
+        [HttpPost]
+        public ActionResult CheckUsername(Users user)
+        {
+            var res = AdminService.CheckUserExist(user.Username);
+            if (res == null)
+            {
+                res = "OK";
+            }
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+        public int CheckRole(int role)
         {
             var user = (Users)Session["User"];
-            if (user != null && user.RoleID == role)
+            if (user != null)
             {
-                return true;
+                if (user.RoleID == role)
+                {
+                    return -1; //sai quyền
+                }
+                return 0; //Chưa đăng nhập
             }
-            return false;
+            return 1; //Hợp lệ
         }
 
     }

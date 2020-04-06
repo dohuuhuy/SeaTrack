@@ -1,10 +1,15 @@
 ﻿myapp.controller('AgencyController', function ($scope, $window, AgencyService) {
+    $scope.currentPage = 1;
+    $scope.pageSize = 10;
     $scope.Role = function (role) {
         $scope.role = role;
         if(role == 3){
+
+            $scope.Customers = [];
             LoadListCustomer();
         }
         if(role == 4){
+            $scope.Users = [];
             LoadListUser();
         }
 
@@ -44,12 +49,18 @@
     $scope.Resetsave = function () {
         Resetsave();
     }
-    $scope.AddCustomer = function(){
-        LoadListAgency();
-    }
     $scope.AddUser = function(){
         LoadListCustomer();
     }
+
+    $scope.UsernameExist = function (Username) {
+        $scope.UsernameCheck = "OK";
+        var r = AgencyService.CheckUsername(Username)
+        r.then(function successCallback(response) {
+            $scope.UsernameCheck = response.data;
+        })
+    }
+
     $scope.save = function () {
         var user = {
             Username: $scope.Username,

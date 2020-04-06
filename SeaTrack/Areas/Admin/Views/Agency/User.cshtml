@@ -61,11 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="u in Users" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
-                            || (Status == null && (u.Username == SearchKey || u.Fullname == SearchKey))
-                            || ((SearchKey == null || SearchKey == '') && u.Status == Status)
-                            || ((u.Username == SearchKey || u.Fullname == SearchKey) && u.Status == Status)
-                                 ">
+                        <tr dir-paginate="u in Users | filter:SearchKey | itemsPerPage: 7" current-page="currentPage">
                             <td>{{$index+1}}</td>
                             <td>
                                 <a href="#" data-ng-href="@Url.Action("Detail", "Agency")/{{u.UserID}}" title="Chi tiết người dùng"><i class="fa fa-eye" style="color:black"></i></a>
@@ -81,6 +77,12 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="other-controller" style="border:1px solid #ccf; padding:5px; margin:3px">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -95,8 +97,8 @@
                         <form class="form-horizontal" name="AddNewForm">
                             <div class="form-group">
                                 <label class="control-label"> Username</label>
-                                <input class="form-control" name="Username" ng-model="Username" type="text" placeholder="Username" required maxlength="50" />
-
+                                <input class="form-control" name="Username" ng-model="Username" ng-blur="UsernameExist(Username)" type="text" placeholder="Username" required maxlength="50" />
+                                <label ng-if="UsernameCheck != null" style="color:red">Username đã tồn tại</label>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Password</label>
@@ -133,9 +135,12 @@
 
     </div>
     <script src="~/Scripts/angular.js"></script>
+    <script src="~/Content/public/js/jquery.min.js"></script>
+    <script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyModule.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyService.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyController.js"></script>
+    <script src="~/Areas/Admin/Pagination JS/dirPagination.js"></script>
 
 
 </div>

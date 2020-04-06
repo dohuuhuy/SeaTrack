@@ -1,4 +1,4 @@
 ﻿var myapp;
 (function () {
-    myapp = angular.module('AgencyModule', []);
+    myapp = angular.module('AgencyModule', ['angularUtils.directives.dirPagination']);
 })();

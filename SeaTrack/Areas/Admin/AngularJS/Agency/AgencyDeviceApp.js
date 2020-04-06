@@ -1,14 +1,10 @@
-﻿var DeviceApp = angular.module("AgencyDeviceApp", []);
+﻿var DeviceApp = angular.module("AgencyDeviceApp", ['angularUtils.directives.dirPagination']);
 
 DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService) {
-
-    $scope.namesData = null;
-    DeviceService.GetAllRecords().then(function (d) {
-        $scope.namesData = d.data;
-    }, function () {
-        alert('Unable to Get Data !!!');
-    });
-
+    $scope.currentPage = 1;
+    $scope.pageSize = 10;
+    $scope.namesData = [];
+    LoadDevice();
     $scope.loadMessage = updateInfo();
 
     function updateInfo() {

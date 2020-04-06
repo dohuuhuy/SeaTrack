@@ -4,7 +4,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAgency.cshtml";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <div class="container-fluid" ng-app="AgencyDeviceApp" ng-controller="DeviceController">
     <h1 class="mt-4">Danh Mục Thiết Bị</h1>
     <ol class="breadcrumb mb-4">
@@ -68,19 +67,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="a in namesData" ng-if="(Status == null && (SearchKey == null || SearchKey == ''))
-                            || (Status == null && (a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey))
-                            || ((SearchKey == null || SearchKey == '') && a.StatusDevice == Status)
-                            || ((a.DeviceName == SearchKey || a.DeviceNo == SearchKey || a.DeviceImei == SearchKey || a.DeviceVersion == SearchKey) && a.StatusDevice == Status)
-                                 ">
+                        <tr dir-paginate="a in namesData | filter:SearchKey | itemsPerPage: 7" current-page="currentPage">
                             <td>{{$index+1}}</td>
-
                             <td>
-                                @*<a href="#" data-ng-href="@Url.Action("DeviceDetail","Agency", new { area = "Admin"})/{{a.DeviceID}}">Detail</a>*@
                                 <a ng-click="View(namesData[$index])" ng-model="$scope.Device" data-toggle="modal" data-target="#XemThietBi">
                                     <i class="fa fa-eye" style="color:black"></i>
-                                </a>|
-                                <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>|
+                                </a>
+                                <a ng-click="Edit(namesData[$index])" data-toggle="modal" data-target="#SuaThietBi"><i class="fa fa-edit">edit</i></a>
                                 <a ng-click="Delete($index)" ng-if="a.StatusDevice == 1"><i class="fa fa-lock" style="color:red"></i></a>
                                 <a ng-click="Unlock($index)" ng-if="a.StatusDevice == -1"><i class="fa fa-unlock" style="color:black"></i></a>
 
@@ -95,9 +88,14 @@
                             <td ng-if="a.StatusDevice == -1"><p style="color:red">Tạm khóa</p></td>
                             <td ng-if="a.StatusDevice == 0"><p style="color:red">Đã hết hạn</p></td>
                         </tr>
-
                     </tbody>
                 </table>
+                <div class="other-controller" style="border:1px solid #ccf; padding:5px; margin:3px">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -250,7 +248,12 @@
             </div>
         </div>
     </div>
+
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Content/public/js/jquery.min.js"></script>
+    <script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="~/Areas/Admin/AngularJS/Agency/AgencyDeviceApp.js"></script>
+    <script src="~/Areas/Admin/Pagination JS/dirPagination.js"></script>
     <script>
         var today = new Date();
         var dd = today.getDate();
