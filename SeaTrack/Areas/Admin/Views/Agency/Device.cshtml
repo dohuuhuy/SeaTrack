@@ -53,7 +53,6 @@
             <div class="table-responsive">
 
                 <table id="dataTable" class="table table-bordered table-striped text-center">
-
                     <thead>
                         <tr>
                             <th width="5%">#</th>
@@ -206,7 +205,7 @@
                     <button type="button" class="close" data-dismiss="modal" style="text-align:left" ng-click="Clear()">x</button>
                 </div>
                 <div class="modal-body" style="margin-left:20px">
-                    <form class="form-horizontal row" name="">
+                    <form class="form-horizontal row" name="UpdateForm">
                         <div class="col col-md-6">
                             <div class="form-group">
                                 <label class="control-label"> Số hiệu </label>
@@ -222,27 +221,50 @@
                                 <label class="control-label"> Phiên bản </label>
                                 <input class="form-control" name="DeviceVersion" ng-model="Device.DeviceVersion" type="text" required maxlength="50" />
                             </div>
+                            <div class="form-group">
+                                <label class="control-label"> Ghi chú </label>
+                                <textarea class="form-control" name="DeviceNote" ng-model="Device.DeviceNote" type="text" required rows="3"></textarea>
+                            </div>
+
                         </div>
                         <div class="col colp-md-6">
                             <div class="form-group">
                                 <label class="control-label"> Imei </label>
-                                <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" placeholder="Imei ..." required maxlength="10" ng-blur="ImeiDeviceExist(Device.DeviceImei)" />
+                                <input class="form-control" name="DeviceImei" ng-model="Device.DeviceImei" type="text" placeholder="Imei ..." required ng-blur="ImeiDeviceExist(Device.DeviceImei)" />
                                 <label ng-if="ImeiCheck == Device.DeviceImei" style="color:red">Imei đã tồn tại</label>
                             </div>
                             <div class="form-group">
-                                <label class="control-label"> Ngày hết hạn {{Device.DateExpired}} </label>
-                                {{Device.ExpireDate}}
-                                <input class="form-control" id="datefield1" name="DateExpired" ng-model="Device.DateExpired" type="date" required />
+                                <label class="control-label"> Nhóm thiết bị </label>
+                                <input class="form-control" name="DeviceGroup" ng-model="Device.DeviceGroup" type="text" placeholder="Nhóm ..." required />
                             </div>
+
                             <div class="form-group">
-                                <label class="control-label"> Ghi chú </label>
-                                <textarea class="form-control" name="DeviceNote" ng-model="Device.DeviceNote" type="text" required rows="3"></textarea>
+                                <label class="control-label"> Ngày hết hạn </label>
+                                <input class="form-control" id="datefield1" name="DateExpired" ng-model="Device.ExpireDate" type="date" data-date-format="dd-MM-yyyy HH:mm:ss"/>
+                                <span ng-if="UpdateForm.DateExpired.$invalid">Error</span>
+                                <br />
+                                <div class="row text-center">
+                                    <div class="form-group col-md-6">
+                                        <button class="btn btn-primary" ng-click="DeviceExtension(Device.ExpireDate,1)">Gia hạn 1 tháng</button>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button class="btn btn-primary" ng-click="DeviceExtension(Device.ExpireDate,3)">Gia hạn 3 tháng</button>
+                                    </div>
+                                    <div class="form-group col-md-6 offset-md-3">
+                                        <button class="btn btn-primary" ng-click="DeviceExtension(Device.ExpireDate,6)">Gia hạn 6 tháng</button>
+                                    </div>
+                                    @*<div class="form-group col-md-6">
+                                        <button class="btn btn-primary" ng-click="DeviceExtension(Device.ExpireDate,12)">Gia hạn 12 tháng</button>
+                                    </div>*@
+
+                                </div>
+
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="AddNewForm.$invalid" ng-click="update()">Update</button>
+                    <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-disabled="UpdateForm.$invalid" ng-click="update()">Update</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Clear()">Close</button>
                 </div>
             </div>

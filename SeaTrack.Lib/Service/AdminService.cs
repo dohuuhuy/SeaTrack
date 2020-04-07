@@ -302,6 +302,7 @@ namespace SeaTrack.Lib.Service
                         DeviceNote = reader["DeviceNote"].ToString(),
                         DateExpired = (reader["DateExpired"].ToString()),
                         StatusDevice = Convert.ToInt32(reader["StatusDevice"]),
+                        ExpireDate = Convert.ToDateTime(reader["DateExpired"].ToString()),
                         ExpireStatus = DateTime.Compare(Convert.ToDateTime(reader["DateExpired"]), DateTime.Now) > 0 ? 1 : -1
                     };
                     lst.Add(data);

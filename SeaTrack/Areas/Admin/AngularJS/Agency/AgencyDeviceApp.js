@@ -36,7 +36,13 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
         DeviceNote: ''
 
     };
-
+    $scope.DeviceExtension = function(dateExpire,time) {
+        console.log('date'+dateExpire);
+        dateExpire.setDate(dateExpire.getDate() + time*30); // Set now + 30 days as the new date
+        console.log('new date'+dateExpire);
+        $scope.Device.ExpireDate = new Date(dateExpire);
+        $scope.Device.DateExpired = new Date(dateExpire);
+    }
     $scope.View = function (data) {
         console.log('i am inside view() + ');
         $scope.Device = {
@@ -77,7 +83,6 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
             $scope.ImeiCheck = response.data.DeviceImei;
         })
     }
-
     $scope.Save = function () {
         if ($scope.Device.DeviceName != "") {
             console.log('i am inside save func' + JSON.stringify($scope.Device));
@@ -131,19 +136,24 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
             DeviceVersion: data.DeviceVersion,
             DeviceGroup: data.DeviceGroup,
             DateExpired: data.DateExpired,
-            DeviceNote: data.DeviceNote
-
+            DeviceNote: data.DeviceNote,
+            ExpireDate: new Date(parseInt(data.ExpireDate.substr(6)))
         };
     };
     $scope.Clear = function () {
-        $scope.Device.DeviceID = '',
-        $scope.Device.DeviceNo = '',
-        $scope.Device.DeviceName = '',
-        $scope.Device.DeviceImei = '',
-        $scope.Device.DeviceVersion = '',
-        $scope.Device.DeviceGroup = '',
-        $scope.Device.DateExpired = '',
-        $scope.Device.DeviceNote = ''
+        $scope.Device = null;
+        $scope.NoCheck = "alo";
+        $scope.ImeiCheck = "alo";
+
+        //$scope.Device.DeviceID = '',
+        //$scope.Device.DeviceNo = '',
+        //$scope.Device.DeviceName = '',
+        //$scope.Device.DeviceImei = '',
+        //$scope.Device.DeviceVersion = '',
+        //$scope.Device.DeviceGroup = '',
+        //$scope.Device.DateExpired = '',
+        //$scope.Device.DeviceNote = '',
+
 
     };
     $scope.Cancel = function () {

@@ -241,13 +241,13 @@ namespace SeaTrack.Areas.Admin.Controllers
             var user = (Users)Session["User"];
             if (user != null)
             {
-                if (user.RoleID == role)
+                if (user.RoleID != role)
                 {
                     return -1; //sai quyền
                 }
-                return 0; //Chưa đăng nhập
+                return 1; //Hợp lệ
             }
-            return 1; //Hợp lệ
+            return 0; //Chưa đăng nhập
         }
 
     }

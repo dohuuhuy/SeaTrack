@@ -31,7 +31,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9">@Html.PasswordFor(model => model.Password, new { @value = @Model.Password, @required = "required", @class = "form-control", placeholder = "Text" })</div>
+                        <div class="col-12 col-md-9">@Html.PasswordFor(model => model.Password, new { @value = @Model.Password, @required = "required", @pattern = "^[a-z0-9 ]+$", @class = "form-control", @placeholder = "Text", @minlength = 5, @maxlength = 30, @oninput = "InvalidMsg(this);", oninvalid = "InvalidMsg(this);" })</div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Họ tên</label></div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Số điện thoại</label></div>
-                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Phone, new { @value = @Model.Phone, @required = "required", @class = "form-control", placeholder = "Số điện thoại" })</div>
+                        <div class="col-12 col-md-9">@Html.TextBoxFor(model => model.Phone, new { @value = @Model.Phone, @required = "required", @pattern = "^[0-9]+$", @maxlength = 11, @class = "form-control", placeholder = "Số điện thoại", @oninvalid = "InvalidPhone(this);" })</div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Địa chỉ</label></div>
@@ -167,3 +167,30 @@
 </div>
 <script src="~/Scripts/angular.js"></script>
 <script src="~/Areas/Admin/AngularJS/Admin/UserDetailApp.js"></script>
+<script>
+    function InvalidMsg(textbox) {
+
+        if (textbox.value === '') {
+            textbox.setCustomValidity
+                  ('Không để trống mật khẩu!');
+        } else if (textbox.validity.patternMismatch) {
+            textbox.setCustomValidity
+                  ('Mật khẩu không được chứa ký tự đặc biệt!');
+        } else if (textbox.validity.tooShort) {
+            textbox.setCustomValidity
+                  ('Mật khẩu từ 5 đến 30 ký tự')
+        }else {
+            textbox.setCustomValidity('');
+        }
+        return true;
+    }
+    function InvalidPhone(textbox){
+        if (textbox.validity.valueMissing) {
+            textbox.setCustomValidity('Không để trống số điện thoại');
+        } else if(textbox.validity.patternMismatch) {
+            textbox.setCustomValidity('Số điện thoại không hợp lệ');
+        } else {
+            textbox.setCustomValidity('');
+}
+    }
+</script>

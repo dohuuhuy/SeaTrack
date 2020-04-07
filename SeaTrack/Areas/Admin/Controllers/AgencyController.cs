@@ -14,7 +14,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         // GET: Admin/Agency
         public ActionResult Customer()
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -27,7 +27,7 @@ namespace SeaTrack.Areas.Admin.Controllers
 
         public new ActionResult User()
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -41,7 +41,7 @@ namespace SeaTrack.Areas.Admin.Controllers
 
         public ActionResult Device()
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -61,7 +61,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         //}
         public ActionResult Detail(int id)
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -105,7 +105,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetListUserByUserID(int id) //id = RoleID
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -122,7 +122,7 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetListUserOfAgency() //id = RoleID
         {
-            if (CheckRole(2) == -1)
+            if (CheckRole(2) != 1)
             {
                 if (CheckRole(2) == 0)
                 {
@@ -141,13 +141,13 @@ namespace SeaTrack.Areas.Admin.Controllers
             var user = (Users)Session["User"];
             if (user != null)
             {
-                if (user.RoleID == role)
+                if (user.RoleID != role)
                 {
                     return -1; //sai quyền
                 }
-                return 0; //Chưa đăng nhập
+                return 1; //Hợp lệ
             }
-            return 1; //Hợp lệ
+            return 0; //Chưa đăng nhập
         }
 
     }

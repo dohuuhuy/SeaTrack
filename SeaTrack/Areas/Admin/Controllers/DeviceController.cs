@@ -88,9 +88,9 @@ namespace SeaTrack.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetListDeviceByUserID(int? id)
         {
-            if (CheckRole(1) == -1)
+            if (CheckRole(1) == -1  && CheckRole(2) == -1)
             {
-                if (CheckRole(1) == 0)
+                if (CheckRole(1) == 0 && CheckRole(2) == 0)
                 {
                     return RedirectToAction("Login", "Home", new { area = "" });
                 }
@@ -202,7 +202,6 @@ namespace SeaTrack.Areas.Admin.Controllers
                 return RedirectToAction("ErrorView", "Home", new { area = "" });
             }
 
-            var us = (Users)Session["User"];
             var data = AdminService.GetListDeviceOfCustomer(user.ManageBy, user.UserID);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -363,13 +362,13 @@ namespace SeaTrack.Areas.Admin.Controllers
             var user = (Users)Session["User"];
             if (user != null)
             {
-                if (user.RoleID == role)
+                if (user.RoleID != role)
                 {
                     return -1; //sai quyền
                 }
-                return 0; //Chưa đăng nhập
+                return 1; //Hợp lệ
             }
-            return 1; //Hợp lệ
+            return 0; //Chưa đăng nhập
         }
 
     }

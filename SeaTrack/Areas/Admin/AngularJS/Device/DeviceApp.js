@@ -21,6 +21,13 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
         });
         return total;
     };
+    $scope.DeviceExtension = function(dateExpire,time) {
+    console.log('date'+dateExpire);
+    dateExpire.setDate(dateExpire.getDate() + time*30); // Set now + 30 days as the new date
+    console.log('new date'+dateExpire);
+    $scope.Device.ExpireDate = new Date(dateExpire);
+    $scope.Device.DateExpired = new Date(dateExpire);
+    }
 
     $scope.ClearSearch = function(){
     $scope.SearchKey = "";
@@ -133,7 +140,9 @@ DeviceApp.controller('DeviceController', function ($scope, $http, DeviceService)
             DeviceVersion: data.DeviceVersion,
             DeviceGroup: data.DeviceGroup,
             DateExpired: data.DateExpired,
-            DeviceNote: data.DeviceNote
+            DeviceNote: data.DeviceNote,
+            ExpireDate: new Date(parseInt(data.ExpireDate.substr(6)))
+
 
         };
     };
